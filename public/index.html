@@ -1,0 +1,1280 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>NSXDC v1.0 - Always-ON Validation</title>
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      max-width: 1400px;
+      margin: 0 auto;
+    }
+
+    .header {
+      text-align: center;
+      color: white;
+      margin-bottom: 30px;
+    }
+
+    .header h1 {
+      font-size: 2.5rem;
+      margin-bottom: 10px;
+      font-weight: 700;
+    }
+
+    .version-badge {
+      display: inline-block;
+      background: rgba(255, 255, 255, 0.2);
+      padding: 4px 12px;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      margin-left: 10px;
+    }
+
+    .enforced-badge {
+      display: inline-block;
+      background: rgba(40, 167, 69, 0.9);
+      padding: 6px 14px;
+      border-radius: 16px;
+      font-size: 0.8rem;
+      margin-left: 8px;
+      font-weight: 600;
+      border: 2px solid rgba(255, 255, 255, 0.3);
+    }
+
+    .locked-setting {
+      background: #e7f3ff;
+      padding: 15px;
+      border-radius: 10px;
+      border-left: 4px solid #28a745;
+      margin-bottom: 20px;
+    }
+
+    .locked-setting strong {
+      color: #155724;
+      font-size: 1rem;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .locked-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      background: #28a745;
+      color: white;
+      padding: 6px 12px;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      margin-right: 8px;
+    }
+
+    .header p {
+      font-size: 1.1rem;
+      opacity: 0.9;
+    }
+
+    .main-panel {
+      background: white;
+      border-radius: 20px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      overflow: hidden;
+    }
+
+    .controls {
+      background: linear-gradient(to right, #f8f9fa, #e9ecef);
+      padding: 25px;
+      border-bottom: 2px solid #dee2e6;
+    }
+
+    .control-group {
+      margin-bottom: 20px;
+    }
+
+    .control-group:last-child {
+      margin-bottom: 0;
+    }
+
+    .control-group label {
+      display: block;
+      font-weight: 600;
+      margin-bottom: 8px;
+      color: #495057;
+      font-size: 0.95rem;
+    }
+
+    .radio-group {
+      display: flex;
+      gap: 15px;
+      flex-wrap: wrap;
+    }
+
+    .radio-option {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .radio-option input[type="radio"] {
+      width: 18px;
+      height: 18px;
+      cursor: pointer;
+    }
+
+    .radio-option label {
+      margin: 0;
+      cursor: pointer;
+      font-weight: 500;
+    }
+
+    .checkbox-option {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .checkbox-option input[type="checkbox"] {
+      width: 20px;
+      height: 20px;
+      cursor: pointer;
+    }
+
+    .checkbox-option label {
+      margin: 0;
+      cursor: pointer;
+    }
+
+    .content {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0;
+      min-height: 600px;
+    }
+
+    .panel {
+      padding: 25px;
+      display: flex;
+      flex-direction: column;
+    }
+
+    .panel h2 {
+      font-size: 1.3rem;
+      margin-bottom: 15px;
+      color: #343a40;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .panel-icon {
+      font-size: 1.5rem;
+    }
+
+    .input-panel {
+      border-right: 2px solid #dee2e6;
+    }
+
+    textarea {
+      flex: 1;
+      width: 100%;
+      padding: 15px;
+      border: 2px solid #ced4da;
+      border-radius: 10px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.95rem;
+      resize: none;
+      margin-bottom: 15px;
+      transition: border-color 0.2s;
+    }
+
+    textarea:focus {
+      outline: none;
+      border-color: #667eea;
+    }
+
+    .button-group {
+      display: flex;
+      gap: 10px;
+    }
+
+    button {
+      flex: 1;
+      padding: 15px;
+      font-size: 1rem;
+      font-weight: 600;
+      border: none;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 8px;
+    }
+
+    .btn-primary {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 10px 20px rgba(102, 126, 234, 0.3);
+    }
+
+    .btn-primary:disabled {
+      background: #adb5bd;
+      cursor: not-allowed;
+      transform: none;
+    }
+
+    .btn-secondary {
+      background: #6c757d;
+      color: white;
+    }
+
+    .btn-secondary:hover {
+      background: #5a6268;
+    }
+
+    .output-panel {
+      background: #f8f9fa;
+    }
+
+    .tabs {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 15px;
+      border-bottom: 2px solid #dee2e6;
+      padding-bottom: 10px;
+    }
+
+    .tab {
+      padding: 10px 20px;
+      background: white;
+      border: 2px solid #dee2e6;
+      border-bottom: none;
+      border-radius: 10px 10px 0 0;
+      cursor: pointer;
+      font-weight: 600;
+      transition: all 0.2s;
+      color: #6c757d;
+    }
+
+    .tab.active {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      color: white;
+      border-color: #667eea;
+    }
+
+    .tab-content {
+      display: none;
+      flex: 1;
+      overflow-y: auto;
+    }
+
+    .tab-content.active {
+      display: block;
+    }
+
+    .output-content {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      white-space: pre-wrap;
+      word-wrap: break-word;
+      min-height: 400px;
+      max-height: 500px;
+      overflow-y: auto;
+    }
+
+    .narrative-content {
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+      font-size: 1rem;
+      line-height: 1.6;
+      min-height: 400px;
+      max-height: 500px;
+      overflow-y: auto;
+    }
+
+    .narrative-content h1 {
+      font-size: 1.5rem;
+      margin-bottom: 15px;
+      color: #343a40;
+    }
+
+    .narrative-content h2 {
+      font-size: 1.2rem;
+      margin-top: 20px;
+      margin-bottom: 10px;
+      color: #495057;
+    }
+
+    .narrative-content strong {
+      color: #343a40;
+    }
+
+    .status {
+      padding: 12px 20px;
+      border-radius: 10px;
+      margin-top: 15px;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .status.loading {
+      background: #fff3cd;
+      color: #856404;
+      border: 2px solid #ffeaa7;
+    }
+
+    .status.success {
+      background: #d4edda;
+      color: #155724;
+      border: 2px solid #c3e6cb;
+    }
+
+    .status.error {
+      background: #f8d7da;
+      color: #721c24;
+      border: 2px solid #f5c6cb;
+    }
+
+    .spinner {
+      border: 3px solid #f3f3f3;
+      border-top: 3px solid #667eea;
+      border-radius: 50%;
+      width: 20px;
+      height: 20px;
+      animation: spin 1s linear infinite;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+
+    .metadata {
+      background: #e9ecef;
+      padding: 15px;
+      border-radius: 10px;
+      margin-top: 15px;
+      font-size: 0.9rem;
+    }
+
+    .metadata-item {
+      display: flex;
+      justify-content: space-between;
+      padding: 8px 0;
+      border-bottom: 1px solid #ced4da;
+    }
+
+    .metadata-item:last-child {
+      border-bottom: none;
+    }
+
+    .metadata-label {
+      font-weight: 600;
+      color: #495057;
+    }
+
+    .metadata-value {
+      color: #6c757d;
+    }
+
+    /* Quality Alert Styles */
+    .quality-alert {
+      background: white;
+      border-radius: 12px;
+      padding: 20px;
+      margin-bottom: 20px;
+      box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      border-left: 6px solid #ffc107;
+    }
+
+    .alert-critical {
+      border-left-color: #dc3545;
+      background: linear-gradient(to right, #fff5f5, #ffffff);
+    }
+
+    .alert-warning {
+      border-left-color: #ffc107;
+      background: linear-gradient(to right, #fffbf0, #ffffff);
+    }
+
+    .alert-header {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 15px;
+      padding-bottom: 12px;
+      border-bottom: 2px solid #e9ecef;
+    }
+
+    .alert-icon {
+      font-size: 1.8rem;
+      line-height: 1;
+    }
+
+    .alert-title {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: #343a40;
+    }
+
+    .alert-body {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .issue-counts {
+      display: flex;
+      gap: 10px;
+      flex-wrap: wrap;
+    }
+
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      padding: 8px 14px;
+      border-radius: 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .badge-critical {
+      background: #f8d7da;
+      color: #721c24;
+      border: 2px solid #f5c6cb;
+    }
+
+    .badge-major {
+      background: #fff3cd;
+      color: #856404;
+      border: 2px solid #ffeaa7;
+    }
+
+    .badge-minor {
+      background: #d1ecf1;
+      color: #0c5460;
+      border: 2px solid #bee5eb;
+    }
+
+    /* Interactive Issue Cards */
+    .issues-section {
+      margin-top: 20px;
+    }
+
+    .issues-section > strong {
+      display: block;
+      margin-bottom: 15px;
+      color: #343a40;
+      font-size: 1rem;
+    }
+
+    .issues-list {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+    }
+
+    .issue-card {
+      background: white;
+      border-radius: 8px;
+      padding: 15px;
+      border-left: 4px solid #6c757d;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      transition: all 0.3s ease;
+    }
+
+    .issue-card:hover {
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+    }
+
+    .issue-critical {
+      border-left-color: #dc3545;
+      background: linear-gradient(to right, #fff5f5, #ffffff);
+    }
+
+    .issue-major {
+      border-left-color: #ffc107;
+      background: linear-gradient(to right, #fffbf0, #ffffff);
+    }
+
+    .issue-minor {
+      border-left-color: #17a2b8;
+      background: linear-gradient(to right, #f0f9fa, #ffffff);
+    }
+
+    .issue-resolved {
+      opacity: 0.7;
+      border-left-color: #28a745;
+    }
+
+    .issue-header {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      margin-bottom: 10px;
+      flex-wrap: wrap;
+    }
+
+    .issue-severity-icon {
+      font-size: 1.2rem;
+    }
+
+    .issue-category {
+      background: #e9ecef;
+      padding: 4px 10px;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      font-weight: 600;
+      color: #495057;
+    }
+
+    .issue-location {
+      color: #6c757d;
+      font-size: 0.9rem;
+      font-style: italic;
+    }
+
+    .issue-message {
+      color: #343a40;
+      font-size: 0.95rem;
+      line-height: 1.5;
+      margin-bottom: 10px;
+    }
+
+    .issue-suggestion {
+      background: #e7f3ff;
+      padding: 10px;
+      border-radius: 6px;
+      font-size: 0.9rem;
+      color: #004085;
+      margin-bottom: 10px;
+      border-left: 3px solid #007bff;
+    }
+
+    .issue-details {
+      background: #f8f9fa;
+      padding: 8px;
+      border-radius: 6px;
+      font-size: 0.85rem;
+      color: #6c757d;
+      margin-bottom: 10px;
+    }
+
+    .issue-actions {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 1px solid #e9ecef;
+    }
+
+    .action-btn {
+      flex: 1;
+      min-width: 140px;
+      padding: 10px 14px;
+      border: 2px solid #dee2e6;
+      border-radius: 6px;
+      background: white;
+      color: #495057;
+      font-size: 0.85rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.2s;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 6px;
+    }
+
+    .action-btn:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .action-review {
+      border-color: #007bff;
+      color: #007bff;
+    }
+
+    .action-review:hover {
+      background: #007bff;
+      color: white;
+    }
+
+    .action-accept {
+      border-color: #28a745;
+      color: #28a745;
+    }
+
+    .action-accept:hover {
+      background: #28a745;
+      color: white;
+    }
+
+    .action-reextract {
+      border-color: #ffc107;
+      color: #856404;
+    }
+
+    .action-reextract:hover {
+      background: #ffc107;
+      color: #856404;
+    }
+
+    .action-ignore {
+      border-color: #6c757d;
+      color: #6c757d;
+    }
+
+    .action-ignore:hover {
+      background: #6c757d;
+      color: white;
+    }
+
+    .issue-resolution {
+      margin-top: 12px;
+      padding-top: 12px;
+      border-top: 2px solid #28a745;
+    }
+
+    .resolution-message {
+      background: #d4edda;
+      padding: 12px;
+      border-radius: 6px;
+      color: #155724;
+      font-size: 0.9rem;
+      border-left: 3px solid #28a745;
+    }
+
+    .resolution-summary {
+      margin-top: 20px;
+      padding: 15px;
+      background: linear-gradient(to right, #d4edda, #ffffff);
+      border-radius: 8px;
+      border: 2px solid #28a745;
+    }
+
+    .resolution-summary strong {
+      display: block;
+      color: #155724;
+      margin-bottom: 10px;
+      font-size: 1rem;
+    }
+
+    .resolution-breakdown {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+    }
+
+    .resolution-tag {
+      padding: 6px 12px;
+      background: white;
+      border: 1px solid #28a745;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      color: #155724;
+      font-weight: 600;
+      text-transform: capitalize;
+    }
+
+    .action-required {
+      background: #e9ecef;
+      padding: 12px 15px;
+      border-radius: 8px;
+      border: 1px solid #ced4da;
+    }
+
+    .action-required strong {
+      color: #343a40;
+      margin-right: 8px;
+    }
+
+    @media (max-width: 1200px) {
+      .content {
+        grid-template-columns: 1fr;
+      }
+
+      .input-panel {
+        border-right: none;
+        border-bottom: 2px solid #dee2e6;
+      }
+    }
+
+    .empty-state {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      min-height: 400px;
+      color: #6c757d;
+      text-align: center;
+    }
+
+    .empty-state-icon {
+      font-size: 4rem;
+      margin-bottom: 20px;
+      opacity: 0.5;
+    }
+
+    .empty-state-text {
+      font-size: 1.1rem;
+      font-weight: 500;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="header">
+      <h1>🧠 NSXDC <span class="version-badge">v1.0</span><span class="enforced-badge">🔒 VALIDATED</span><span class="enforced-badge">✅ QA ALWAYS ON</span></h1>
+      <p>Neurosurgical Summarizer - eXtended & Distributed Core | Zero-Hallucination Clinical Data Extraction</p>
+    </div>
+
+    <div class="main-panel">
+      <div class="controls">
+        <div class="locked-setting">
+          <strong>🔒 Enforced Settings (LOCKED)</strong>
+          <div style="display: flex; gap: 10px; margin-top: 8px;">
+            <span class="locked-badge">✅ VALIDATED Mode</span>
+            <span class="locked-badge">✅ QA Validation</span>
+            <span class="locked-badge">✅ Zero-Hallucination</span>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label>Narrative Mode:</label>
+          <div class="radio-group">
+            <div class="radio-option">
+              <input type="radio" id="strict" name="narrativeMode" value="STRICT">
+              <label for="strict">STRICT (Data Only)</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" id="standard" name="narrativeMode" value="STANDARD" checked>
+              <label for="standard">STANDARD (Clinical)</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" id="enhanced" name="narrativeMode" value="ENHANCED">
+              <label for="enhanced">ENHANCED (Rich Context)</label>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="content">
+        <div class="panel input-panel">
+          <h2><span class="panel-icon">📝</span>Clinical Notes</h2>
+          <textarea id="clinicalNotes" placeholder="Paste neurosurgical clinical notes here...
+
+Example:
+Patient: 54F admitted 2024-01-15 with headaches
+Imaging: MRI brain showing 3.2cm left frontal meningioma
+Surgery: Left frontal craniotomy 2024-01-16
+Pathology: WHO Grade I meningioma
+Course: POD 5 - ambulating independently, no deficits
+Discharge: 2024-01-21, follow-up 2 weeks"></textarea>
+
+          <div class="button-group">
+            <button id="extractBtn" class="btn-primary">🚀 Extract & Summarize</button>
+            <button id="clearBtn" class="btn-secondary">🗑️ Clear</button>
+          </div>
+
+          <div id="statusMessage"></div>
+        </div>
+
+        <div class="panel output-panel">
+          <h2><span class="panel-icon">📊</span>Results</h2>
+
+          <div class="tabs">
+            <div class="tab active" data-tab="narrative">Narrative</div>
+            <div class="tab" data-tab="extraction">Extraction</div>
+            <div class="tab" data-tab="validation">Validation</div>
+            <div class="tab" data-tab="raw">Raw JSON</div>
+          </div>
+
+          <div id="narrative-tab" class="tab-content active">
+            <div class="empty-state">
+              <div class="empty-state-icon">📄</div>
+              <div class="empty-state-text">Discharge summary will appear here</div>
+            </div>
+          </div>
+
+          <div id="extraction-tab" class="tab-content">
+            <div class="empty-state">
+              <div class="empty-state-icon">🔍</div>
+              <div class="empty-state-text">Structured extraction data will appear here</div>
+            </div>
+          </div>
+
+          <div id="validation-tab" class="tab-content">
+            <div class="empty-state">
+              <div class="empty-state-icon">✓</div>
+              <div class="empty-state-text">Validation results will appear here</div>
+            </div>
+          </div>
+
+          <div id="raw-tab" class="tab-content">
+            <div class="empty-state">
+              <div class="empty-state-icon">{ }</div>
+              <div class="empty-state-text">Raw JSON response will appear here</div>
+            </div>
+          </div>
+
+          <div id="metadata"></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const API_BASE_URL = 'http://localhost:3002';
+
+    // Issue resolutions tracker
+    const issueResolutions = {};
+
+    // Tab switching
+    document.querySelectorAll('.tab').forEach(tab => {
+      tab.addEventListener('click', () => {
+        document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+
+        tab.classList.add('active');
+        document.getElementById(`${tab.dataset.tab}-tab`).classList.add('active');
+      });
+    });
+
+    // Extract button
+    document.getElementById('extractBtn').addEventListener('click', async () => {
+      const clinicalNotes = document.getElementById('clinicalNotes').value.trim();
+
+      if (!clinicalNotes) {
+        showStatus('error', '❌ Please enter clinical notes');
+        return;
+      }
+
+      // Clear previous issue resolutions
+      Object.keys(issueResolutions).forEach(key => delete issueResolutions[key]);
+
+      // NSXDC always uses VALIDATED mode with QA validation (ENFORCED)
+      const narrativeMode = document.querySelector('input[name="narrativeMode"]:checked').value;
+
+      const extractBtn = document.getElementById('extractBtn');
+      extractBtn.disabled = true;
+      showStatus('loading', '⏳ Processing with VALIDATED mode + QA validation... This may take 5-15 seconds');
+
+      try {
+        const response = await fetch(`${API_BASE_URL}/api/v1/extract`, {
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json'
+          },
+          body: JSON.stringify({
+            clinicalNotes,
+            mode: 'VALIDATED',        // Always VALIDATED (enforced)
+            narrativeMode,
+            includeValidation: true   // Always true (enforced)
+          })
+        });
+
+        const result = await response.json();
+
+        if (result.success) {
+          showStatus('success', '✅ Extraction completed successfully!');
+          displayResults(result);
+        } else {
+          showStatus('error', `❌ Error: ${result.error.message}`);
+        }
+      } catch (error) {
+        showStatus('error', `❌ Error: ${error.message}`);
+      } finally {
+        extractBtn.disabled = false;
+      }
+    });
+
+    // Clear button
+    document.getElementById('clearBtn').addEventListener('click', () => {
+      document.getElementById('clinicalNotes').value = '';
+      document.getElementById('statusMessage').innerHTML = '';
+      document.getElementById('metadata').innerHTML = '';
+
+      // Reset tabs to empty state
+      ['narrative', 'extraction', 'validation', 'raw'].forEach(tab => {
+        const tabElement = document.getElementById(`${tab}-tab`);
+        const emptyStateHtml = `
+          <div class="empty-state">
+            <div class="empty-state-icon">${getEmptyIcon(tab)}</div>
+            <div class="empty-state-text">${getEmptyText(tab)}</div>
+          </div>
+        `;
+        tabElement.innerHTML = emptyStateHtml;
+      });
+
+      // Clear issue resolutions
+      Object.keys(issueResolutions).forEach(key => delete issueResolutions[key]);
+    });
+
+    function showStatus(type, message) {
+      const statusDiv = document.getElementById('statusMessage');
+      statusDiv.className = `status ${type}`;
+
+      if (type === 'loading') {
+        statusDiv.innerHTML = `<div class="spinner"></div>${message}`;
+      } else {
+        statusDiv.innerHTML = message;
+      }
+    }
+
+    function displayResults(result) {
+      // Display quality alert if issues found (BEFORE metadata)
+      displayQualityAlert(result.qualitySummary, result.validation);
+
+      // Narrative tab
+      const narrativeTab = document.getElementById('narrative-tab');
+      if (result.narrative) {
+        narrativeTab.innerHTML = `<div class="narrative-content">${formatNarrative(result.narrative)}</div>`;
+      } else {
+        narrativeTab.innerHTML = '<div class="output-content">No narrative generated</div>';
+      }
+
+      // Extraction tab
+      const extractionTab = document.getElementById('extraction-tab');
+      extractionTab.innerHTML = `<div class="output-content">${JSON.stringify(result.extraction, null, 2)}</div>`;
+
+      // Validation tab
+      const validationTab = document.getElementById('validation-tab');
+      if (result.validation) {
+        validationTab.innerHTML = `<div class="output-content">${formatValidation(result.validation)}</div>`;
+      } else {
+        validationTab.innerHTML = '<div class="output-content">Validation not enabled</div>';
+      }
+
+      // Raw JSON tab
+      const rawTab = document.getElementById('raw-tab');
+      rawTab.innerHTML = `<div class="output-content">${JSON.stringify(result, null, 2)}</div>`;
+
+      // Metadata (AFTER quality alert)
+      displayMetadata(result.metadata);
+    }
+
+    function displayQualityAlert(qualitySummary, validation) {
+      const metadataDiv = document.getElementById('metadata');
+
+      // STRICT CHECK: Only show dashboard if validation was enabled AND has issues
+      if (!validation || !validation.issues || validation.issues.length === 0) {
+        return; // No validation data or no issues - skip dashboard
+      }
+
+      // Also check if qualitySummary says it's safe
+      if (qualitySummary && qualitySummary.safeToUse) {
+        return; // No issues - skip dashboard
+      }
+
+      // Build qualitySummary from validation if not provided
+      if (!qualitySummary && validation && validation.issues) {
+        const critical = validation.issues.filter(i => i.severity === 'critical').length;
+        const major = validation.issues.filter(i => i.severity === 'major').length;
+        const minor = validation.issues.filter(i => i.severity === 'minor').length;
+
+        const score = Math.max(0, 100 - (critical * 20) - (major * 5) - (minor * 1));
+        const passed = score >= 80 && critical === 0;
+
+        qualitySummary = {
+          overallStatus: passed ? 'PASSED' : 'FAILED',
+          score: score,
+          riskLevel: critical > 0 ? 'HIGH' : major > 0 ? 'MEDIUM' : 'LOW',
+          issueBreakdown: { critical, major, minor, total: validation.issues.length },
+          actionRequired: critical > 0 ? 'MANUAL_REVIEW_REQUIRED' : major > 0 ? 'REVIEW_RECOMMENDED' : 'NO_ACTION_REQUIRED',
+          safeToUse: critical === 0 && major === 0
+        };
+      }
+
+      // Skip if safe to use
+      if (qualitySummary.safeToUse) {
+        return;
+      }
+
+      const alertClass = qualitySummary.riskLevel === 'HIGH' ? 'alert-critical' : 'alert-warning';
+      const alertIcon = qualitySummary.riskLevel === 'HIGH' ? '🚨' : '⚠️';
+
+      // Build individual issue cards
+      const issuesHtml = validation && validation.issues ?
+        validation.issues.map((issue, index) => buildIssueCard(issue, index)).join('') : '';
+
+      const alertHtml = `
+        <div class="quality-alert ${alertClass}">
+          <div class="alert-header">
+            <span class="alert-icon">${alertIcon}</span>
+            <span class="alert-title">${qualitySummary.overallStatus} - Quality Score: ${qualitySummary.score}/100</span>
+          </div>
+          <div class="alert-body">
+            <div class="issue-counts">
+              ${qualitySummary.issueBreakdown.critical > 0 ? `<span class="badge badge-critical">🔴 ${qualitySummary.issueBreakdown.critical} Critical</span>` : ''}
+              ${qualitySummary.issueBreakdown.major > 0 ? `<span class="badge badge-major">🟡 ${qualitySummary.issueBreakdown.major} Major</span>` : ''}
+              ${qualitySummary.issueBreakdown.minor > 0 ? `<span class="badge badge-minor">🔵 ${qualitySummary.issueBreakdown.minor} Minor</span>` : ''}
+            </div>
+
+            <div class="issues-section">
+              <strong>Issues Found:</strong>
+              <div class="issues-list">
+                ${issuesHtml}
+              </div>
+            </div>
+
+            <div class="action-required">
+              <strong>Action Required:</strong> ${formatActionRequired(qualitySummary.actionRequired)}
+            </div>
+          </div>
+        </div>
+      `;
+
+      metadataDiv.insertAdjacentHTML('afterbegin', alertHtml);
+    }
+
+    function buildIssueCard(issue, index) {
+      const severityIcon = {
+        'critical': '🔴',
+        'major': '🟡',
+        'minor': '🔵'
+      }[issue.severity] || '⚪';
+
+      const severityClass = `issue-${issue.severity}`;
+      const categoryBadge = getCategoryBadge(issue.category);
+
+      return `
+        <div class="issue-card ${severityClass}" id="issue-${index}">
+          <div class="issue-header">
+            <span class="issue-severity-icon">${severityIcon}</span>
+            <span class="issue-category">${categoryBadge}</span>
+            <span class="issue-location">${issue.location || 'General'}</span>
+          </div>
+          <div class="issue-message">${issue.message}</div>
+          ${issue.suggestedFix ? `<div class="issue-suggestion">💡 Suggested Fix: ${issue.suggestedFix}</div>` : ''}
+          ${issue.details ? `<div class="issue-details">📋 ${issue.details}</div>` : ''}
+
+          <div class="issue-actions">
+            <button class="action-btn action-review" onclick="resolveIssue(${index}, 'review')">
+              📝 Mark for Review
+            </button>
+            <button class="action-btn action-accept" onclick="resolveIssue(${index}, 'accept')">
+              ✅ Accept As-Is
+            </button>
+            <button class="action-btn action-reextract" onclick="resolveIssue(${index}, 'reextract')">
+              🔄 Re-Extract Field
+            </button>
+            <button class="action-btn action-ignore" onclick="resolveIssue(${index}, 'ignore')">
+              🚫 Ignore Issue
+            </button>
+          </div>
+          <div class="issue-resolution" id="resolution-${index}" style="display:none;"></div>
+        </div>
+      `;
+    }
+
+    function getCategoryBadge(category) {
+      const badges = {
+        'grounding': '🔗 Grounding',
+        'temporal': '⏰ Temporal',
+        'medical': '⚕️ Medical',
+        'mode': '⚙️ Mode',
+        'completeness': '📊 Completeness',
+        'confidence': '🎯 Confidence',
+        'fabrication': '🚨 Fabrication',
+        'quality': '✨ Quality'
+      };
+      return badges[category] || `📌 ${category}`;
+    }
+
+    function resolveIssue(issueIndex, action) {
+      issueResolutions[issueIndex] = action;
+
+      const issueCard = document.getElementById(`issue-${issueIndex}`);
+      const resolutionDiv = document.getElementById(`resolution-${issueIndex}`);
+
+      // Hide action buttons
+      const actionsDiv = issueCard.querySelector('.issue-actions');
+      actionsDiv.style.display = 'none';
+
+      // Show resolution status
+      resolutionDiv.style.display = 'block';
+      resolutionDiv.innerHTML = getResolutionMessage(action);
+
+      // Add resolved class
+      issueCard.classList.add('issue-resolved');
+
+      // Check if all issues resolved
+      checkAllIssuesResolved();
+    }
+
+    function getResolutionMessage(action) {
+      const messages = {
+        'review': '✏️ <strong>Marked for manual review</strong> - This issue will be reviewed by a clinician before finalizing.',
+        'accept': '✔️ <strong>Accepted as-is</strong> - Issue acknowledged and accepted. Extraction will proceed.',
+        'reextract': '🔄 <strong>Re-extraction requested</strong> - This field will be re-extracted with adjusted parameters.',
+        'ignore': '⊘ <strong>Issue ignored</strong> - This validation concern has been dismissed.'
+      };
+      return `<div class="resolution-message">${messages[action]}</div>`;
+    }
+
+    function checkAllIssuesResolved() {
+      const allIssueCards = document.querySelectorAll('.issue-card');
+      const resolvedCount = Object.keys(issueResolutions).length;
+
+      if (resolvedCount === allIssueCards.length && resolvedCount > 0) {
+        // All issues resolved - show summary
+        const qualityAlert = document.querySelector('.quality-alert');
+
+        // Check if summary already exists
+        if (!qualityAlert.querySelector('.resolution-summary')) {
+          qualityAlert.insertAdjacentHTML('beforeend', `
+            <div class="resolution-summary">
+              <strong>✅ All Issues Addressed (${resolvedCount}/${allIssueCards.length})</strong>
+              <div class="resolution-breakdown">
+                ${Object.entries(issueResolutions).map(([idx, action]) =>
+                  `<span class="resolution-tag">${action}</span>`
+                ).join('')}
+              </div>
+            </div>
+          `);
+        }
+      }
+    }
+
+    function formatActionRequired(action) {
+      const actions = {
+        'MANUAL_REVIEW_REQUIRED': '⚠️ Manual review required before clinical use',
+        'REVIEW_RECOMMENDED': '📋 Review recommended for quality assurance',
+        'NO_ACTION_REQUIRED': '✅ No action required - safe to proceed'
+      };
+      return actions[action] || action;
+    }
+
+    function formatNarrative(narrative) {
+      // Convert markdown-style formatting to HTML
+      return narrative
+        .replace(/^## (.+)$/gm, '<h2>$1</h2>')
+        .replace(/^# (.+)$/gm, '<h1>$1</h1>')
+        .replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>')
+        .replace(/\n\n/g, '</p><p>')
+        .replace(/^(?!<h[12]>)(.+)/gm, '<p>$1</p>');
+    }
+
+    function formatValidation(validation) {
+      let output = `Validation Score: ${validation.score || 'N/A'}\n`;
+      output += `Status: ${validation.passed ? '✓ PASSED' : '✗ FAILED'}\n\n`;
+
+      if (validation.issues && validation.issues.length > 0) {
+        output += `Issues Found (${validation.issues.length}):\n`;
+        output += '─'.repeat(60) + '\n\n';
+
+        validation.issues.forEach((issue, index) => {
+          const severityEmoji = {
+            'critical': '🔴',
+            'major': '🟡',
+            'minor': '🔵'
+          }[issue.severity] || '⚪';
+
+          output += `${index + 1}. ${severityEmoji} ${issue.severity.toUpperCase()}\n`;
+          output += `   Category: ${issue.category}\n`;
+          if (issue.location) output += `   Location: ${issue.location}\n`;
+          output += `   Message: ${issue.message}\n`;
+          if (issue.suggestedFix) output += `   Suggested Fix: ${issue.suggestedFix}\n`;
+          output += '\n';
+        });
+      } else {
+        if (!validation.passed) {
+          output += '⚠️  Validation failed but no specific issues were reported.\n';
+          output += 'This may indicate an incomplete validation or extraction error.\n';
+          output += 'Please check the raw JSON output for more details.';
+        } else {
+          output += '✓ No issues detected! Extraction is high quality.';
+        }
+      }
+
+      return output;
+    }
+
+    function displayMetadata(metadata) {
+      const metadataDiv = document.getElementById('metadata');
+
+      const metadataHtml = `
+        <div class="metadata">
+          <div class="metadata-item">
+            <span class="metadata-label">Extraction Mode:</span>
+            <span class="metadata-value">${metadata.extractionMode}</span>
+          </div>
+          <div class="metadata-item">
+            <span class="metadata-label">Narrative Mode:</span>
+            <span class="metadata-value">${metadata.narrativeMode || 'N/A'}</span>
+          </div>
+          <div class="metadata-item">
+            <span class="metadata-label">Model:</span>
+            <span class="metadata-value">${metadata.modelUsed}</span>
+          </div>
+          <div class="metadata-item">
+            <span class="metadata-label">Tokens:</span>
+            <span class="metadata-value">${metadata.tokenCount.input} in / ${metadata.tokenCount.output} out ${metadata.tokenCount.cached ? `(${metadata.tokenCount.cached} cached)` : ''}</span>
+          </div>
+          <div class="metadata-item">
+            <span class="metadata-label">Processing Time:</span>
+            <span class="metadata-value">${(metadata.processingTime / 1000).toFixed(2)}s</span>
+          </div>
+          <div class="metadata-item">
+            <span class="metadata-label">Timestamp:</span>
+            <span class="metadata-value">${new Date(metadata.timestamp).toLocaleString()}</span>
+          </div>
+        </div>
+      `;
+
+      metadataDiv.insertAdjacentHTML('beforeend', metadataHtml);
+    }
+
+    function getEmptyIcon(tab) {
+      const icons = {
+        'narrative': '📄',
+        'extraction': '🔍',
+        'validation': '✓',
+        'raw': '{ }'
+      };
+      return icons[tab] || '📊';
+    }
+
+    function getEmptyText(tab) {
+      const texts = {
+        'narrative': 'Discharge summary will appear here',
+        'extraction': 'Structured extraction data will appear here',
+        'validation': 'Validation results will appear here',
+        'raw': 'Raw JSON response will appear here'
+      };
+      return texts[tab] || 'Results will appear here';
+    }
+  </script>
+</body>
+</html>
