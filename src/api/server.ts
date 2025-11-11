@@ -13,6 +13,16 @@ import { LLMService } from '../services/llm.service.js';
 import { OrchestratorService } from '../services/orchestrator.service.js';
 import type { ExtractionRequest } from '../types/index.js';
 
+// Import middleware - Day 4 Enhancement
+import {
+  requestLogger,
+  rateLimiter,
+  validateApiKey,
+  validateExtractionRequest,
+  sanitizeRequestBody,
+  getApiKeyStatus
+} from '../middleware/index.js';
+
 // ES module compatibility
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
@@ -29,24 +39,37 @@ const orchestrator = new OrchestratorService(llmService, orchestratorConfig);
 // Create Express app
 const app = express();
 
-// Middleware
+// ============================================================================
+// GLOBAL MIDDLEWARE - Day 4 Enhancement
+// ============================================================================
+
+// Security middleware
 app.use(helmet({
   contentSecurityPolicy: false, // Allow inline scripts for single-page app
 }));
 app.use(cors());
 app.use(express.json({ limit: '10mb' }));
 
+// Request logging middleware (log all requests)
+app.use(requestLogger);
+
 // Serve static files from public directory
 app.use(express.static(path.join(__dirname, '../../public')));
 
 // Health check endpoint
 app.get('/health', (_req: Request, res: Response) => {
+  const apiKeyStatus = getApiKeyStatus();
+  
   res.json({
     status: 'healthy',
     app: appMetadata.name,
     version: appMetadata.version,
     timestamp: new Date().toISOString(),
     features: appMetadata.features,
+    security: {
+      apiKeyEnabled: apiKeyStatus.enabled,
+      apiKeysConfigured: apiKeyStatus.keysConfigured
+    }
   });
 });
 
@@ -111,8 +134,13 @@ app.post('/api/v1/logs/error', (req: Request, res: Response) => {
   }
 });
 
-// Main extraction endpoint
-app.post('/api/v1/extract', async (req: Request, res: Response) => {
+// Main extraction endpoint - Day 4: Now with comprehensive middleware
+app.post('/api/v1/extract',
+  rateLimiter,                    // Rate limiting (10 req/min)
+  validateApiKey,                 // API key validation (if enabled)
+  sanitizeRequestBody,            // Remove unexpected fields
+  validateExtractionRequest,      // Validate request body
+  async (req: Request, res: Response) => {
   try {
     const request: ExtractionRequest = {
       clinicalNotes: req.body.clinicalNotes,
@@ -121,30 +149,9 @@ app.post('/api/v1/extract', async (req: Request, res: Response) => {
       includeValidation: true, // ALWAYS true (enforced)
     };
 
-    // Validate request
-    if (!request.clinicalNotes || typeof request.clinicalNotes !== 'string') {
-      return res.status(400).json({
-        success: false,
-        error: {
-          code: 'INVALID_REQUEST',
-          message: 'clinicalNotes is required and must be a string',
-        },
-      });
-    }
-
-    if (request.clinicalNotes.length < 50) {
-      return res.status(400).json({
-        success: false,
-        error: {
-          code: 'INVALID_REQUEST',
-          message: 'clinicalNotes must be at least 50 characters',
-        },
-      });
-    }
-
-    // Log request
+    // Log request (validation already done by middleware)
     console.log(`\n${'='.repeat(60)}`);
-    console.log(`📥 New extraction request`);
+    console.log(`📥 New extraction request (validated by middleware)`);
     console.log(`   - Notes length: ${request.clinicalNotes.length} chars`);
     console.log(`   - Extraction mode: ${request.mode}`);
     console.log(`   - Narrative mode: ${request.narrativeMode || 'None'}`);
@@ -180,6 +187,8 @@ app.use((_req: Request, res: Response) => {
 
 // Start server
 const server = app.listen(serverConfig.port, () => {
+  const apiKeyStatus = getApiKeyStatus();
+  
   console.log('\n' + '='.repeat(60));
   console.log(`🚀 ${appMetadata.name} v${appMetadata.version}`);
   console.log('='.repeat(60));
@@ -204,11 +213,22 @@ const server = app.listen(serverConfig.port, () => {
   console.log('   - Discharge status deduction');
   console.log('   - Zero-hallucination enforcement');
   console.log();
+  console.log('🛡️  Middleware (Day 4):');
+  console.log('   - Request logging (all requests)');
+  console.log('   - Rate limiting (10 req/min per IP)');
+  console.log(`   - API key validation (${apiKeyStatus.enabled ? 'ENABLED' : 'DISABLED'})`);
+  if (apiKeyStatus.enabled) {
+    console.log(`     └─ ${apiKeyStatus.keysConfigured} key(s) configured`);
+  }
+  console.log('   - Request validation (comprehensive)');
+  console.log('   - Request sanitization (XSS protection)');
+  console.log();
   console.log('📡 Endpoints:');
-  console.log('   POST /api/v1/extract - Run extraction pipeline');
-  console.log('   GET  /api/v1/version - Get version info');
-  console.log('   GET  /api/v1/config  - Get configuration');
-  console.log('   GET  /health         - Health check');
+  console.log('   POST /api/v1/extract      - Run extraction pipeline');
+  console.log('   POST /api/v1/logs/error   - Log client errors');
+  console.log('   GET  /api/v1/version      - Get version info');
+  console.log('   GET  /api/v1/config       - Get configuration');
+  console.log('   GET  /health              - Health check');
   console.log();
   console.log('='.repeat(60));
   console.log();
