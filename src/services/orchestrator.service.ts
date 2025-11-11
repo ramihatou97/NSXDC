@@ -4,7 +4,7 @@
  */
 
 import { LLMService } from './llm.service.js';
-import { DatePreprocessorService } from './date-preprocessor.service.js';
+import { DatePreprocessorEnhancedService } from './date-preprocessor-enhanced.service.js';
 import { DocumentationInventoryService } from './documentation-inventory.service.js';
 import { CompletenessCheckerService } from './completeness-checker.service.js';
 import { buildExtractionPrompt } from '../prompts/extraction.js';
@@ -21,14 +21,14 @@ import type {
 export class OrchestratorService {
   private llmService: LLMService;
   private config: OrchestratorConfig;
-  private datePreprocessor: DatePreprocessorService;
+  private datePreprocessor: DatePreprocessorEnhancedService;
   private documentationInventory: DocumentationInventoryService;
   private completenessChecker: CompletenessCheckerService;
 
   constructor(llmService: LLMService, config: OrchestratorConfig) {
     this.llmService = llmService;
     this.config = config;
-    this.datePreprocessor = new DatePreprocessorService();
+    this.datePreprocessor = new DatePreprocessorEnhancedService();
     this.documentationInventory = new DocumentationInventoryService({
       requireAdmissionHP: true,
       requireDischargeSummary: true,
@@ -61,10 +61,11 @@ export class OrchestratorService {
 
     switch (taskType) {
       case 'extraction':
-        // Extraction produces structured JSON (~60-70% of input size)
-        // v1.1.0: Increased to prevent truncation with large comprehensive documentation
-        outputMultiplier = 0.7;
-        minTokens = 10000; // Minimum for structured extraction with Phase 4+ enhancements
+        // Extraction produces structured JSON with extensive grounding metadata
+        // v1.2.0: Each field has value + sourceQuote + sourceContext + confidence + deductionMethod + warnings
+        // For large documents (18K+ tokens), output can equal or exceed input size
+        outputMultiplier = 1.0; // 100% of input size to accommodate full grounding structure
+        minTokens = 12000; // Minimum for structured extraction with Phase 4+ enhancements
         break;
       case 'narrative':
         // Narrative is prose summary (~30-40% of input size)
@@ -87,8 +88,9 @@ export class OrchestratorService {
     // Add 30% safety buffer (v1.1.0: increased from 20% to handle large comprehensive notes)
     outputTokens = Math.ceil(outputTokens * 1.3);
 
-    // Cap at 20000 tokens (20K limit handles ~100K word clinical notes)
-    outputTokens = Math.min(outputTokens, 20000);
+    // Cap at 24000 tokens (v1.2.0: increased to handle extensive grounding metadata for large documents)
+    // Claude Sonnet 4.5 supports up to 200K context, leaving ample room for 24K output
+    outputTokens = Math.min(outputTokens, 24000);
 
     console.log(`📊 Adaptive Token Allocation (${taskType}):`);
     console.log(`   - Estimated input: ~${estimatedInputTokens} tokens`);
@@ -105,21 +107,20 @@ export class OrchestratorService {
     const startTime = Date.now();
 
     try {
-      // Step 0: Preprocess dates (Phase 1 - Date Format Disambiguation)
-      console.log('📅 Step 0: Preprocessing dates for format disambiguation...');
-      const preprocessResult = this.datePreprocessor.preprocessDates(
-        request.clinicalNotes,
-        {
-          preferredFormat: request.dateFormat || 'AUTO',
-          dateFormatHints: request.dateFormatHints,
-        }
-      );
+      // Step 0: Preprocess dates (Week 1 Day 2 - Enhanced Date Preprocessing)
+      console.log('📅 Step 0: Preprocessing dates with enhanced analysis...');
+      const preprocessResult = this.datePreprocessor.preprocessDates(request.clinicalNotes);
 
-      console.log(`   ✓ Detected format: ${preprocessResult.analysis.detectedFormat}`);
-      console.log(`   ✓ Confidence: ${preprocessResult.analysis.confidence}`);
-      console.log(`   ✓ Unambiguous dates: ${preprocessResult.analysis.unambiguousDates.length}`);
-      console.log(`   ✓ Ambiguous dates: ${preprocessResult.analysis.ambiguousDates.length}`);
-      console.log(`   ✓ Warnings generated: ${preprocessResult.warnings.length}`);
+      const keyDates = this.datePreprocessor.getKeyDates(preprocessResult);
+      
+      console.log(`   ✓ Total dates found: ${preprocessResult.summary.totalDates}`);
+      console.log(`   ✓ Average confidence: ${(preprocessResult.summary.avgConfidence * 100).toFixed(1)}%`);
+      console.log(`   ✓ Key dates: Admission=${keyDates.admission?.normalized || 'N/A'}, Discharge=${keyDates.discharge?.normalized || 'N/A'}, Surgery=${keyDates.surgery?.normalized || 'N/A'}`);
+      console.log(`   ✓ Validation: ${preprocessResult.validation.isValid ? 'PASS' : 'FAIL'} (${preprocessResult.validation.errors.length} errors, ${preprocessResult.validation.warnings.length} warnings)`);
+      if (preprocessResult.validation.lengthOfStay) {
+        console.log(`   ✓ Length of stay: ${preprocessResult.validation.lengthOfStay} days`);
+      }
+      console.log(`   ✓ Preprocessing warnings: ${preprocessResult.warnings.length}`);
 
       // Step 1: Extract structured data (VALIDATED mode)
       console.log('🔍 Step 1: Extracting structured data (VALIDATED mode)...');
@@ -227,10 +228,11 @@ export class OrchestratorService {
         narrative,
         validation, // Always present
         datePreprocessing: {
-          detectedFormat: preprocessResult.analysis.detectedFormat,
-          confidence: preprocessResult.analysis.confidence,
-          conversionsCount: preprocessResult.conversions.length,
-          ambiguousDatesCount: preprocessResult.analysis.ambiguousDates.length,
+          detectedFormat: 'AUTO', // Enhanced service auto-detects multiple formats
+          confidence: preprocessResult.summary.avgConfidence >= 0.75 ? 'high' : 
+                     preprocessResult.summary.avgConfidence >= 0.50 ? 'medium' : 'low',
+          conversionsCount: preprocessResult.parsedDates.length,
+          ambiguousDatesCount: preprocessResult.parsedDates.filter(d => d.warnings.length > 0).length,
           warnings: preprocessResult.warnings,
         },
         documentationInventory: {
