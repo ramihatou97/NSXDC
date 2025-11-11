@@ -27,7 +27,7 @@ export function getLLMConfig(): LLMConfig {
   return {
     apiKey: process.env.ANTHROPIC_API_KEY!,
     model: process.env.MODEL || 'claude-sonnet-4-5-20250929',
-    maxTokens: 16384, // Increased to 16K for very long clinical notes (handles ~65K words)
+    maxTokens: 14000, // Set to 14K for optimal balance between completeness and cost
     temperature: 0,
     enableCaching: process.env.ENABLE_CACHING !== 'false', // Default: true
   };
