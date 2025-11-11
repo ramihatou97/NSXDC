@@ -61,10 +61,10 @@ export class OrchestratorService {
 
     switch (taskType) {
       case 'extraction':
-        // Extraction produces structured JSON (~50-60% of input size)
-        // Phase 4: Increased minimum to accommodate enhanced multidisciplinary prompts
-        outputMultiplier = 0.6;
-        minTokens = 8000; // Minimum for structured extraction with Phase 4 enhancements
+        // Extraction produces structured JSON (~60-70% of input size)
+        // v1.1.0: Increased to prevent truncation with large comprehensive documentation
+        outputMultiplier = 0.7;
+        minTokens = 10000; // Minimum for structured extraction with Phase 4+ enhancements
         break;
       case 'narrative':
         // Narrative is prose summary (~30-40% of input size)
@@ -84,11 +84,11 @@ export class OrchestratorService {
     // Ensure minimum
     outputTokens = Math.max(outputTokens, minTokens);
 
-    // Add 20% safety buffer
-    outputTokens = Math.ceil(outputTokens * 1.2);
+    // Add 30% safety buffer (v1.1.0: increased from 20% to handle large comprehensive notes)
+    outputTokens = Math.ceil(outputTokens * 1.3);
 
-    // Cap at 16384 tokens (16K limit handles ~65K word clinical notes)
-    outputTokens = Math.min(outputTokens, 16384);
+    // Cap at 20000 tokens (20K limit handles ~100K word clinical notes)
+    outputTokens = Math.min(outputTokens, 20000);
 
     console.log(`📊 Adaptive Token Allocation (${taskType}):`);
     console.log(`   - Estimated input: ~${estimatedInputTokens} tokens`);

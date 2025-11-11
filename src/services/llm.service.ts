@@ -47,7 +47,7 @@ export class LLMService {
    * Send request to Claude (Phase 3: Enhanced with truncation detection)
    */
   private async send(request: LLMRequest): Promise<LLMResponse> {
-    const maxTokens = request.maxTokens || this.config.maxTokens || 8000;
+    const maxTokens = request.maxTokens || this.config.maxTokens || 10000; // v1.1.0: increased fallback
 
     const response = await this.client.messages.create({
       model: this.config.model,

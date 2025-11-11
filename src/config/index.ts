@@ -27,7 +27,7 @@ export function getLLMConfig(): LLMConfig {
   return {
     apiKey: process.env.ANTHROPIC_API_KEY!,
     model: process.env.MODEL || 'claude-sonnet-4-5-20250929',
-    maxTokens: 14000, // Set to 14K for optimal balance between completeness and cost
+    maxTokens: 20000, // Increased to 20K to prevent truncation with large documentation (v1.1.0)
     temperature: 0,
     enableCaching: process.env.ENABLE_CACHING !== 'false', // Default: true
   };
@@ -75,7 +75,7 @@ export function getServerConfig() {
 export function getAppMetadata() {
   return {
     name: 'NSXDC',
-    version: '1.0.0',
+    version: '1.1.0',
     description: 'Neurosurgical Discharge Summarizer - Always-ON Validation',
     features: {
       validatedExtraction: true,
