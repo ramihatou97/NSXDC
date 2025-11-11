@@ -72,6 +72,45 @@ app.get('/api/v1/config', (_req: Request, res: Response) => {
   });
 });
 
+// Error logging endpoint - Day 3 Enhancement
+app.post('/api/v1/logs/error', (req: Request, res: Response) => {
+  try {
+    const { type, details, timestamp } = req.body;
+    
+    // Log client-side error to server console
+    console.error('\n' + '='.repeat(60));
+    console.error(`🔴 CLIENT-SIDE ERROR - ${type}`);
+    console.error('='.repeat(60));
+    console.error(`Timestamp: ${timestamp}`);
+    
+    if (details) {
+      console.error('Details:');
+      Object.entries(details).forEach(([key, value]) => {
+        if (key === 'stack') {
+          console.error(`  ${key}:\n${value}`);
+        } else {
+          console.error(`  ${key}: ${value}`);
+        }
+      });
+    }
+    console.error('='.repeat(60) + '\n');
+    
+    // In production, you would write to a log file or external logging service
+    // For now, console logging is sufficient
+    
+    res.status(200).json({ 
+      success: true,
+      message: 'Error logged successfully' 
+    });
+  } catch (error) {
+    console.error('Failed to log client error:', error);
+    res.status(500).json({ 
+      success: false,
+      message: 'Failed to log error' 
+    });
+  }
+});
+
 // Main extraction endpoint
 app.post('/api/v1/extract', async (req: Request, res: Response) => {
   try {
