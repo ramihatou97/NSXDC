@@ -4,6 +4,9 @@
  */
 
 import { LLMService } from './llm.service.js';
+import { DatePreprocessorService } from './date-preprocessor.service.js';
+import { DocumentationInventoryService } from './documentation-inventory.service.js';
+import { CompletenessCheckerService } from './completeness-checker.service.js';
 import { buildExtractionPrompt } from '../prompts/extraction.js';
 import { buildNarrativePrompt } from '../prompts/narrative.js';
 import { buildValidationPrompt } from '../prompts/validation.js';
@@ -18,16 +21,80 @@ import type {
 export class OrchestratorService {
   private llmService: LLMService;
   private config: OrchestratorConfig;
+  private datePreprocessor: DatePreprocessorService;
+  private documentationInventory: DocumentationInventoryService;
+  private completenessChecker: CompletenessCheckerService;
 
   constructor(llmService: LLMService, config: OrchestratorConfig) {
     this.llmService = llmService;
     this.config = config;
+    this.datePreprocessor = new DatePreprocessorService();
+    this.documentationInventory = new DocumentationInventoryService({
+      requireAdmissionHP: true,
+      requireDischargeSummary: true,
+      minPODCoveragePercent: 80,
+    });
+    this.completenessChecker = new CompletenessCheckerService();
 
     // Log enforcement
     console.log('🔒 NSXDC Orchestrator initialized with ENFORCED settings:');
     console.log(`   - Extraction Mode: ${this.config.extractionMode} (LOCKED)`);
     console.log(`   - QA Validation: ${this.config.forceValidation ? 'ALWAYS ON (LOCKED)' : 'OFF'}`);
     console.log(`   - Prompt Caching: ${this.config.enableCaching ? 'Enabled' : 'Disabled'}`);
+    console.log(`   - Completeness Checking: ENABLED (Phase 8)`);
+  }
+
+  /**
+   * Calculate optimal max_tokens based on input size and task type (Phase 3)
+   * Prevents truncation by estimating required output tokens
+   */
+  private calculateAdaptiveMaxTokens(
+    inputText: string,
+    taskType: 'extraction' | 'narrative' | 'validation'
+  ): number {
+    // Estimate input tokens (roughly 4 characters per token)
+    const estimatedInputTokens = Math.ceil(inputText.length / 4);
+
+    // Calculate output tokens needed based on task type
+    let outputMultiplier: number;
+    let minTokens: number;
+
+    switch (taskType) {
+      case 'extraction':
+        // Extraction produces structured JSON (~50-60% of input size)
+        // Phase 4: Increased minimum to accommodate enhanced multidisciplinary prompts
+        outputMultiplier = 0.6;
+        minTokens = 8000; // Minimum for structured extraction with Phase 4 enhancements
+        break;
+      case 'narrative':
+        // Narrative is prose summary (~30-40% of input size)
+        outputMultiplier = 0.4;
+        minTokens = 2000; // Minimum for coherent narrative
+        break;
+      case 'validation':
+        // Validation is analysis report (~20-30% of input size)
+        outputMultiplier = 0.3;
+        minTokens = 1500; // Minimum for validation report
+        break;
+    }
+
+    // Calculate base output tokens
+    let outputTokens = Math.ceil(estimatedInputTokens * outputMultiplier);
+
+    // Ensure minimum
+    outputTokens = Math.max(outputTokens, minTokens);
+
+    // Add 20% safety buffer
+    outputTokens = Math.ceil(outputTokens * 1.2);
+
+    // Cap at 16384 tokens (16K limit handles ~65K word clinical notes)
+    outputTokens = Math.min(outputTokens, 16384);
+
+    console.log(`📊 Adaptive Token Allocation (${taskType}):`);
+    console.log(`   - Estimated input: ~${estimatedInputTokens} tokens`);
+    console.log(`   - Allocated output: ${outputTokens} tokens`);
+
+    return outputTokens;
   }
 
   /**
@@ -38,9 +105,89 @@ export class OrchestratorService {
     const startTime = Date.now();
 
     try {
+      // Step 0: Preprocess dates (Phase 1 - Date Format Disambiguation)
+      console.log('📅 Step 0: Preprocessing dates for format disambiguation...');
+      const preprocessResult = this.datePreprocessor.preprocessDates(
+        request.clinicalNotes,
+        {
+          preferredFormat: request.dateFormat || 'AUTO',
+          dateFormatHints: request.dateFormatHints,
+        }
+      );
+
+      console.log(`   ✓ Detected format: ${preprocessResult.analysis.detectedFormat}`);
+      console.log(`   ✓ Confidence: ${preprocessResult.analysis.confidence}`);
+      console.log(`   ✓ Unambiguous dates: ${preprocessResult.analysis.unambiguousDates.length}`);
+      console.log(`   ✓ Ambiguous dates: ${preprocessResult.analysis.ambiguousDates.length}`);
+      console.log(`   ✓ Warnings generated: ${preprocessResult.warnings.length}`);
+
       // Step 1: Extract structured data (VALIDATED mode)
       console.log('🔍 Step 1: Extracting structured data (VALIDATED mode)...');
-      const extraction = await this.performExtraction(request.clinicalNotes);
+      const extraction = await this.performExtraction(request);
+
+      // Step 1.5: Analyze documentation inventory (Phase 2 - Gap Detection)
+      console.log('📋 Step 1.5: Analyzing documentation inventory for gaps...');
+
+      // Extract date values from GroundedValue objects (extraction returns {value, sourceQuote, ...})
+      const surgeryDateValue = extraction.data.surgeryDate?.value || null;
+      const dischargeDateValue = extraction.data.dischargeDate?.value || null;
+
+      const inventoryResult = this.documentationInventory.analyze(
+        request.clinicalNotes,
+        surgeryDateValue,
+        dischargeDateValue
+      );
+
+      console.log(`   ✓ Documents detected: ${inventoryResult.documents.length}`);
+      console.log(`   ✓ POD coverage: ${inventoryResult.podCoverage.coveragePercentage}% (${inventoryResult.podCoverage.presentPODs.length}/${inventoryResult.podCoverage.expectedPODs.length} PODs)`);
+      console.log(`   ✓ Missing PODs: ${inventoryResult.podCoverage.missingPODs.length}`);
+      console.log(`   ✓ Completeness score: ${inventoryResult.completenessScore}/100`);
+      console.log(`   ✓ Warnings generated: ${inventoryResult.warnings.length}`);
+
+      // Step 1.75: Pre-extraction completeness check (Phase 8)
+      console.log('✅ Step 1.75: Running pre-extraction completeness check (Phase 8)...');
+      const preExtractionChecklist = this.completenessChecker.preExtractionCheck(
+        request.clinicalNotes,
+        inventoryResult
+      );
+
+      console.log(`   ✓ Readiness score: ${preExtractionChecklist.readinessScore}/100`);
+      console.log(`   ✓ Checks passed: ${preExtractionChecklist.checks.filter(c => c.passed).length}/${preExtractionChecklist.checks.length}`);
+      console.log(`   ✓ Critical blockers: ${preExtractionChecklist.blockers.length}`);
+      console.log(`   ✓ Warnings: ${preExtractionChecklist.warnings.length}`);
+
+      if (!preExtractionChecklist.overallReady) {
+        console.warn(`⚠️  PRE-EXTRACTION READINESS WARNING: ${preExtractionChecklist.blockers.length} critical blocker(s) detected`);
+        for (const blocker of preExtractionChecklist.blockers) {
+          console.warn(`   - ${blocker.message}`);
+          if (blocker.recommendation) {
+            console.warn(`     → ${blocker.recommendation}`);
+          }
+        }
+      }
+
+      // Step 1.9: Post-extraction completeness check (Phase 8)
+      console.log('✅ Step 1.9: Running post-extraction completeness check (Phase 8)...');
+      const postExtractionChecklist = this.completenessChecker.postExtractionCheck(
+        extraction.data,
+        inventoryResult
+      );
+
+      console.log(`   ✓ Completeness score: ${postExtractionChecklist.completenessScore}/100`);
+      console.log(`   ✓ Checks passed: ${postExtractionChecklist.checks.filter(c => c.passed).length}/${postExtractionChecklist.checks.length}`);
+      console.log(`   ✓ Critical issues: ${postExtractionChecklist.criticalIssues.length}`);
+      console.log(`   ✓ Major issues: ${postExtractionChecklist.majorIssues.length}`);
+      console.log(`   ✓ Minor issues: ${postExtractionChecklist.minorIssues.length}`);
+
+      if (!postExtractionChecklist.overallComplete) {
+        console.warn(`⚠️  POST-EXTRACTION COMPLETENESS WARNING: ${postExtractionChecklist.criticalIssues.length} critical + ${postExtractionChecklist.majorIssues.length} major issue(s) detected`);
+        for (const issue of [...postExtractionChecklist.criticalIssues, ...postExtractionChecklist.majorIssues].slice(0, 5)) {
+          console.warn(`   - ${issue.message}`);
+          if (issue.recommendation) {
+            console.warn(`     → ${issue.recommendation}`);
+          }
+        }
+      }
 
       // Steps 2 & 3: Generate narrative (if requested) and validate in parallel
       let narrative: string | undefined;
@@ -53,7 +200,7 @@ export class OrchestratorService {
         // Run narrative and extraction-only validation in parallel for speed
         const [narrativeResult, validationResult] = await Promise.all([
           this.performNarrative(extraction.data, request.narrativeMode),
-          this.performValidation(request.clinicalNotes, extraction.data, undefined)
+          this.performValidation(request.clinicalNotes, extraction.data, undefined, inventoryResult)
         ]);
 
         narrative = narrativeResult.narrative;
@@ -68,7 +215,8 @@ export class OrchestratorService {
         validation = await this.performValidation(
           request.clinicalNotes,
           extraction.data,
-          undefined
+          undefined,
+          inventoryResult
         );
       }
 
@@ -78,6 +226,24 @@ export class OrchestratorService {
         extraction: extraction.data,
         narrative,
         validation, // Always present
+        datePreprocessing: {
+          detectedFormat: preprocessResult.analysis.detectedFormat,
+          confidence: preprocessResult.analysis.confidence,
+          conversionsCount: preprocessResult.conversions.length,
+          ambiguousDatesCount: preprocessResult.analysis.ambiguousDates.length,
+          warnings: preprocessResult.warnings,
+        },
+        documentationInventory: {
+          documents: inventoryResult.documents,
+          podCoverage: inventoryResult.podCoverage,
+          gaps: inventoryResult.gaps,
+          completenessScore: inventoryResult.completenessScore,
+          warnings: inventoryResult.warnings,
+        },
+        completenessCheck: {
+          preExtraction: preExtractionChecklist,
+          postExtraction: postExtractionChecklist,
+        },
         metadata: {
           extractionMode: 'VALIDATED', // Always VALIDATED
           narrativeMode: request.narrativeMode,
@@ -93,6 +259,14 @@ export class OrchestratorService {
       };
 
       console.log(`✨ Extraction complete in ${response.metadata.processingTime}ms`);
+      console.log(`   - Date Format Detected: ${response.datePreprocessing?.detectedFormat} (${response.datePreprocessing?.confidence} confidence)`);
+      console.log(`   - Ambiguous Dates: ${response.datePreprocessing?.ambiguousDatesCount}`);
+      console.log(`   - Date Warnings: ${response.datePreprocessing?.warnings.length}`);
+      console.log(`   - Documentation Completeness: ${response.documentationInventory?.completenessScore}/100`);
+      console.log(`   - POD Coverage: ${response.documentationInventory?.podCoverage.coveragePercentage}%`);
+      console.log(`   - Documentation Warnings: ${response.documentationInventory?.warnings.length}`);
+      console.log(`   - Pre-Extraction Readiness: ${response.completenessCheck?.preExtraction.readinessScore}/100 (${response.completenessCheck?.preExtraction.blockers.length} blockers)`);
+      console.log(`   - Post-Extraction Completeness: ${response.completenessCheck?.postExtraction.completenessScore}/100 (${response.completenessCheck?.postExtraction.criticalIssues.length} critical, ${response.completenessCheck?.postExtraction.majorIssues.length} major)`);
       console.log(`   - Validation Score: ${validation.score}/100`);
       console.log(`   - Issues Found: ${validation.issues.length}`);
 
@@ -120,12 +294,19 @@ export class OrchestratorService {
   /**
    * Perform extraction step
    */
-  private async performExtraction(clinicalNotes: string): Promise<{
+  private async performExtraction(request: ExtractionRequest): Promise<{
     data: Record<string, any>;
     tokens: { input: number; output: number; cached?: number };
   }> {
-    // Build prompt
-    const systemPrompt = buildExtractionPrompt(clinicalNotes);
+    // Build prompt with date format configuration
+    const systemPrompt = buildExtractionPrompt(request.clinicalNotes, {
+      dateFormat: request.dateFormat,
+      dateFormatHints: request.dateFormatHints,
+      regionLocale: request.regionLocale,
+    });
+
+    // Phase 3: Calculate adaptive max_tokens to prevent truncation
+    const maxTokens = this.calculateAdaptiveMaxTokens(request.clinicalNotes, 'extraction');
 
     // Build LLM request with caching
     const llmRequest = {
@@ -142,10 +323,21 @@ export class OrchestratorService {
           content: 'Extract the clinical data from the notes provided in the system prompt.',
         },
       ],
+      maxTokens, // Phase 3: Adaptive token allocation
     };
 
     // Call LLM
     const llmResponse = await this.llmService.sendWithRetry(llmRequest);
+
+    // Phase 3: Check for truncation
+    if (llmResponse.truncationWarning) {
+      console.warn(`⚠️  ${llmResponse.truncationWarning}`);
+    }
+    if (llmResponse.truncated) {
+      const errorMsg = `Clinical notes too long for processing. Output truncated at ${llmResponse.usage.outputTokens} tokens. Please contact support for assistance with very long documents.`;
+      console.error(`🚨 EXTRACTION TRUNCATED: ${errorMsg}`);
+      throw new Error(errorMsg);
+    }
 
     // Parse JSON from response
     let extractedData: any;
@@ -186,6 +378,10 @@ export class OrchestratorService {
     // Build prompt
     const systemPrompt = buildNarrativePrompt(extractedData, mode);
 
+    // Phase 3: Calculate adaptive max_tokens based on extracted data size
+    const extractedDataText = JSON.stringify(extractedData);
+    const maxTokens = this.calculateAdaptiveMaxTokens(extractedDataText, 'narrative');
+
     // Build LLM request with caching
     const llmRequest = {
       system: [
@@ -201,10 +397,21 @@ export class OrchestratorService {
           content: 'Generate the narrative discharge summary from the extracted data provided in the system prompt.',
         },
       ],
+      maxTokens, // Phase 3: Adaptive token allocation
     };
 
     // Call LLM
     const llmResponse = await this.llmService.sendWithRetry(llmRequest);
+
+    // Phase 3: Check for truncation
+    if (llmResponse.truncationWarning) {
+      console.warn(`⚠️  ${llmResponse.truncationWarning}`);
+    }
+    if (llmResponse.truncated) {
+      const errorMsg = `Narrative generation truncated at ${llmResponse.usage.outputTokens} tokens. Summary is incomplete. Please contact support.`;
+      console.error(`🚨 NARRATIVE TRUNCATED: ${errorMsg}`);
+      throw new Error(errorMsg);
+    }
 
     return {
       narrative: llmResponse.content,
@@ -221,10 +428,21 @@ export class OrchestratorService {
   private async performValidation(
     originalNotes: string,
     extractedData: Record<string, any>,
-    narrative?: string
+    narrative?: string,
+    documentationInventory?: any
   ): Promise<ValidationResult> {
-    // Build validation prompt
-    const systemPrompt = buildValidationPrompt(originalNotes, extractedData, narrative);
+    // Build validation prompt with documentation inventory (Phase 2)
+    const systemPrompt = buildValidationPrompt(
+      originalNotes,
+      extractedData,
+      narrative,
+      documentationInventory
+    );
+
+    // Phase 3: Calculate adaptive max_tokens based on input size
+    // Validation analyzes both original notes and extracted data
+    const combinedInput = originalNotes + JSON.stringify(extractedData) + (narrative || '');
+    const maxTokens = this.calculateAdaptiveMaxTokens(combinedInput, 'validation');
 
     // Build LLM request with caching
     const llmRequest = {
@@ -241,6 +459,7 @@ export class OrchestratorService {
           content: 'Perform comprehensive validation and return the JSON validation report.',
         },
       ],
+      maxTokens, // Phase 3: Adaptive token allocation
     };
 
     // Call LLM

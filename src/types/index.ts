@@ -5,6 +5,17 @@
  * VALIDATED extraction and QA validation ALWAYS ON by design
  */
 
+import type {
+  DocumentInstance,
+  PODCoverage,
+  DocumentationGaps,
+  DocumentType,
+} from '../services/documentation-inventory.service.js';
+import type {
+  PreExtractionChecklist,
+  PostExtractionChecklist,
+} from '../services/completeness-checker.service.js';
+
 // ============================================================================
 // EXTRACTION TYPES
 // ============================================================================
@@ -20,11 +31,17 @@ export type ExtractionMode = 'PURE' | 'DEDUCTION' | 'VALIDATED';
 export type NarrativeMode = 'STRICT' | 'STANDARD' | 'ENHANCED';
 
 /**
- * Grounded value with source attribution
+ * Date format types for disambiguation
+ */
+export type DateFormatType = 'DD/MM/YYYY' | 'MM/DD/YYYY' | 'YYYY-MM-DD' | 'AUTO';
+
+/**
+ * Grounded value with source attribution (Phase 4: Enhanced with note type)
  */
 export interface GroundedValue<T = any> {
   value: T;
   sourceQuote: string;
+  sourceNoteType?: DocumentType;  // Phase 4: Which type of note this data came from
   confidence: 'high' | 'medium' | 'low';
   deductionMethod?: string;
   warnings?: ValidationWarning[];
@@ -48,7 +65,19 @@ export interface ValidationWarning {
  */
 export interface ValidationIssue {
   severity: 'critical' | 'major' | 'minor';
-  category: 'grounding' | 'temporal' | 'medical' | 'mode' | 'completeness' | 'confidence' | 'fabrication' | 'quality';
+  category:
+    | 'grounding'
+    | 'temporal'
+    | 'medical'
+    | 'medication'
+    | 'anatomical'
+    | 'gcs'
+    | 'mode'
+    | 'completeness'
+    | 'confidence'
+    | 'fabrication'
+    | 'quality'
+    | 'date_format';
   message: string;
   location?: string;
   suggestedFix?: string;
@@ -89,6 +118,11 @@ export interface ExtractionRequest {
   mode?: ExtractionMode; // Defaults to VALIDATED
   narrativeMode?: NarrativeMode;
   includeValidation?: boolean; // Defaults to TRUE (always ON)
+
+  // Date format disambiguation (Phase 1)
+  dateFormat?: DateFormatType; // Defaults to AUTO (auto-detection)
+  dateFormatHints?: string; // User-provided context about date format (e.g., "Hospital in Australia, uses DD/MM/YYYY")
+  regionLocale?: string; // Optional region hint (e.g., "US", "UK", "AU") for format inference
 }
 
 /**
@@ -99,6 +133,24 @@ export interface ExtractionResponse {
   extraction?: Record<string, any>;
   narrative?: string;
   validation?: ValidationResult;
+  datePreprocessing?: {
+    detectedFormat: DateFormatType;
+    confidence: 'high' | 'medium' | 'low';
+    conversionsCount: number;
+    ambiguousDatesCount: number;
+    warnings: ValidationWarning[];
+  };
+  documentationInventory?: {
+    documents: DocumentInstance[];
+    podCoverage: PODCoverage;
+    gaps: DocumentationGaps;
+    completenessScore: number;
+    warnings: string[];
+  };
+  completenessCheck?: {
+    preExtraction: PreExtractionChecklist;
+    postExtraction: PostExtractionChecklist;
+  };
   error?: {
     code: string;
     message: string;
@@ -151,7 +203,7 @@ export interface LLMRequest {
 }
 
 /**
- * LLM response with token usage
+ * LLM response with token usage and truncation detection (Phase 3)
  */
 export interface LLMResponse {
   content: string;
@@ -161,6 +213,10 @@ export interface LLMResponse {
     cacheReadTokens?: number;
     cacheCreationTokens?: number;
   };
+  // Phase 3: Truncation detection
+  stopReason: 'end_turn' | 'max_tokens' | 'stop_sequence' | 'unknown';
+  truncated: boolean;
+  truncationWarning?: string;
 }
 
 // ============================================================================

@@ -44,12 +44,14 @@ export class LLMService {
   }
 
   /**
-   * Send request to Claude
+   * Send request to Claude (Phase 3: Enhanced with truncation detection)
    */
   private async send(request: LLMRequest): Promise<LLMResponse> {
+    const maxTokens = request.maxTokens || this.config.maxTokens || 8000;
+
     const response = await this.client.messages.create({
       model: this.config.model,
-      max_tokens: request.maxTokens || this.config.maxTokens || 8000,
+      max_tokens: maxTokens,
       temperature: request.temperature ?? this.config.temperature ?? 0,
       system: request.system,
       messages: request.messages,
@@ -61,14 +63,33 @@ export class LLMService {
       .map(block => block.text)
       .join('\n');
 
+    // Phase 3: Truncation detection
+    const stopReason = response.stop_reason as 'end_turn' | 'max_tokens' | 'stop_sequence' | 'unknown';
+    const truncated = stopReason === 'max_tokens';
+    const outputTokens = response.usage.output_tokens;
+    const tokenUtilization = (outputTokens / maxTokens) * 100;
+
+    // Generate truncation warning
+    let truncationWarning: string | undefined;
+    if (truncated) {
+      truncationWarning = `CRITICAL: Response truncated at ${outputTokens}/${maxTokens} tokens (100%). Output is incomplete.`;
+    } else if (tokenUtilization >= 95) {
+      truncationWarning = `WARNING: Response used ${outputTokens}/${maxTokens} tokens (${tokenUtilization.toFixed(1)}%). Approaching limit.`;
+    } else if (tokenUtilization >= 90) {
+      truncationWarning = `CAUTION: Response used ${outputTokens}/${maxTokens} tokens (${tokenUtilization.toFixed(1)}%). Near limit.`;
+    }
+
     return {
       content,
       usage: {
         inputTokens: response.usage.input_tokens,
-        outputTokens: response.usage.output_tokens,
+        outputTokens,
         cacheReadTokens: (response.usage as any).cache_read_input_tokens,
         cacheCreationTokens: (response.usage as any).cache_creation_input_tokens,
       },
+      stopReason,
+      truncated,
+      truncationWarning,
     };
   }
 

@@ -771,6 +771,42 @@
         </div>
 
         <div class="control-group">
+          <label>📅 Date Format (Phase 1):</label>
+          <div class="radio-group">
+            <div class="radio-option">
+              <input type="radio" id="dateFormatAuto" name="dateFormat" value="AUTO" checked>
+              <label for="dateFormatAuto">AUTO (Detect)</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" id="dateFormatDDMMYYYY" name="dateFormat" value="DD/MM/YYYY">
+              <label for="dateFormatDDMMYYYY">DD/MM/YYYY (International)</label>
+            </div>
+            <div class="radio-option">
+              <input type="radio" id="dateFormatMMDDYYYY" name="dateFormat" value="MM/DD/YYYY">
+              <label for="dateFormatMMDDYYYY">MM/DD/YYYY (US)</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="control-group">
+          <label>🌍 Region/Locale (Optional):</label>
+          <select id="regionLocale" style="width: 100%; padding: 10px; border: 2px solid #ced4da; border-radius: 8px; font-size: 0.95rem;">
+            <option value="">-- Not Specified --</option>
+            <option value="CA">🇨🇦 Canada</option>
+            <option value="US">🇺🇸 United States</option>
+            <option value="UK">🇬🇧 United Kingdom</option>
+            <option value="AU">🇦🇺 Australia</option>
+            <option value="NZ">🇳🇿 New Zealand</option>
+            <option value="EU">🇪🇺 European Union</option>
+          </select>
+        </div>
+
+        <div class="control-group">
+          <label>💡 Date Format Hints (Optional):</label>
+          <input type="text" id="dateFormatHints" placeholder="e.g., Hamilton General Hospital, Ontario, Canada" style="width: 100%; padding: 10px; border: 2px solid #ced4da; border-radius: 8px; font-size: 0.95rem;">
+        </div>
+
+        <div class="control-group">
           <label>Narrative Mode:</label>
           <div class="radio-group">
             <div class="radio-option">
@@ -886,22 +922,39 @@ Discharge: 2024-01-21, follow-up 2 weeks"></textarea>
       // NSXDC always uses VALIDATED mode with QA validation (ENFORCED)
       const narrativeMode = document.querySelector('input[name="narrativeMode"]:checked').value;
 
+      // Collect date format configuration (Phase 1)
+      const dateFormat = document.querySelector('input[name="dateFormat"]:checked').value;
+      const regionLocale = document.getElementById('regionLocale').value;
+      const dateFormatHints = document.getElementById('dateFormatHints').value.trim();
+
       const extractBtn = document.getElementById('extractBtn');
       extractBtn.disabled = true;
       showStatus('loading', '⏳ Processing with VALIDATED mode + QA validation... This may take 5-15 seconds');
 
       try {
+        // Build request body with date format configuration
+        const requestBody = {
+          clinicalNotes,
+          mode: 'VALIDATED',        // Always VALIDATED (enforced)
+          narrativeMode,
+          includeValidation: true,  // Always true (enforced)
+          dateFormat              // Phase 1: Date format preference
+        };
+
+        // Add optional parameters only if provided
+        if (regionLocale) {
+          requestBody.regionLocale = regionLocale;
+        }
+        if (dateFormatHints) {
+          requestBody.dateFormatHints = dateFormatHints;
+        }
+
         const response = await fetch(`${API_BASE_URL}/api/v1/extract`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({
-            clinicalNotes,
-            mode: 'VALIDATED',        // Always VALIDATED (enforced)
-            narrativeMode,
-            includeValidation: true   // Always true (enforced)
-          })
+          body: JSON.stringify(requestBody)
         });
 
         const result = await response.json();
@@ -980,8 +1033,8 @@ Discharge: 2024-01-21, follow-up 2 weeks"></textarea>
       const rawTab = document.getElementById('raw-tab');
       rawTab.innerHTML = `<div class="output-content">${JSON.stringify(result, null, 2)}</div>`;
 
-      // Metadata (AFTER quality alert)
-      displayMetadata(result.metadata);
+      // Metadata (AFTER quality alert) - Pass datePreprocessing (Phase 1) and documentationInventory (Phase 2)
+      displayMetadata(result.metadata, result.datePreprocessing, result.documentationInventory);
     }
 
     function displayQualityAlert(qualitySummary, validation) {
@@ -1221,10 +1274,102 @@ Discharge: 2024-01-21, follow-up 2 weeks"></textarea>
       return output;
     }
 
-    function displayMetadata(metadata) {
+    function displayMetadata(metadata, datePreprocessing, documentationInventory) {
       const metadataDiv = document.getElementById('metadata');
 
+      // Build date preprocessing section if available (Phase 1)
+      let datePreprocessingHtml = '';
+      if (datePreprocessing) {
+        const confidenceEmoji = {
+          'high': '🟢',
+          'medium': '🟡',
+          'low': '🔴'
+        };
+        const emoji = confidenceEmoji[datePreprocessing.confidence] || '⚪';
+
+        datePreprocessingHtml = `
+          <div style="margin-bottom: 15px; padding: 12px; background: #f8f9fa; border-left: 4px solid #007bff; border-radius: 4px;">
+            <div style="font-weight: 600; margin-bottom: 8px; color: #0056b3;">📅 Phase 1: Date Format Detection</div>
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; font-size: 0.9rem;">
+              <div><strong>Detected Format:</strong> ${datePreprocessing.detectedFormat}</div>
+              <div><strong>Confidence:</strong> ${emoji} ${datePreprocessing.confidence}</div>
+              <div><strong>Conversions:</strong> ${datePreprocessing.conversionsCount}</div>
+              <div><strong>Ambiguous Dates:</strong> ${datePreprocessing.ambiguousDatesCount}</div>
+            </div>
+            ${datePreprocessing.warnings && datePreprocessing.warnings.length > 0 ? `
+              <div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid #dee2e6;">
+                <strong>⚠️ Warnings:</strong>
+                <ul style="margin: 4px 0 0 20px; padding: 0;">
+                  ${datePreprocessing.warnings.map(w => `<li>${w.message}</li>`).join('')}
+                </ul>
+              </div>
+            ` : ''}
+          </div>
+        `;
+      }
+
+      // Build documentation inventory section if available (Phase 2)
+      let documentationInventoryHtml = '';
+      if (documentationInventory) {
+        const score = documentationInventory.completenessScore;
+        const podCoverage = documentationInventory.podCoverage.coveragePercentage;
+
+        // Determine color based on completeness score
+        let scoreColor, scoreEmoji, scoreLabel;
+        if (score >= 90) {
+          scoreColor = '#28a745'; scoreEmoji = '🟢'; scoreLabel = 'Complete';
+        } else if (score >= 70) {
+          scoreColor = '#ffc107'; scoreEmoji = '🟡'; scoreLabel = 'Minor Gaps';
+        } else if (score >= 40) {
+          scoreColor = '#fd7e14'; scoreEmoji = '🟠'; scoreLabel = 'Major Gaps';
+        } else {
+          scoreColor = '#dc3545'; scoreEmoji = '🔴'; scoreLabel = 'Critical Gaps';
+        }
+
+        // POD coverage color
+        let podColor, podEmoji;
+        if (podCoverage >= 80) {
+          podColor = '#28a745'; podEmoji = '🟢';
+        } else if (podCoverage >= 50) {
+          podColor = '#ffc107'; podEmoji = '🟡';
+        } else {
+          podColor = '#dc3545'; podEmoji = '🔴';
+        }
+
+        documentationInventoryHtml = `
+          <div style="margin-bottom: 15px; padding: 12px; background: #f8f9fa; border-left: 4px solid ${scoreColor}; border-radius: 4px;">
+            <div style="font-weight: 600; margin-bottom: 8px; color: ${scoreColor};">📋 Phase 2: Documentation Inventory</div>
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; font-size: 0.9rem;">
+              <div><strong>Completeness Score:</strong> ${scoreEmoji} ${score}/100 (${scoreLabel})</div>
+              <div><strong>Documents Detected:</strong> ${documentationInventory.documents.length}</div>
+              <div><strong>POD Coverage:</strong> ${podEmoji} ${podCoverage}% (${documentationInventory.podCoverage.presentPODs.length}/${documentationInventory.podCoverage.expectedPODs.length} days)</div>
+              <div><strong>Missing PODs:</strong> ${documentationInventory.podCoverage.missingPODs.length > 0 ? documentationInventory.podCoverage.missingRanges.join(', ') : 'None'}</div>
+            </div>
+            ${(documentationInventory.gaps.missingCritical.length > 0 || documentationInventory.gaps.missingImportant.length > 0) ? `
+              <div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid #dee2e6; font-size: 0.9rem;">
+                ${documentationInventory.gaps.missingCritical.length > 0 ? `
+                  <div style="color: #dc3545;"><strong>🔴 Missing Critical:</strong> ${documentationInventory.gaps.missingCritical.join(', ')}</div>
+                ` : ''}
+                ${documentationInventory.gaps.missingImportant.length > 0 ? `
+                  <div style="color: #ffc107; margin-top: 4px;"><strong>🟡 Missing Important:</strong> ${documentationInventory.gaps.missingImportant.join(', ')}</div>
+                ` : ''}
+              </div>
+            ` : ''}
+            ${documentationInventory.warnings && documentationInventory.warnings.length > 0 ? `
+              <div style="margin-top: 8px; padding-top: 8px; border-top: 1px solid #dee2e6;">
+                <strong>⚠️ Warnings:</strong>
+                <ul style="margin: 4px 0 0 20px; padding: 0;">
+                  ${documentationInventory.warnings.map(w => `<li>${w}</li>`).join('')}
+                </ul>
+              </div>
+            ` : ''}
+          </div>
+        `;
+      }
+
       const metadataHtml = `
+        ${datePreprocessingHtml}
+        ${documentationInventoryHtml}
         <div class="metadata">
           <div class="metadata-item">
             <span class="metadata-label">Extraction Mode:</span>
