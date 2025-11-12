@@ -16,6 +16,7 @@ import { StorageService, ExtractionRepository } from '../services/storage.servic
 import { progressService } from '../services/progress.service.js';
 import { cacheService } from '../services/cache.service.js';
 import type { ExtractionRequest } from '../types/index.js';
+import { validateEnvironmentOrExit } from '../utils/env-validator.js';
 
 // Import middleware - Day 4 Enhancement
 import {
@@ -30,6 +31,10 @@ import {
 // ES module compatibility
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
+// Validate environment variables before starting
+console.log('🔍 Validating environment configuration...');
+validateEnvironmentOrExit();
 
 // Initialize services
 const llmConfig = getLLMConfig();

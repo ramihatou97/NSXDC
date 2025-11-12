@@ -24,8 +24,6 @@ export default function ExtractionPanel({
   // File size limit: 5MB
   const MAX_FILE_SIZE = 5 * 1024 * 1024;
 
-  // File size limit: 5MB
-
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const text = e.target.value;
     setClinicalNotes(text);
@@ -33,7 +31,7 @@ export default function ExtractionPanel({
     setWordCount(text.trim() ? text.trim().split(/\s+/).length : 0);
   };
 
-  const processFileContent = (text: string, filename: string) => {
+  const processFileContent = (text: string, _filename: string) => {
     setClinicalNotes(text);
     setCharCount(text.length);
     setWordCount(text.trim() ? text.trim().split(/\s+/).length : 0);

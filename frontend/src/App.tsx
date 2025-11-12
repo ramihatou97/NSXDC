@@ -22,6 +22,10 @@ export interface ExtractionResult {
   warnings?: string[];
 }
 
+// API configuration from environment variables
+const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
+const API_KEY = import.meta.env.VITE_API_KEY || 'demo-key';
+
 function App() {
   const [extractionResult, setExtractionResult] = useState<ExtractionResult | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -32,11 +36,11 @@ function App() {
     setError(null);
 
     try {
-      const response = await fetch('/api/v1/extract', {
+      const response = await fetch(`${API_BASE_URL}/api/v1/extract`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
-          'X-API-Key': 'demo-key', // In production, use environment variable
+          'X-API-Key': API_KEY,
         },
         body: JSON.stringify({
           clinicalNotes,
