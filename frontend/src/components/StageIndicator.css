@@ -1,0 +1,212 @@
+/**
+ * StageIndicator Styles
+ */
+
+.stage-indicator {
+  width: 100%;
+  padding: 1.5rem;
+  background: #f8f9fa;
+  border-radius: 8px;
+  margin: 1rem 0;
+}
+
+.stage-indicator-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.stage-indicator-header h4 {
+  margin: 0;
+  font-size: 1rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.stage-badge {
+  padding: 0.25rem 0.75rem;
+  border-radius: 12px;
+  font-size: 0.75rem;
+  font-weight: 600;
+}
+
+.stage-badge.success {
+  background: #d4edda;
+  color: #155724;
+}
+
+.stage-badge.error {
+  background: #f8d7da;
+  color: #721c24;
+}
+
+.stage-badge.warning {
+  background: #fff3cd;
+  color: #856404;
+}
+
+.stages-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  position: relative;
+}
+
+.stage-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 0.5rem;
+  flex: 1;
+  position: relative;
+  opacity: 0.4;
+  transition: opacity 0.3s ease;
+}
+
+.stage-item.active {
+  opacity: 1;
+}
+
+.stage-item.current {
+  opacity: 1;
+}
+
+.stage-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.25rem;
+  background: #e9ecef;
+  border: 2px solid #dee2e6;
+  transition: all 0.3s ease;
+  z-index: 2;
+  position: relative;
+}
+
+.stage-item.completed .stage-icon {
+  background: #28a745;
+  border-color: #28a745;
+  color: white;
+}
+
+.stage-item.current .stage-icon {
+  background: #007bff;
+  border-color: #007bff;
+  color: white;
+  box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.2);
+}
+
+.stage-item.failed .stage-icon {
+  background: #dc3545;
+  border-color: #dc3545;
+  color: white;
+}
+
+.stage-item.cancelled .stage-icon {
+  background: #ffc107;
+  border-color: #ffc107;
+  color: white;
+}
+
+.stage-label {
+  font-size: 0.75rem;
+  font-weight: 500;
+  color: #666;
+  text-align: center;
+  max-width: 80px;
+  line-height: 1.2;
+}
+
+.stage-item.current .stage-label {
+  color: #007bff;
+  font-weight: 600;
+}
+
+.stage-item.completed .stage-label {
+  color: #28a745;
+}
+
+.stage-connector {
+  position: absolute;
+  top: 20px;
+  left: 50%;
+  right: -50%;
+  height: 2px;
+  background: #dee2e6;
+  transition: background 0.3s ease;
+  z-index: 1;
+}
+
+.stage-connector.active {
+  background: #007bff;
+}
+
+/* Spinner animation for current stage */
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.spinner {
+  display: inline-block;
+  animation: spin 2s linear infinite;
+}
+
+/* Pulse animation for current stage icon */
+@keyframes pulse {
+  0%, 100% {
+    box-shadow: 0 0 0 4px rgba(0, 123, 255, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 0 8px rgba(0, 123, 255, 0.1);
+  }
+}
+
+.stage-item.current .stage-icon {
+  animation: pulse 2s ease-in-out infinite;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .stage-indicator {
+    padding: 1rem;
+  }
+
+  .stages-container {
+    flex-wrap: wrap;
+    gap: 1rem;
+  }
+
+  .stage-item {
+    flex: 0 0 calc(33.333% - 1rem);
+  }
+
+  .stage-connector {
+    display: none;
+  }
+
+  .stage-icon {
+    width: 32px;
+    height: 32px;
+    font-size: 1rem;
+  }
+
+  .stage-label {
+    font-size: 0.6875rem;
+    max-width: 60px;
+  }
+}
+
+@media (max-width: 480px) {
+  .stage-item {
+    flex: 0 0 calc(50% - 0.5rem);
+  }
+}

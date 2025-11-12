@@ -18,6 +18,7 @@ import APIClient, { APIError } from '../../services/api-client';
 export interface ExtractionSlice {
   // Current extraction state
   currentExtraction: ExtractionResult | null;
+  currentJobId: string | null;
   isLoading: boolean;
   error: string | null;
 
@@ -44,6 +45,7 @@ export const createExtractionSlice: StateCreator<
 > = (set, get) => ({
   // Initial state
   currentExtraction: null,
+  currentJobId: null,
   isLoading: false,
   error: null,
   lastRequest: null,
@@ -62,6 +64,11 @@ export const createExtractionSlice: StateCreator<
     try {
       // Call API
       const data = await APIClient.extract(request);
+
+      // Store jobId for progress tracking
+      if (data.jobId) {
+        set({ currentJobId: data.jobId });
+      }
 
       // Transform to frontend format
       const result: ExtractionResult = {
@@ -136,6 +143,7 @@ export const createExtractionSlice: StateCreator<
   clearExtraction: () => {
     set({
       currentExtraction: null,
+      currentJobId: null,
       error: null,
     });
   },

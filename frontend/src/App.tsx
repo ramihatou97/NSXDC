@@ -1,6 +1,7 @@
 import Header from './components/Header';
 import ExtractionPanel from './components/ExtractionPanel';
 import ResultsPanel from './components/ResultsPanel';
+import ProgressTracker from './components/ProgressTracker';
 import { useExtraction } from './store/hooks';
 import './App.css';
 
@@ -8,6 +9,7 @@ function App() {
   // Use Zustand store for state management
   const {
     currentExtraction,
+    currentJobId,
     isLoading,
     error,
     extract,
@@ -30,6 +32,19 @@ function App() {
     clearExtraction();
   };
 
+  const handleProgressComplete = () => {
+    // Progress complete - extraction result will be shown via currentExtraction
+  };
+
+  const handleProgressError = (errorMsg: string) => {
+    // Error already handled in extraction slice
+    console.error('Progress error:', errorMsg);
+  };
+
+  const handleProgressCancel = () => {
+    clearExtraction();
+  };
+
   return (
     <div className="app">
       <Header />
@@ -41,7 +56,19 @@ function App() {
             isLoading={isLoading}
             error={error}
           />
-          {currentExtraction && (
+
+          {/* Show progress tracker during extraction */}
+          {isLoading && currentJobId && (
+            <ProgressTracker
+              jobId={currentJobId}
+              onComplete={handleProgressComplete}
+              onError={handleProgressError}
+              onCancel={handleProgressCancel}
+            />
+          )}
+
+          {/* Show results when extraction is complete */}
+          {currentExtraction && !isLoading && (
             <ResultsPanel
               result={currentExtraction}
               onClose={handleClear}

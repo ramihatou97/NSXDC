@@ -1,0 +1,104 @@
+/**
+ * ProgressBar Styles
+ */
+
+.progress-bar-container {
+  width: 100%;
+  margin: 1rem 0;
+}
+
+.progress-bar-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 0.5rem;
+}
+
+.progress-label {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #333;
+}
+
+.progress-percentage {
+  font-size: 0.875rem;
+  font-weight: 600;
+  color: #666;
+  font-variant-numeric: tabular-nums;
+}
+
+.progress-bar-track {
+  width: 100%;
+  height: 24px;
+  background-color: #e9ecef;
+  border-radius: 12px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: inset 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.progress-bar-fill {
+  height: 100%;
+  position: relative;
+  border-radius: 12px;
+  transition: width 0.3s ease-in-out, background-color 0.3s ease-in-out;
+  overflow: hidden;
+}
+
+.progress-bar-shine {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 50%;
+  background: linear-gradient(
+    to bottom,
+    rgba(255, 255, 255, 0.3),
+    rgba(255, 255, 255, 0)
+  );
+  border-radius: 12px 12px 0 0;
+}
+
+.progress-message {
+  margin-top: 0.5rem;
+  font-size: 0.75rem;
+  color: #666;
+  font-style: italic;
+}
+
+/* Animation for indeterminate progress */
+@keyframes indeterminate {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(400%);
+  }
+}
+
+.progress-bar-fill.indeterminate::after {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  width: 25%;
+  background: rgba(255, 255, 255, 0.3);
+  animation: indeterminate 1.5s infinite linear;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+  .progress-bar-track {
+    height: 20px;
+  }
+
+  .progress-label,
+  .progress-percentage {
+    font-size: 0.8125rem;
+  }
+
+  .progress-message {
+    font-size: 0.6875rem;
+  }
+}

@@ -16,6 +16,7 @@ import type { Store } from './index';
 export const useExtraction = () => {
   return useStore((state) => ({
     currentExtraction: state.currentExtraction,
+    currentJobId: state.currentJobId,
     isLoading: state.isLoading,
     error: state.error,
     extract: state.extract,
