@@ -9,7 +9,7 @@
 export {
   validateExtractionRequest,
   sanitizeRequestBody
-} from './validation.middleware.js';
+} from './validation.middleware';
 
 // Rate limiting middleware
 export {
@@ -20,14 +20,14 @@ export {
   getRateLimitStatus,
   clearRateLimit,
   clearAllRateLimits
-} from './rate-limiter.middleware.js';
+} from './rate-limiter.middleware';
 
 // Request logging middleware
 export {
   requestLogger,
   minimalRequestLogger,
   detailedRequestLogger
-} from './request-logger.middleware.js';
+} from './request-logger.middleware';
 
 // API key validation middleware
 export {
@@ -36,4 +36,4 @@ export {
   isApiKeyEnabled,
   isValidApiKey,
   getApiKeyStatus
-} from './api-key.middleware.js';
+} from './api-key.middleware';

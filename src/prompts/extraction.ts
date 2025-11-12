@@ -20,18 +20,15 @@ Extract ALL clinical data with confidence levels and warnings for uncertain info
 
 Every extracted value MUST include:
 - value: The extracted data point
-- sourceQuote: EXACT text from source (verbatim, no paraphrasing)
-- sourceContext: Temporal/sectional context of the quote
-  - Format: "[Note Type] dated [YYYY-MM-DD]" or "[Note Type] [POD/HD]"
+- source: EXACT text with temporal context in brackets
+  - Format: "<verbatim quote> [Note Type YYYY-MM-DD]"
   - Examples:
-    - "Admission H&P dated 2024-01-15"
-    - "Progress note POD 3 (2024-01-18)"
-    - "Discharge summary dated 2024-01-20"
-    - "Physical therapy note Hospital Day 5"
-    - "Nursing flowsheet 2024-01-17 14:30"
-    - "Operative report dated 2024-01-16"
-- confidence: "high" (explicit) | "medium" (strong inference) | "low" (weak inference)
-- warnings: Array of issues if confidence is low
+    - "Alert and oriented x3 [Admission H&P 2024-01-15]"
+    - "GCS 15, no deficits [Progress note POD 3, 2024-01-18]"
+    - "Ambulating independently [Discharge summary 2024-01-20]"
+    - "Moving all extremities 5/5 [PT note HD 5]"
+- confidence: (OPTIONAL) Only include if "medium" or "low". Default is "high"
+- warnings: Array if confidence is low
 
 ### Temporal Validity Rules (CRITICAL):
 
@@ -53,10 +50,9 @@ Every extracted value MUST include:
 {
   "dischargeGCS": {
     "value": 15,
-    "sourceQuote": "Alert and oriented to person, place, and time. Follows all commands. Moving all extremities with good strength.",
-    "sourceContext": "Discharge exam dated 2024-01-19",
+    "source": "Alert and oriented to person, place, and time. Follows all commands. Moving all extremities with good strength [Discharge exam 2024-01-19]",
     "confidence": "medium",
-    "deductionMethod": "Clinical description indicates GCS 15 (E4V5M6)"
+    "deduced": "clinical-exam-gcs-e4v5m6"
   }
 }
 
@@ -64,10 +60,9 @@ Every extracted value MUST include:
 {
   "dischargeGCS": {
     "value": 15,
-    "sourceQuote": "Alert and oriented x3, following commands",
-    "sourceContext": "Admission exam dated 2024-01-15",  // ❌ WRONG - Using admission for discharge
+    "source": "Alert and oriented x3, following commands [Admission exam 2024-01-15]",  // ❌ WRONG - Using admission for discharge
     "confidence": "medium",
-    "deductionMethod": "Assumed stable course"
+    "deduced": "assumed-stable"
   }
 }
 **Why wrong:** Cannot use admission exam for discharge status. This is temporal hallucination.
@@ -92,92 +87,15 @@ Every extracted value MUST include:
 Use these reference tables when deducing functional scores from clinical descriptions:
 
 ### Glasgow Coma Scale (GCS): Range 3-15
-**Calculation**: Eye (E) + Verbal (V) + Motor (M)
+**GCS (E+V+M)**: "Alert, oriented x3, follows commands" = 15 (E4V5M6) | "Lethargic, confused, localizes" = 11 (E3V4M5)
 
-**Eye Opening (E):**
-- 4 = Spontaneous opening
-- 3 = Opens to verbal command
-- 2 = Opens to pain
-- 1 = No eye opening
+**mRS (0-6)**: 0-1 = independent | 2 = slight disability | 3 = walks unassisted, needs help | 4 = cannot walk/ADL unassisted | 5 = bedridden | 6 = dead
 
-**Verbal Response (V):**
-- 5 = Oriented (person, place, time)
-- 4 = Confused conversation
-- 3 = Inappropriate words
-- 2 = Incomprehensible sounds
-- 1 = No verbal response
+**KPS (0-100)**: 90-100 = normal activity | 70-80 = cares for self | 50-60 = needs assistance | 30-40 = disabled/hospitalized | 10-20 = very sick
 
-**Motor Response (M):**
-- 6 = Obeys commands
-- 5 = Localizes to pain
-- 4 = Withdraws from pain
-- 3 = Abnormal flexion (decorticate)
-- 2 = Abnormal extension (decerebrate)
-- 1 = No motor response
+**NIHSS (0-42)**: 0 = no symptoms | 1-4 = minor | 5-15 = moderate | 16-20 = moderate-severe | 21+ = severe
 
-**Common Clinical Descriptions:**
-- "Alert, oriented x3, follows commands" → GCS 15 (E4V5M6)
-- "Lethargic, confused, localizes to pain" → GCS 11 (E3V4M5)
-- "Comatose, incomprehensible sounds, withdraws" → GCS 6 (E1V2M4)
-
-### Modified Rankin Scale (mRS): Range 0-6
-- 0 = No symptoms at all
-- 1 = No significant disability (can do all usual activities despite symptoms)
-- 2 = Slight disability (unable to do all previous activities but independent)
-- 3 = Moderate disability (requires some help but walks unassisted)
-- 4 = Moderately severe disability (unable to walk or attend to bodily needs without assistance)
-- 5 = Severe disability (bedridden, incontinent, requires constant care)
-- 6 = Dead
-
-**Common Clinical Descriptions:**
-- "Independent in all activities, no assistance needed" → mRS 0-1
-- "Ambulating independently, needs help with complex tasks" → mRS 2
-- "Ambulating with walker, requires supervision" → mRS 3
-- "Wheelchair-bound, requires assistance with ADLs" → mRS 4
-
-### Karnofsky Performance Status (KPS): Range 0-100
-- 100 = Normal, no complaints, no evidence of disease
-- 90 = Able to carry on normal activity, minor signs/symptoms
-- 80 = Normal activity with effort, some signs/symptoms
-- 70 = Cares for self, unable to carry on normal activity/work
-- 60 = Requires occasional assistance, cares for most needs
-- 50 = Requires considerable assistance and frequent medical care
-- 40 = Disabled, requires special care and assistance
-- 30 = Severely disabled, hospitalization indicated
-- 20 = Very sick, hospitalization necessary, active supportive treatment
-- 10 = Moribund, fatal processes progressing rapidly
-- 0 = Dead
-
-**Common Clinical Descriptions:**
-- "Ambulating 100ft independently, dressing self, no assistance" → KPS 80-90
-- "Needs help with bathing but otherwise independent" → KPS 60-70
-- "Wheelchair-bound, requires nursing care" → KPS 30-40
-
-### NIHSS (NIH Stroke Scale): Range 0-42
-- 0 = No stroke symptoms
-- 1-4 = Minor stroke
-- 5-15 = Moderate stroke
-- 16-20 = Moderate to severe stroke
-- 21-42 = Severe stroke
-
-**Key Components:** (use when calculating from neurological exam)
-- Level of consciousness (0-3)
-- Visual fields (0-3)
-- Facial palsy (0-3)
-- Motor arm/leg (0-4 each limb)
-- Limb ataxia (0-2)
-- Sensory (0-2)
-- Language (0-3)
-- Dysarthria (0-2)
-- Extinction/inattention (0-2)
-
-### ECOG Performance Status: Range 0-5
-- 0 = Fully active, able to carry on all pre-disease activities
-- 1 = Restricted in physically strenuous activity, ambulatory and able to carry out light work
-- 2 = Ambulatory and capable of all self-care, unable to carry out work activities, up >50% of waking hours
-- 3 = Capable of only limited self-care, confined to bed/chair >50% of waking hours
-- 4 = Completely disabled, cannot carry on any self-care, totally confined to bed/chair
-- 5 = Dead
+**ECOG (0-5)**: 0 = fully active | 1 = restricted strenuous activity | 2 = self-care only | 3-4 = limited/no self-care | 5 = dead
 
 ## 4B. MEDICATION STANDARDIZATION
 
@@ -234,39 +152,16 @@ Extract medications in standardized format: **Drug name | Dose | Unit | Route | 
 {
   "dischargeMedications": [
     {
-      "value": "Levetiracetam 750mg PO BID",
-      "sourceQuote": "Keppra 750mg PO BID",
-      "confidence": "high",
-      "brandName": "Keppra",
-      "genericName": "Levetiracetam",
-      "dose": 750,
-      "unit": "mg",
-      "route": "PO",
-      "frequency": "BID"
+      "value": "Levetiracetam (Keppra) 750mg PO BID",
+      "source": "Keppra 750mg PO BID [Discharge summary 2024-01-19]"
     },
     {
-      "value": "Dexamethasone 4mg PO Q12H with taper",
-      "sourceQuote": "Decadron 4mg PO Q12H x 7 days then taper",
-      "confidence": "high",
-      "brandName": "Decadron",
-      "genericName": "Dexamethasone",
-      "dose": 4,
-      "unit": "mg",
-      "route": "PO",
-      "frequency": "Q12H",
-      "duration": "7 days then taper"
+      "value": "Dexamethasone (Decadron) 4mg PO Q12H x 7 days then taper",
+      "source": "Decadron 4mg PO Q12H x 7 days then taper [Discharge summary 2024-01-19]"
     },
     {
-      "value": "Oxycodone-Acetaminophen 5-325mg PO Q6H PRN pain",
-      "sourceQuote": "Percocet 5-325mg PO Q6H PRN pain",
-      "confidence": "high",
-      "brandName": "Percocet",
-      "genericName": "Oxycodone-Acetaminophen",
-      "dose": "5-325",
-      "unit": "mg",
-      "route": "PO",
-      "frequency": "Q6H PRN",
-      "indication": "pain"
+      "value": "Oxycodone-Acetaminophen (Percocet) 5-325mg PO Q6H PRN pain",
+      "source": "Percocet 5-325mg PO Q6H PRN pain [Discharge summary 2024-01-19]"
     }
   ]
 }
@@ -284,103 +179,24 @@ Extract daily events, status changes, and clinical trajectory:
     "admissionSummary": {
       "presentingSymptoms": "Chief complaint and key symptoms",
       "admissionDate": "YYYY-MM-DD",
-      "admissionStatus": {
-        "neurologicalStatus": "GCS, consciousness, deficits",
-        "functionalStatus": "Ambulatory status, independence level",
-        "sourceQuote": "Exact admission exam findings",
-        "confidence": "high" | "medium" | "low"
-      }
+      "admissionStatus": "GCS, consciousness, deficits, ambulatory status [Admission H&P YYYY-MM-DD]"
     },
 
     "dailyProgress": [
       {
         "date": "YYYY-MM-DD",
-        "hospitalDay": 1,
-        "postOpDay": null,  // null if pre-op, number if post-op
-        "events": [
-          {
-            "time": "HH:MM" | "morning" | "afternoon" | "evening" | "night",
-            "event": "Specific clinical event",
-            "category": "Assessment" | "Procedure" | "Complication" | "Treatment" | "Status Change" | "Imaging" | "Lab",
-            "details": "Full description",
-            "sourceQuote": "Exact quote from notes",
-            "significance": "Why this matters clinically"
-          }
-        ],
-        "clinicalStatus": {
-          "neurologicalStatus": "Summary of neuro status this day",
-          "vitalSigns": "Notable vitals if documented",
-          "symptoms": "Pain, nausea, headache, etc.",
-          "mobility": "Bedbound, chair, ambulating",
-          "diet": "NPO, clears, regular",
-          "sourceQuote": "From daily progress note or nursing notes"
-        },
-        "interventions": [
-          {
-            "intervention": "Treatment, medication change, procedure",
-            "indication": "Why performed",
-            "outcome": "Result if documented",
-            "sourceQuote": "Exact quote"
-          }
-        ],
-        "complications": [
-          {
-            "complication": "Specific complication",
-            "timing": "When during day",
-            "management": "How addressed",
-            "sourceQuote": "Exact quote"
-          }
-        ]
+        "day": "HD 1" | "POD 0",  // Hospital Day or Post-Op Day
+        "status": "Brief neuro/functional status summary",
+        "events": "Chronological narrative of key events, interventions, complications [Source notes]"
       }
     ],
 
-    "clinicalTrajectory": {
-      "overallCourse": "Improving" | "Stable" | "Declining" | "Fluctuating" | "Complicated",
-      "neurologicalTrajectory": {
-        "admission": "Initial neuro status",
-        "nadir": "Worst point (date, status)",
-        "discharge": "Final neuro status",
-        "trend": "Progressive improvement" | "Stable throughout" | "Initial decline then improvement" | "Ongoing decline",
-        "evidenceTimeline": [
-          {
-            "timepoint": "Hospital Day X or POD Y",
-            "date": "YYYY-MM-DD",
-            "status": "Clinical status description",
-            "sourceQuote": "Exact quote"
-          }
-        ]
-      },
-      "functionalTrajectory": {
-        "admission": "Initial functional status",
-        "discharge": "Final functional status",
-        "keyMilestones": [
-          {
-            "milestone": "e.g., First time out of bed, ambulating 100ft, independent ADLs",
-            "date": "YYYY-MM-DD",
-            "hospitalDay": number,
-            "sourceQuote": "Exact quote"
-          }
-        ]
-      },
-      "complicationsImpact": {
-        "occurred": ["List all complications"],
-        "resolved": ["Which resolved before discharge"],
-        "ongoing": ["Which ongoing at discharge"],
-        "impactOnLOS": "Did complications prolong stay? By how many days estimated?"
-      }
-    },
-
-    "keyEvents": [
-      {
-        "event": "Major clinical event (surgery, complication, status change)",
-        "date": "YYYY-MM-DD",
-        "hospitalDay": number,
-        "postOpDay": number | null,
-        "description": "Detailed description",
-        "outcome": "Result of event",
-        "sourceQuote": "Exact quote"
-      }
-    ]
+    "trajectory": {
+      "overall": "Improving" | "Stable" | "Declining" | "Fluctuating",
+      "neuro": "Admission → Nadir → Discharge summary with dates",
+      "functional": "Admission → Key milestones → Discharge summary",
+      "complications": "List major complications with resolution status"
+    }
   }
 }
 
@@ -440,283 +256,59 @@ Extract daily events, status changes, and clinical trajectory:
     "admissionSummary": {
       "presentingSymptoms": "Progressive headaches for 3 months, new onset seizure",
       "admissionDate": "2024-01-15",
-      "admissionStatus": {
-        "neurologicalStatus": "Alert and oriented x3, no focal deficits, GCS 15",
-        "functionalStatus": "Ambulating independently, fully independent in ADLs",
-        "sourceQuote": "Admission exam: Alert and oriented to person, place, and time. Cranial nerves II-XII intact. Motor strength 5/5 throughout. Ambulating independently.",
-        "confidence": "high"
-      }
+      "admissionStatus": "Alert and oriented x3, GCS 15, no focal deficits, ambulating independently [Admission H&P 2024-01-15]"
     },
 
     "dailyProgress": [
       {
         "date": "2024-01-15",
-        "hospitalDay": 1,
-        "postOpDay": null,
-        "events": [
-          {
-            "time": "14:30",
-            "event": "Patient admitted to neurosurgery service",
-            "category": "Assessment",
-            "details": "Admitted for left frontal mass resection",
-            "sourceQuote": "Admitted to neurosurgery for craniotomy tomorrow",
-            "significance": "Established care, pre-operative preparation"
-          },
-          {
-            "time": "afternoon",
-            "event": "Pre-operative MRI completed",
-            "category": "Imaging",
-            "details": "3.2cm left frontal extra-axial mass",
-            "sourceQuote": "MRI brain shows 3.2cm left frontal extra-axial mass with surrounding edema",
-            "significance": "Surgical planning, confirms diagnosis"
-          }
-        ],
-        "clinicalStatus": {
-          "neurologicalStatus": "Intact, GCS 15",
-          "vitalSigns": "Stable",
-          "symptoms": "Mild headache",
-          "mobility": "Ambulating independently",
-          "diet": "NPO after midnight",
-          "sourceQuote": "Neuro exam intact. Tolerating PO. Made NPO at 24:00."
-        },
-        "interventions": [
-          {
-            "intervention": "Started Keppra 500mg PO BID for seizure prophylaxis",
-            "indication": "Seizure history, peri-operative prophylaxis",
-            "outcome": "Tolerated well, no further seizures",
-            "sourceQuote": "Started on levetiracetam 500mg PO BID for seizure prophylaxis"
-          }
-        ],
-        "complications": []
+        "day": "HD 1",
+        "status": "GCS 15, neuro intact, ambulating",
+        "events": "Admitted for left frontal craniotomy. Pre-op MRI: 3.2cm left frontal extra-axial mass. Started Keppra 500mg BID for seizure prophylaxis. Made NPO at midnight. [Admission H&P and Progress note 2024-01-15]"
       },
       {
         "date": "2024-01-16",
-        "hospitalDay": 2,
-        "postOpDay": 0,
-        "events": [
-          {
-            "time": "08:00",
-            "event": "Left frontal craniotomy performed",
-            "category": "Procedure",
-            "details": "Gross total resection achieved, no intraoperative complications",
-            "sourceQuote": "Underwent left frontal craniotomy for resection. Gross total resection achieved. EBL 200cc. No intraop complications.",
-            "significance": "Definitive surgical treatment"
-          },
-          {
-            "time": "14:00",
-            "event": "Extubated in PACU",
-            "category": "Status Change",
-            "details": "Awake, following commands, moving all extremities",
-            "sourceQuote": "Extubated in PACU. Alert, following commands, moving all four extremities with good strength",
-            "significance": "Successful emergence from anesthesia"
-          },
-          {
-            "time": "evening",
-            "event": "Transferred to ICU",
-            "category": "Status Change",
-            "details": "For routine post-craniotomy monitoring",
-            "sourceQuote": "Transferred to ICU for post-op monitoring",
-            "significance": "Standard post-op care"
-          }
-        ],
-        "clinicalStatus": {
-          "neurologicalStatus": "Alert, following commands, GCS 15, no new deficits",
-          "vitalSigns": "Stable",
-          "symptoms": "Mild incisional pain",
-          "mobility": "Bedrest",
-          "diet": "NPO",
-          "sourceQuote": "POD 0 evening: Alert, oriented x3, following all commands, moving all extremities 5/5"
-        },
-        "interventions": [
-          {
-            "intervention": "Post-op head CT",
-            "indication": "Routine post-craniotomy imaging",
-            "outcome": "Expected post-op changes, no hemorrhage",
-            "sourceQuote": "Post-op CT: Expected post-surgical changes, no acute hemorrhage"
-          }
-        ],
-        "complications": []
+        "day": "POD 0",
+        "status": "Post-op: Alert, GCS 15, no new deficits",
+        "events": "Left frontal craniotomy performed 08:00, GTR achieved. Extubated in PACU 14:00, moving all extremities. Transferred to ICU for routine monitoring. Post-op CT: no hemorrhage. [Op note, PACU note, Progress note POD 0 2024-01-16]"
       },
       {
         "date": "2024-01-17",
-        "hospitalDay": 3,
-        "postOpDay": 1,
-        "events": [
-          {
-            "time": "morning",
-            "event": "Out of bed to chair",
-            "category": "Status Change",
-            "details": "Tolerated well, ambulated to chair with PT",
-            "sourceQuote": "POD 1: Out of bed to chair with PT. Tolerated well.",
-            "significance": "Progressive mobility"
-          },
-          {
-            "time": "afternoon",
-            "event": "Diet advanced to regular",
-            "category": "Treatment",
-            "details": "Tolerating PO without nausea",
-            "sourceQuote": "Diet advanced to regular. Tolerating well without nausea.",
-            "significance": "Return of GI function"
-          },
-          {
-            "time": "evening",
-            "event": "Transferred to floor",
-            "category": "Status Change",
-            "details": "Neurologically stable, transferred from ICU",
-            "sourceQuote": "Transferred to neurosurgery floor. Stable.",
-            "significance": "No longer needs ICU-level monitoring"
-          }
-        ],
-        "clinicalStatus": {
-          "neurologicalStatus": "GCS 15, no deficits",
-          "vitalSigns": "Normotensive, afebrile",
-          "symptoms": "Minimal incisional pain, controlled with oral analgesics",
-          "mobility": "Out of bed to chair, ambulating short distances with assistance",
-          "diet": "Regular, tolerating well",
-          "sourceQuote": "POD 1: Neuro exam unchanged from post-op. Ambulating with assistance. Pain well-controlled."
-        },
-        "interventions": [],
-        "complications": []
+        "day": "POD 1",
+        "status": "GCS 15, ambulating with assistance",
+        "events": "Out of bed to chair with PT. Diet advanced to regular, tolerating well. Transferred to floor from ICU. Pain controlled with oral analgesics. [Progress note POD 1 2024-01-17]"
       },
       {
         "date": "2024-01-18",
-        "hospitalDay": 4,
-        "postOpDay": 2,
-        "events": [
-          {
-            "time": "morning",
-            "event": "Ambulating independently",
-            "category": "Status Change",
-            "details": "100 feet with PT, no assistance",
-            "sourceQuote": "POD 2: Ambulating 100 feet independently with PT. Steady gait.",
-            "significance": "Significant functional recovery"
-          }
-        ],
-        "clinicalStatus": {
-          "neurologicalStatus": "GCS 15, no deficits",
-          "vitalSigns": "Stable, afebrile",
-          "symptoms": "Minimal pain",
-          "mobility": "Ambulating independently",
-          "diet": "Regular",
-          "sourceQuote": "POD 2: Doing well. Ambulating independently. Pain minimal."
-        },
-        "interventions": [],
-        "complications": []
+        "day": "POD 2",
+        "status": "GCS 15, ambulating independently",
+        "events": "Ambulating 100 feet independently with PT. Steady gait. Pain minimal. [Progress note POD 2 2024-01-18]"
       },
       {
         "date": "2024-01-19",
-        "hospitalDay": 5,
-        "postOpDay": 3,
-        "events": [
-          {
-            "time": "morning",
-            "event": "Cleared for discharge",
-            "category": "Assessment",
-            "details": "Medically stable, tolerating PO, ambulating, pain controlled",
-            "sourceQuote": "POD 3: Ready for discharge. Stable, ambulating, pain controlled.",
-            "significance": "Discharge criteria met"
-          }
-        ],
-        "clinicalStatus": {
-          "neurologicalStatus": "GCS 15, no deficits",
-          "vitalSigns": "Stable",
-          "symptoms": "Minimal incisional pain",
-          "mobility": "Ambulating independently",
-          "diet": "Regular",
-          "sourceQuote": "Discharge exam: Alert and oriented x3. CN II-XII intact. Motor 5/5 throughout. Ambulating independently. Incision clean, dry, intact."
-        },
-        "interventions": [],
-        "complications": []
+        "day": "POD 3",
+        "status": "GCS 15, fully independent",
+        "events": "Cleared for discharge. Medically stable, ambulating independently, pain controlled. Incision clean, dry, intact. [Discharge summary 2024-01-19]"
       }
     ],
 
-    "clinicalTrajectory": {
-      "overallCourse": "Improving",
-      "neurologicalTrajectory": {
-        "admission": "GCS 15, no deficits",
-        "nadir": "POD 0 immediate post-op, briefly sedated (GCS 14-15)",
-        "discharge": "GCS 15, no deficits",
-        "trend": "Stable throughout, no neurological deterioration",
-        "evidenceTimeline": [
-          {
-            "timepoint": "Admission (HD 1)",
-            "date": "2024-01-15",
-            "status": "GCS 15, intact exam",
-            "sourceQuote": "Admission: Alert and oriented x3, no deficits"
-          },
-          {
-            "timepoint": "POD 0 evening",
-            "date": "2024-01-16",
-            "status": "GCS 15, no new deficits",
-            "sourceQuote": "POD 0: Alert, following commands, moving all extremities 5/5"
-          },
-          {
-            "timepoint": "Discharge (POD 3)",
-            "date": "2024-01-19",
-            "status": "GCS 15, no deficits",
-            "sourceQuote": "Discharge: Alert and oriented x3, no deficits"
-          }
-        ]
-      },
-      "functionalTrajectory": {
-        "admission": "Fully independent, ambulating",
-        "discharge": "Fully independent, ambulating",
-        "keyMilestones": [
-          {
-            "milestone": "Extubated",
-            "date": "2024-01-16",
-            "hospitalDay": 2,
-            "sourceQuote": "Extubated in PACU"
-          },
-          {
-            "milestone": "Out of bed to chair",
-            "date": "2024-01-17",
-            "hospitalDay": 3,
-            "sourceQuote": "POD 1: Out of bed to chair"
-          },
-          {
-            "milestone": "Ambulating independently",
-            "date": "2024-01-18",
-            "hospitalDay": 4,
-            "sourceQuote": "POD 2: Ambulating 100 feet independently"
-          }
-        ]
-      },
-      "complicationsImpact": {
-        "occurred": [],
-        "resolved": [],
-        "ongoing": [],
-        "impactOnLOS": "No complications. Routine length of stay for uncomplicated craniotomy."
-      }
-    },
-
-    "keyEvents": [
-      {
-        "event": "Left frontal craniotomy",
-        "date": "2024-01-16",
-        "hospitalDay": 2,
-        "postOpDay": 0,
-        "description": "Gross total resection of left frontal meningioma",
-        "outcome": "Successful resection, no complications",
-        "sourceQuote": "Underwent left frontal craniotomy for resection. GTR achieved."
-      }
-    ]
+    "trajectory": {
+      "overall": "Improving",
+      "neuro": "Admission: GCS 15, no deficits (2024-01-15) → Nadir: POD 0 post-op sedated (2024-01-16) → Discharge: GCS 15, no deficits (2024-01-19). Stable throughout, no neurological deterioration.",
+      "functional": "Admission: fully independent → POD 0: extubated in PACU → POD 1: out of bed to chair → POD 2: ambulating 100ft independently → Discharge: fully independent",
+      "complications": "None. Routine uncomplicated post-craniotomy course."
+    }
   }
 }
 
 ### Extraction Checklist for Hospital Course:
 
 Before submitting extraction, verify:
-□ Admission date established and all subsequent dates calculated correctly
-□ Every documented hospital day extracted (including "uneventful" days)
-□ Events in chronological order within each day
-□ Temporal source context provided for all quotes (note type + date)
-□ Clinical trajectory documented with evidence timeline
-□ Key milestones extracted (extubation, first ambulation, complications, discharge)
-□ Complications tracked through course (onset → management → resolution)
+□ Admission date established, all subsequent dates calculated correctly
+□ Every documented hospital day extracted with brief status + narrative events
+□ Trajectory includes admission → nadir → discharge progression
+□ All source references include temporal context in brackets [Note type YYYY-MM-DD]
 □ No temporal impossibilities (POD 7 before POD 3, etc.)
-□ Functional status progression documented
-□ All sourceQuotes are verbatim and include temporal context
 
 ## 6. DISCHARGE STATUS DEDUCTION (CRITICAL)
 
@@ -759,9 +351,9 @@ Source: "Discharge exam: Alert and oriented to person, place, and time. Follows 
 {
   "dischargeGCS": {
     "value": 15,
-    "sourceQuote": "Alert and oriented to person, place, and time. Follows all commands. Moving all four extremities",
+    "source": "Alert and oriented to person, place, and time. Follows all commands. Moving all four extremities [Discharge exam 2024-01-19]",
     "confidence": "medium",
-    "deductionMethod": "Clinical description indicates GCS 15 (E4V5M6: spontaneous eye opening, oriented, follows commands)"
+    "deduced": "clinical-exam-gcs-e4v5m6"
   }
 }
 
@@ -770,9 +362,9 @@ Source: "45-year-old male discharged on POD 7 after craniotomy."
 {
   "dischargeGCS": {
     "value": 15,
-    "sourceQuote": "discharged on POD 7",
+    "source": "discharged on POD 7 [Discharge summary 2024-01-19]",
     "confidence": "medium",
-    "deductionMethod": "Assumed normal for routine discharge"
+    "deduced": "assumed-normal"
   }
 }
 Why wrong: HALLUCINATION - Cannot assume GCS 15 without documented exam. Discharge ≠ normal status.
@@ -817,10 +409,10 @@ Return a JSON object with extracted clinical data. Each field should follow the 
 {
   "fieldName": {
     "value": <extracted value or null>,
-    "sourceQuote": "<exact quote from notes>",
-    "confidence": "high" | "medium" | "low",
-    "deductionMethod": "<method if inferred>",
-    "warnings": [<array if low confidence>]
+    "source": "<exact quote with [note type date]>",
+    "confidence": "medium" | "low",  // OPTIONAL - omit if high
+    "deduced": "<short-tag>",  // OPTIONAL - only if value inferred/calculated
+    "warnings": [<array if low confidence>]  // OPTIONAL - only if confidence is low
   }
 }
 

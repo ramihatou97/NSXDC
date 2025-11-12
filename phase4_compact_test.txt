@@ -1,0 +1,152 @@
+NEUROSURGICAL CLINICAL NOTES
+
+========================================================================
+ADMISSION HISTORY & PHYSICAL - 15/03/2025
+========================================================================
+Dr. Sarah Johnson, Neurosurgery
+
+Chief Complaint: Progressive lower extremity weakness
+
+HPI: 68F with breast cancer history presents with 3-month bilateral LE weakness, 2 recent falls. No bowel/bladder incontinence.
+
+Exam:
+- Alert, oriented x3
+- Motor: Bilateral LE 3/5, UE 5/5
+- Sensory: Decreased L3-S1 bilaterally
+- Gait: Non-ambulatory, wheelchair dependent
+
+MRI: Enhancing intramedullary lesion T10-T11, 2.5cm
+
+Admission Assessment:
+- GCS: 15/15
+- KPS: 50 (requires considerable assistance)
+- Ambulatory Status: Non-ambulatory, wheelchair
+
+========================================================================
+OPERATIVE REPORT - 16/03/2025
+========================================================================
+Surgeon: Dr. Sarah Johnson
+
+Procedure: T9-T12 laminectomy with microsurgical resection intramedullary spinal cord tumor
+
+Operative Findings: Well-demarcated intramedullary tumor T10-T11
+Technique: Gross total resection achieved
+EBL: 350 mL
+Complications: None
+
+========================================================================
+PATHOLOGY REPORT - 18/03/2025
+========================================================================
+Dr. Emily Rodriguez
+
+Specimen: Intramedullary spinal cord tumor
+
+Diagnosis: METASTATIC ADENOCARCINOMA, consistent with breast primary
+IHC: ER+, PR+, HER2-, CK7+, CK20-, GFAP-
+
+========================================================================
+PHYSICAL THERAPY EVALUATION - 18/03/2025 (POD #2)
+========================================================================
+Jessica Martinez, PT, DPT
+
+Subjective: Patient motivated for therapy. Reports weakness in legs.
+
+Objective Assessment:
+- Bed Mobility: Moderate assistance
+- Transfers: Maximum assistance x2
+- Standing: Unable without maximum assistance
+- Ambulation: Not attempted due to significant weakness
+
+Strength Testing:
+- Hip Flexion: 2/5 bilaterally
+- Knee Extension: 2/5 bilaterally
+- Ankle Dorsiflexion: 2/5 bilaterally
+
+Functional Assessment:
+- ADL Independence: Dependent for all transfers, toileting, bathing
+- Safety Awareness: Good
+
+Assessment: 68F POD#2 s/p thoracic tumor resection with significant bilateral LE weakness, dependent mobility.
+
+Discharge Recommendation: ACUTE INPATIENT REHABILITATION
+
+========================================================================
+NURSING ASSESSMENT - 19/03/2025 (POD #3)
+========================================================================
+Amanda Thompson, RN
+
+Neurological: Alert, oriented x3, GCS 15/15
+Motor: Bilateral LE weakness, unable to move legs against gravity
+Foley in place - unable to void independently
+
+Mobility:
+- Requires total assistance for bed repositioning
+- 2-person assist for transfers
+- Sitting tolerance: 30 min with support
+- Wheelchair for mobility
+- HIGH fall risk
+
+ADL Status:
+- Bathing: Total assistance
+- Dressing: Total assistance lower body
+- Toileting: Total assistance
+- Feeding: Independent
+
+========================================================================
+OCCUPATIONAL THERAPY - 20/03/2025 (POD #4)
+========================================================================
+David Kim, OTR/L
+
+UE Assessment: 5/5 strength all muscle groups, coordination WNL
+
+ADL Assessment:
+- Feeding: Independent
+- Grooming: Modified independent
+- Upper body dressing: Modified independent
+- Lower body dressing: Dependent
+- Bathing: Dependent lower body
+- Toileting: Dependent
+
+Wheelchair mobility: Learning to propel short distances
+Transfers: Requires 2-person maximum assistance
+
+Discharge Recommendation: Acute inpatient rehab for intensive ADL retraining
+
+========================================================================
+DISCHARGE SUMMARY - 23/03/2025
+========================================================================
+Dr. Sarah Johnson
+
+Admission: 15/03/2025
+Surgery: 16/03/2025
+Discharge: 23/03/2025
+LOS: 8 days
+
+Diagnosis:
+1. Metastatic breast adenocarcinoma to thoracic spinal cord (T10-T11)
+2. Paraparesis secondary to spinal cord tumor
+
+Hospital Course:
+Underwent successful GTR intramedullary spinal cord tumor. Postop LE strength 2/5 bilaterally. Pathology confirmed metastatic breast adenocarcinoma. Daily PT/OT with slow progress.
+
+Discharge Status:
+- Neurological: GCS 15/15
+- Motor: UE 5/5, LE 2/5 bilaterally
+- Functional: Dependent for transfers, ADLs, mobility
+- Ambulation: Non-ambulatory, wheelchair dependent
+
+Discharge Performance Scores:
+- GCS: 15/15
+- KPS: 40 (disabled, requires special care)
+- ECOG: 3 (limited self-care, confined >50% waking hours)
+- mRS: 5 (severe disability, bedridden, requires constant nursing)
+
+Disposition: ACUTE INPATIENT REHABILITATION
+
+Medications:
+1. Dexamethasone 4mg PO Q6H
+2. Oxycodone 5-10mg PO Q4H PRN
+3. Acetaminophen 650mg PO Q6H
+4. Docusate 100mg PO BID
+5. Pantoprazole 40mg PO daily
+6. Enoxaparin 40mg SQ daily

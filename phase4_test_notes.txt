@@ -1,0 +1,261 @@
+NEUROSURGICAL CLINICAL NOTES - MULTIDISCIPLINARY DOCUMENTATION
+
+========================================================================
+ADMISSION HISTORY & PHYSICAL
+========================================================================
+Date: 15/03/2025
+Provider: Dr. Sarah Johnson, Neurosurgery
+
+Chief Complaint: Progressive lower extremity weakness and gait instability
+
+HPI: 68-year-old female with history of breast cancer (2020, treated with lumpectomy and radiation) presents with 3-month history of progressive bilateral lower extremity weakness and difficulty ambulating. Patient reports falling twice in the past week. Denies bowel/bladder incontinence. Denies saddle anesthesia.
+
+Physical Examination:
+- Mental Status: Alert and oriented x3, appropriate affect
+- Motor: Bilateral lower extremity weakness 3/5, upper extremities 5/5
+- Sensory: Decreased sensation L3-S1 bilaterally
+- Reflexes: Hyperreflexia in lower extremities, positive Babinski bilaterally
+- Gait: Unable to ambulate without assistance due to weakness
+
+Imaging: MRI thoracic spine shows enhancing intramedullary lesion at T10-T11 level, 2.5cm in length, concerning for metastatic disease vs primary spinal cord tumor.
+
+Admission Assessment:
+- GCS: 15/15 (E4V5M6)
+- KPS: 50 (requires considerable assistance and frequent medical care)
+- Ambulatory Status: Non-ambulatory, requires wheelchair
+
+Plan: Admit for surgical resection of thoracic spinal cord lesion
+
+========================================================================
+OPERATIVE REPORT
+========================================================================
+Date of Surgery: 16/03/2025
+Surgeon: Dr. Sarah Johnson
+Assistant: Dr. Michael Chen
+Anesthesia: General endotracheal
+
+Procedure: T9-T12 laminectomy with microsurgical resection of intramedullary spinal cord tumor
+
+Operative Findings: Intramedullary tumor at T10-T11 level, well-demarcated, firm consistency, moderate vascularity.
+
+Technique: Midline posterior approach, T9-T12 laminectomy, dural opening, identification of tumor via myelotomy, microsurgical gross total resection achieved. Duraplasty with fascial graft. Closure in layers.
+
+EBL: 350 mL
+Complications: None
+Specimens: Tumor tissue sent to pathology
+
+Postoperative Diagnosis: Intramedullary spinal cord tumor, awaiting pathology
+
+========================================================================
+PATHOLOGY REPORT
+========================================================================
+Date: 18/03/2025
+Pathologist: Dr. Emily Rodriguez
+
+Specimen: Intramedullary spinal cord tumor
+
+Diagnosis: METASTATIC ADENOCARCINOMA, consistent with breast primary
+
+Immunohistochemistry:
+- ER: Positive
+- PR: Positive
+- HER2: Negative
+- CK7: Positive
+- CK20: Negative
+- GFAP: Negative
+
+Comment: Morphology and immunoprofile consistent with metastatic breast adenocarcinoma to spinal cord. Clinical correlation recommended.
+
+========================================================================
+PROGRESS NOTE - POD #1
+========================================================================
+Date: 17/03/2025 (POD #1)
+Provider: Dr. Michael Chen, Neurosurgery
+
+Subjective: Patient reports moderate incisional pain, controlled with IV opioids. No radicular pain.
+
+Objective:
+- Vitals stable
+- Neurological exam: GCS 15/15, bilateral lower extremity strength 2/5 (decreased from preop), sensation intact, Foley catheter in place
+- Wound: Clean, dry, intact
+
+Assessment/Plan: POD #1 status post T9-T12 laminectomy with tumor resection. Decreased lower extremity strength likely due to surgical manipulation. Continue steroids, pain control. PT/OT consult ordered.
+
+========================================================================
+PHYSICAL THERAPY EVALUATION
+========================================================================
+Date: 18/03/2025 (POD #2)
+Therapist: Jessica Martinez, PT, DPT
+
+Reason for Referral: S/P thoracic spinal cord tumor resection, evaluate mobility and discharge planning
+
+Subjective: Patient motivated for therapy. Reports weakness in legs, difficulty moving in bed.
+
+Objective Assessment:
+- Bed Mobility: Moderate assistance (requires help with all position changes)
+- Transfers: Maximum assistance x2 (requires two people to transfer bed to chair)
+- Sitting Balance: Fair (maintains sitting with close supervision)
+- Standing: Unable to stand without maximum assistance due to bilateral lower extremity weakness
+- Ambulation: Not attempted this session due to significant weakness
+- Assistive Devices: N/A - not ambulatory at this time
+
+Strength Testing:
+- Hip Flexion: 2/5 bilaterally
+- Knee Extension: 2/5 bilaterally
+- Ankle Dorsiflexion: 2/5 bilaterally
+
+Functional Assessment:
+- ADL Independence: Dependent for all transfers, toileting, bathing
+- Safety Awareness: Good - patient aware of limitations
+
+Assessment: 68 y/o F POD #2 s/p thoracic spinal tumor resection with significant bilateral LE weakness, dependent mobility status. Patient requires acute inpatient rehabilitation for intensive PT/OT to maximize functional recovery.
+
+Plan:
+- Daily PT sessions for mobility training
+- Progress to sitting balance exercises, transfer training
+- Recommend discharge to acute inpatient rehabilitation facility
+- Trial of wheelchair mobility
+
+Discharge Recommendation: ACUTE INPATIENT REHABILITATION
+
+========================================================================
+NURSING ASSESSMENT - POD #3
+========================================================================
+Date: 19/03/2025
+RN: Amanda Thompson, RN, BSN
+
+Neurological Assessment:
+- Alert and oriented x3, cooperative
+- GCS: 15/15
+- Motor: Bilateral lower extremity weakness, patient unable to move legs against gravity
+- Foley catheter in place - patient unable to void independently
+
+Mobility Assessment:
+- Patient requires total assistance for all position changes in bed
+- Requires 2-person assist for bed-to-chair transfers
+- Sitting tolerance: 30 minutes with support
+- Patient using wheelchair for mobility
+- Fall Risk Score: HIGH (45/100)
+
+ADL Status:
+- Bathing: Total assistance
+- Dressing: Total assistance lower body, modified independent upper body
+- Toileting: Total assistance, using Foley catheter
+- Feeding: Independent
+
+Pain Assessment:
+- Pain score: 4/10 at rest, 6/10 with movement
+- Managed with oral analgesics
+
+Discharge Planning Needs:
+- Will require 24/7 care
+- Not safe for home discharge without extensive home modifications
+- PT recommends acute inpatient rehab
+
+========================================================================
+OCCUPATIONAL THERAPY EVALUATION
+========================================================================
+Date: 20/03/2025 (POD #4)
+Therapist: David Kim, OTR/L
+
+Reason for Referral: Evaluate ADL function and UE strength post-surgery
+
+Upper Extremity Assessment:
+- Bilateral UE strength: 5/5 all muscle groups
+- Coordination: WNL
+- Fine motor: Intact
+
+ADL Assessment:
+- Feeding: Independent
+- Grooming: Modified independent (can wash face, brush teeth at sink level)
+- Upper body dressing: Modified independent
+- Lower body dressing: Dependent (unable to reach feet due to LE weakness)
+- Bathing: Dependent for lower body, modified independent for upper body
+- Toileting: Dependent (requires transfer assistance, using catheter)
+
+Cognitive Assessment:
+- Alert, oriented, good insight into limitations
+- Able to follow multi-step instructions
+- Demonstrates good safety awareness
+
+Functional Mobility:
+- Wheelchair mobility: Learning to propel wheelchair short distances
+- Transfers: Requires 2-person maximum assistance
+
+Discharge Recommendations:
+- Acute inpatient rehabilitation for intensive ADL retraining
+- Power wheelchair evaluation if LE function does not improve
+- Home assessment if planning to discharge home eventually
+
+========================================================================
+PROGRESS NOTE - POD #5
+========================================================================
+Date: 21/03/2025 (POD #5)
+Provider: Dr. Sarah Johnson, Neurosurgery
+
+Subjective: Patient doing well overall. Pain controlled. Working hard in PT/OT.
+
+Objective:
+- GCS: 15/15
+- Wound healing well, sutures intact
+- Neurological exam: LE strength remains 2/5 bilaterally, UE strength 5/5
+- Working with PT/OT daily, making slow progress with transfers
+
+Assessment/Plan:
+1. Pathology confirmed metastatic breast cancer to spinal cord
+2. Consulted medical oncology - plan for palliative radiation therapy to surgical site
+3. PT/OT recommend acute inpatient rehabilitation
+4. Plan for discharge to acute rehab facility in 2-3 days pending insurance approval
+
+Discharge Planning: Arranging transfer to St. Michael's Rehabilitation Hospital for intensive inpatient rehab program.
+
+========================================================================
+DISCHARGE SUMMARY
+========================================================================
+Date of Discharge: 23/03/2025
+Discharging Provider: Dr. Sarah Johnson, Neurosurgery
+
+Admission Date: 15/03/2025
+Surgery Date: 16/03/2025
+Discharge Date: 23/03/2025
+Length of Stay: 8 days
+
+Diagnosis:
+1. Metastatic breast adenocarcinoma to thoracic spinal cord (T10-T11)
+2. Paraparesis secondary to spinal cord tumor
+
+Procedures:
+1. T9-T12 laminectomy with microsurgical resection of intramedullary spinal cord tumor (16/03/2025)
+
+Hospital Course:
+Patient underwent successful gross total resection of intramedullary spinal cord tumor. Postoperatively experienced decreased lower extremity strength (2/5 bilaterally) attributed to surgical manipulation and tumor effects. Pathology confirmed metastatic breast adenocarcinoma. Patient worked with PT/OT daily with slow improvements in transfer ability. Medical oncology consulted - plan for palliative radiation to surgical site starting next week at rehab facility.
+
+Discharge Status:
+- Neurological: GCS 15/15, alert and oriented
+- Motor: Upper extremities 5/5, lower extremities 2/5 bilaterally (unchanged from POD #1)
+- Functional Status: Dependent for all transfers, ADLs, mobility
+- Ambulation: Non-ambulatory, wheelchair dependent
+- Assistive Devices: Manual wheelchair (family will obtain power wheelchair for long-term)
+
+Discharge Performance Scores:
+- GCS: 15/15
+- KPS: 40 (disabled, requires special care and assistance)
+- ECOG: 3 (capable of only limited self-care, confined to bed or chair >50% of waking hours)
+- mRS: 5 (severe disability, bedridden, incontinent, requires constant nursing care)
+
+Discharge Disposition: ACUTE INPATIENT REHABILITATION (St. Michael's Rehabilitation Hospital)
+
+Discharge Medications:
+1. Dexamethasone 4mg PO Q6H (tapering schedule provided)
+2. Oxycodone 5-10mg PO Q4H PRN pain
+3. Acetaminophen 650mg PO Q6H scheduled
+4. Docusate 100mg PO BID
+5. Pantoprazole 40mg PO daily
+6. Enoxaparin 40mg SQ daily (DVT prophylaxis)
+
+Follow-up:
+- Neurosurgery clinic in 2 weeks for suture removal
+- Medical oncology to arrange radiation therapy at rehab facility
+- PT/OT to continue daily at acute inpatient rehab
+
+Prognosis: Guarded. Patient has metastatic breast cancer with spinal cord involvement. Functional recovery potential unclear. Will require ongoing intensive rehabilitation.

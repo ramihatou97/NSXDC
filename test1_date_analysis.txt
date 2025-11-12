@@ -1,0 +1,167 @@
+═══════════════════════════════════════════════════════════════
+📊 TEST 1 RESULTS - AUTO DATE FORMAT DETECTION
+═══════════════════════════════════════════════════════════════
+
+REQUEST CONFIGURATION:
+  dateFormat: "AUTO"
+  regionLocale: Not specified
+  dateFormatHints: Not specified
+
+EXPECTED BEHAVIOR:
+  ✓ Detect unambiguous dates (day > 12)
+  ✓ Infer DD/MM/YYYY format from unambiguous dates
+  ✓ Apply DD/MM/YYYY to ambiguous dates
+  ✓ Generate warnings for ambiguous dates
+
+═══════════════════════════════════════════════════════════════
+🔍 DATE EXTRACTION RESULTS
+═══════════════════════════════════════════════════════════════
+
+PATIENT DEMOGRAPHICS:
+  Date of Birth: 1969-10-24 ✓
+    Source: "DOB: 24/10/1969"
+    Format: DD/MM/YYYY (UNAMBIGUOUS - day > 12)
+    Confidence: high
+    Interpretation: October 24, 1969 ✓
+
+KEY DATES:
+  Admission Date: 2025-10-10
+    Source: "Date: 10/10/2025"
+    Format: AMBIGUOUS (both values ≤ 12)
+    Confidence: high
+    Interpretation: October 10, 2025
+    ⚠️ NOTE: Could be Oct 10 or Oct 10 (same either way)
+
+  Surgery Date: 2025-10-10 ✓
+    Source: "Date: 10/10/2025"
+    Format: AMBIGUOUS (both values ≤ 12)
+    Confidence: high
+    Interpretation: October 10, 2025 ✓
+
+  POD 1 Note: 2025-10-11 ✓
+    Source: "Date of Service: 11/10/25"
+    Format: DD/MM/YYYY (UNAMBIGUOUS - day > 12)
+    Confidence: high
+    Interpretation: October 11, 2025 ✓
+
+  POD 2 Note: 2025-10-12 ✓
+    Source: "Date of Service: 12/10/25"
+    Format: AMBIGUOUS (both values ≤ 12)
+    Confidence: high
+    Interpretation: October 12, 2025 ✓
+
+  POD 17 Note: 2025-10-27 ✓
+    Source: "Date of Service: 27/10/25"
+    Format: DD/MM/YYYY (UNAMBIGUOUS - day > 12)
+    Confidence: high
+    Interpretation: October 27, 2025 ✓
+
+AMBIGUOUS DATE (CRITICAL TEST):
+  Initial Visit: NOT EXTRACTED AS PRIMARY DATE
+    Source: "Visit date: 1/8/2025"
+    Format: AMBIGUOUS (both values ≤ 12)
+    Expected Interpretation: August 1, 2025 (DD/MM/YYYY)
+    Actual Interpretation: Not extracted as admission date
+    
+    NOTE: The extraction correctly used the SURGERY date (10/10/2025)
+    as the admission date rather than the pre-operative clinic visit
+    date (1/8/2025). This is clinically appropriate but means we
+    cannot assess if 1/8/2025 would have been interpreted correctly.
+
+═══════════════════════════════════════════════════════════════
+✅ TEMPORAL CONSISTENCY VALIDATION
+═══════════════════════════════════════════════════════════════
+
+Chronology Check:
+  Admission (2025-10-10) ≤ Surgery (2025-10-10) ✓
+  Surgery (2025-10-10) < POD 1 (2025-10-11) ✓
+  POD 1 (2025-10-11) < POD 2 (2025-10-12) ✓
+  POD 2 (2025-10-12) < POD 17 (2025-10-27) ✓
+  
+  ✓ ALL DATES IN CORRECT CHRONOLOGICAL ORDER
+
+POD Calculations:
+  Surgery: 2025-10-10
+  POD 1: 2025-10-11 (10/10 + 1 day) ✓
+  POD 2: 2025-10-12 (10/10 + 2 days) ✓
+  POD 17: 2025-10-27 (10/10 + 17 days) ✓
+  
+  ✓ ALL POD CALCULATIONS CORRECT
+
+═══════════════════════════════════════════════════════════════
+⚠️ WARNINGS AND AMBIGUITY DETECTION
+═══════════════════════════════════════════════════════════════
+
+CRITICAL VALIDATION ISSUES (18 total):
+  ❌ 5 Critical issues
+  ❌ 7 Major issues
+  ❌ 6 Minor issues
+
+DATE-RELATED ISSUES:
+  1. CRITICAL - Temporal: "Admission date incorrectly set to surgery date"
+     Location: admissionDate
+     Suggested Fix: Document actual admission date from H&P
+     
+     NOTE: This is a clinical documentation issue, not a date
+     format interpretation issue.
+
+  2. MAJOR - Temporal: "Follow-up appointments include pre-operative 
+     appointments (September 5th, mid-September) which occurred BEFORE 
+     surgery"
+     Location: followUpPlans
+     
+     NOTE: This correctly identifies that September dates come before
+     October surgery, confirming temporal validation is working.
+
+═══════════════════════════════════════════════════════════════
+📈 VALIDATION SCORE: 59/100 (FAILED)
+═══════════════════════════════════════════════════════════════
+
+FAILURE REASONS:
+  - Clinical documentation issues (not date format issues)
+  - Missing POD 3-16 progress notes (documentation gap)
+  - Incomplete hospital course coverage
+  - Admission date conflated with surgery date
+
+DATE FORMAT SPECIFIC PERFORMANCE:
+  ✓ Unambiguous dates correctly identified (24/10/1969, 27/10/25)
+  ✓ Temporal consistency validated (all dates in order)
+  ✓ POD calculations correct
+  ⚠️ Ambiguous date handling not fully tested (1/8/2025 not used)
+  ⚠️ No explicit datePreprocessing field in response
+  ⚠️ No explicit warnings about ambiguous dates
+
+═══════════════════════════════════════════════════════════════
+🔬 PHASE 1 ASSESSMENT
+═══════════════════════════════════════════════════════════════
+
+WHAT WORKED:
+  1. ✓ Dates interpreted correctly (all October dates make sense)
+  2. ✓ Temporal validation caught pre-op vs post-op confusion
+  3. ✓ Chronological order validated
+  4. ✓ POD arithmetic correct
+
+WHAT'S MISSING:
+  1. ❌ No datePreprocessing field in response
+  2. ❌ No explicit ambiguous date warnings
+  3. ❌ No confidence level explanation for ambiguous dates
+  4. ❌ deductionMethod field not used for date interpretation
+
+ISSUE: The extraction prompt instructions were added, but the
+extraction is NOT returning the datePreprocessing metadata that
+was defined in the ExtractionResponse interface. This suggests:
+  a) The prompt needs to explicitly request this metadata
+  b) The orchestrator needs to call DatePreprocessorService
+  c) The response structure needs to be enforced
+
+═══════════════════════════════════════════════════════════════
+
+PERFORMANCE:
+  Processing Time: 158.035 seconds (2 min 38 sec)
+  Input Tokens: 40 (cached)
+  Output Tokens: 9473
+  Model: claude-sonnet-4-5-20250929
+  
+  NOTE: Long processing time likely due to extensive prompt length
+  (140+ lines of date disambiguation logic added to extraction prompt)
+

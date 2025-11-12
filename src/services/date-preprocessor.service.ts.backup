@@ -1,0 +1,904 @@
+/**
+ * Date Preprocessor Service - Enhanced (Week 1 Day 2)
+ * Comprehensive date handling for clinical notes with:
+ * - 5+ date format support (ISO, US, written, relative, partial)
+ * - Date type inference (admission/discharge/procedure/event)
+ * - Multi-factor confidence scoring
+ * - Chronological validation and LOS calculation
+ */
+
+import type { ValidationWarning, DateFormatType } from '../types/index.js';
+
+// ============================================================================
+// ENHANCED TYPE DEFINITIONS (Day 2)
+// ============================================================================
+
+/**
+ * Date type classification based on clinical context
+ */
+export type DateType = 
+  | 'admission'        // Hospital admission date
+  | 'discharge'        // Hospital discharge date
+  | 'procedure'        // Surgery/procedure date
+  | 'event'            // Clinical event (complication, transfer, etc.)
+  | 'birth'            // Date of birth
+  | 'diagnosis'        // Diagnosis date
+  | 'unknown';         // Cannot determine from context
+
+/**
+ * Date format classification
+ */
+export type DateFormatClass =
+  | 'ISO'              // YYYY-MM-DD or YYYY/MM/DD
+  | 'US_NUMERIC'       // MM/DD/YYYY
+  | 'EU_NUMERIC'       // DD/MM/YYYY
+  | 'WRITTEN_FULL'     // Month DD, YYYY (e.g., "January 15, 2025")
+  | 'WRITTEN_SHORT'    // Mon DD, YYYY (e.g., "Jan 15, 2025")
+  | 'RELATIVE'         // "3 days ago", "POD 2", "HD 5"
+  | 'PARTIAL'          // "January 2025", "2025"
+  | 'AMBIGUOUS';       // Cannot determine format
+
+/**
+ * Enhanced date pattern with type inference and confidence factors
+ */
+export interface EnhancedDatePattern {
+  // Original data
+  original: string;
+  normalized: string | null;      // ISO 8601 format (YYYY-MM-DD) or null if unparseable
+  position: { start: number; end: number };
+  
+  // Format classification
+  format: DateFormatClass;
+  formatConfidence: number;       // 0.0-1.0
+  
+  // Type inference
+  inferredType: DateType;
+  typeConfidence: number;         // 0.0-1.0
+  typeReasoning: string;
+  
+  // Multi-factor confidence (Day 2 requirement)
+  overallConfidence: number;      // 0.0-1.0 (weighted aggregate)
+  confidenceFactors: {
+    formatClarity: number;        // 0.0-1.0 (how clear is the format?)
+    contextQuality: number;       // 0.0-1.0 (how good is surrounding context?)
+    temporalCoherence: number;    // 0.0-1.0 (fits with other dates?)
+    clinicalPlausibility: number; // 0.0-1.0 (medically reasonable?)
+  };
+  
+  // Context analysis
+  surroundingText: string;        // ±30 chars for context
+  contextKeywords: string[];      // Keywords that helped inference
+  
+  // Validation
+  isValid: boolean;
+  validationErrors: string[];
+}
+
+/**
+ * Chronological validation result (Day 2 requirement)
+ */
+export interface ChronologicalValidation {
+  isValid: boolean;
+  admissionDate: string | null;
+  procedureDate: string | null;
+  dischargeDate: string | null;
+  
+  // Length of stay calculation
+  lengthOfStay: {
+    days: number | null;
+    confidence: number;
+    calculationMethod: string;
+  };
+  
+  // Chronology checks
+  checks: {
+    admissionBeforeProcedure: boolean | null;
+    procedureBeforeDischarge: boolean | null;
+    admissionBeforeDischarge: boolean | null;
+    reasonableLOS: boolean | null;  // LOS < 365 days
+  };
+  
+  errors: string[];
+  warnings: string[];
+}
+
+/**
+ * Enhanced preprocessing configuration
+ */
+export interface DatePreprocessorConfig {
+  preferredFormat: DateFormatType;
+  dateFormatHints?: string;
+  
+  // Enhanced options (Day 2)
+  enableTypeInference?: boolean;      // Default: true
+  enableChronologicalValidation?: boolean; // Default: true
+  strictValidation?: boolean;         // Fail on invalid dates? Default: false
+  currentDate?: Date;                 // For relative date parsing
+}
+
+/**
+ * Enhanced date format analysis
+ */
+export interface DateFormatAnalysis {
+  detectedFormat: DateFormatType;
+  confidence: 'high' | 'medium' | 'low';
+  reasoning: string;
+  patternsFound: {
+    iso: number;
+    usNumeric: number;
+    euNumeric: number;
+    writtenFull: number;
+    writtenShort: number;
+    relative: number;
+    partial: number;
+    ambiguous: number;
+  };
+  allDates: EnhancedDatePattern[];
+}
+
+/**
+ * Enhanced preprocessing result
+ */
+export interface PreprocessResult {
+  annotatedNotes: string;
+  conversions: EnhancedDatePattern[];
+  warnings: ValidationWarning[];
+  analysis: DateFormatAnalysis;
+  
+  // Enhanced (Day 2)
+  chronologicalValidation: ChronologicalValidation;
+  suggestedDateTypes: Map<string, DateType>; // normalized date -> inferred type
+}
+
+// Legacy interface for backward compatibility
+export interface DatePattern {
+  original: string;
+  normalized: string;
+  confidence: 'high' | 'medium' | 'low';
+  reasoning: string;
+  position: { start: number; end: number };
+}
+
+// ============================================================================
+// DATE PREPROCESSOR SERVICE - ENHANCED IMPLEMENTATION (Day 2)
+// ============================================================================
+
+export class DatePreprocessorService {
+  private currentDate: Date;
+  
+  constructor(currentDate?: Date) {
+    this.currentDate = currentDate || new Date();
+  }
+
+  // ==========================================================================
+  // DATE FORMAT PARSING (5+ formats - Day 2 Requirement)
+  // ==========================================================================
+
+  /**
+   * Parse ISO 8601 format: YYYY-MM-DD or YYYY/MM/DD
+   */
+  private parseISODate(text: string, position: number): EnhancedDatePattern | null {
+    const regex = /\b(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})\b/g;
+    regex.lastIndex = position;
+    const match = regex.exec(text);
+    
+    if (!match || match.index !== position) return null;
+    
+    const year = parseInt(match[1]);
+    const month = parseInt(match[2]);
+    const day = parseInt(match[3]);
+    
+    // Validate date components
+    if (month < 1 || month > 12 || day < 1 || day > 31) {
+      return this.createInvalidDatePattern(match[0], match.index, 'ISO', 
+        `Invalid date components: month=${month}, day=${day}`);
+    }
+    
+    const normalized = `${match[1]}-${match[2].padStart(2, '0')}-${match[3].padStart(2, '0')}`;
+    const surroundingText = this.extractContext(text, match.index, match[0].length);
+    
+    return {
+      original: match[0],
+      normalized,
+      position: { start: match.index, end: match.index + match[0].length },
+      format: 'ISO',
+      formatConfidence: 1.0,
+      inferredType: 'unknown',
+      typeConfidence: 0.0,
+      typeReasoning: '',
+      overallConfidence: 0.9, // High format clarity, pending type inference
+      confidenceFactors: {
+        formatClarity: 1.0,
+        contextQuality: 0.5, // Will be updated by context analysis
+        temporalCoherence: 0.5,
+        clinicalPlausibility: 1.0,
+      },
+      surroundingText,
+      contextKeywords: [],
+      isValid: true,
+      validationErrors: [],
+    };
+  }
+
+  /**
+   * Parse written full format: Month DD, YYYY or DD Month YYYY
+   */
+  private parseWrittenFullDate(text: string, position: number): EnhancedDatePattern | null {
+    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+                       'July', 'August', 'September', 'October', 'November', 'December'];
+    const monthMap: { [key: string]: string } = {
+      'January': '01', 'February': '02', 'March': '03', 'April': '04',
+      'May': '05', 'June': '06', 'July': '07', 'August': '08',
+      'September': '09', 'October': '10', 'November': '11', 'December': '12',
+    };
+    
+    // Pattern 1: Month DD, YYYY
+    const regex1 = new RegExp(`\\b(${monthNames.join('|')})\\s+(\\d{1,2}),?\\s+(\\d{4})\\b`, 'gi');
+    regex1.lastIndex = position;
+    let match = regex1.exec(text);
+    
+    if (match && match.index === position) {
+      const month = monthMap[match[1]];
+      const day = match[2].padStart(2, '0');
+      const year = match[3];
+      const normalized = `${year}-${month}-${day}`;
+      const surroundingText = this.extractContext(text, match.index, match[0].length);
+      
+      return {
+        original: match[0],
+        normalized,
+        position: { start: match.index, end: match.index + match[0].length },
+        format: 'WRITTEN_FULL',
+        formatConfidence: 1.0,
+        inferredType: 'unknown',
+        typeConfidence: 0.0,
+        typeReasoning: '',
+        overallConfidence: 0.95,
+        confidenceFactors: {
+          formatClarity: 1.0,
+          contextQuality: 0.5,
+          temporalCoherence: 0.5,
+          clinicalPlausibility: 1.0,
+        },
+        surroundingText,
+        contextKeywords: [],
+        isValid: true,
+        validationErrors: [],
+      };
+    }
+    
+    // Pattern 2: DD Month YYYY
+    const regex2 = new RegExp(`\\b(\\d{1,2})\\s+(${monthNames.join('|')})\\s+(\\d{4})\\b`, 'gi');
+    regex2.lastIndex = position;
+    match = regex2.exec(text);
+    
+    if (match && match.index === position) {
+      const day = match[1].padStart(2, '0');
+      const month = monthMap[match[2]];
+      const year = match[3];
+      const normalized = `${year}-${month}-${day}`;
+      const surroundingText = this.extractContext(text, match.index, match[0].length);
+      
+      return {
+        original: match[0],
+        normalized,
+        position: { start: match.index, end: match.index + match[0].length },
+        format: 'WRITTEN_FULL',
+        formatConfidence: 1.0,
+        inferredType: 'unknown',
+        typeConfidence: 0.0,
+        typeReasoning: '',
+        overallConfidence: 0.95,
+        confidenceFactors: {
+          formatClarity: 1.0,
+          contextQuality: 0.5,
+          temporalCoherence: 0.5,
+          clinicalPlausibility: 1.0,
+        },
+        surroundingText,
+        contextKeywords: [],
+        isValid: true,
+        validationErrors: [],
+      };
+    }
+    
+    return null;
+  }
+
+  /**
+   * Parse written short format: Mon DD, YYYY
+   */
+  private parseWrittenShortDate(text: string, position: number): EnhancedDatePattern | null {
+    const monthShort = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun',
+                       'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+    const monthMap: { [key: string]: string } = {
+      'Jan': '01', 'Feb': '02', 'Mar': '03', 'Apr': '04',
+      'May': '05', 'Jun': '06', 'Jul': '07', 'Aug': '08',
+      'Sep': '09', 'Oct': '10', 'Nov': '11', 'Dec': '12',
+    };
+    
+    const regex = new RegExp(`\\b(${monthShort.join('|')})\\s+(\\d{1,2}),?\\s+(\\d{4})\\b`, 'gi');
+    regex.lastIndex = position;
+    const match = regex.exec(text);
+    
+    if (!match || match.index !== position) return null;
+    
+    const month = monthMap[match[1]];
+    const day = match[2].padStart(2, '0');
+    const year = match[3];
+    const normalized = `${year}-${month}-${day}`;
+    const surroundingText = this.extractContext(text, match.index, match[0].length);
+    
+    return {
+      original: match[0],
+      normalized,
+      position: { start: match.index, end: match.index + match[0].length },
+      format: 'WRITTEN_SHORT',
+      formatConfidence: 1.0,
+      inferredType: 'unknown',
+      typeConfidence: 0.0,
+      typeReasoning: '',
+      overallConfidence: 0.95,
+      confidenceFactors: {
+        formatClarity: 1.0,
+        contextQuality: 0.5,
+        temporalCoherence: 0.5,
+        clinicalPlausibility: 1.0,
+      },
+      surroundingText,
+      contextKeywords: [],
+      isValid: true,
+      validationErrors: [],
+    };
+  }
+
+  /**
+   * Parse relative dates: "3 days ago", "POD 2", "HD 5", "yesterday"
+   */
+  private parseRelativeDate(text: string, position: number): EnhancedDatePattern | null {
+    // Pattern 1: X days/weeks/months ago
+    const agoRegex = /\b(\d+)\s+(day|week|month|year)s?\s+ago\b/gi;
+    agoRegex.lastIndex = position;
+    let match = agoRegex.exec(text);
+    
+    if (match && match.index === position) {
+      const amount = parseInt(match[1]);
+      const unit = match[2].toLowerCase();
+      const referenceDate = new Date(this.currentDate);
+      
+      switch (unit) {
+        case 'day':
+          referenceDate.setDate(referenceDate.getDate() - amount);
+          break;
+        case 'week':
+          referenceDate.setDate(referenceDate.getDate() - (amount * 7));
+          break;
+        case 'month':
+          referenceDate.setMonth(referenceDate.getMonth() - amount);
+          break;
+        case 'year':
+          referenceDate.setFullYear(referenceDate.getFullYear() - amount);
+          break;
+      }
+      
+      const normalized = referenceDate.toISOString().split('T')[0];
+      const surroundingText = this.extractContext(text, match.index, match[0].length);
+      
+      return {
+        original: match[0],
+        normalized,
+        position: { start: match.index, end: match.index + match[0].length },
+        format: 'RELATIVE',
+        formatConfidence: 0.7, // Lower confidence for relative dates
+        inferredType: 'event',
+        typeConfidence: 0.6,
+        typeReasoning: 'Relative date suggests clinical event',
+        overallConfidence: 0.65,
+        confidenceFactors: {
+          formatClarity: 0.7,
+          contextQuality: 0.5,
+          temporalCoherence: 0.6,
+          clinicalPlausibility: 0.8,
+        },
+        surroundingText,
+        contextKeywords: ['ago'],
+        isValid: true,
+        validationErrors: [],
+      };
+    }
+    
+    // Pattern 2: POD (Post-Operative Day) or HD (Hospital Day)
+    const podRegex = /\b(POD|HD|post[\-\s]?operative day|hospital day)\s*(\d+)\b/gi;
+    podRegex.lastIndex = position;
+    match = podRegex.exec(text);
+    
+    if (match && match.index === position) {
+      const dayNumber = parseInt(match[2]);
+      const surroundingText = this.extractContext(text, match.index, match[0].length);
+      
+      return {
+        original: match[0],
+        normalized: null, // Cannot determine absolute date without reference
+        position: { start: match.index, end: match.index + match[0].length },
+        format: 'RELATIVE',
+        formatConfidence: 0.8,
+        inferredType: match[1].toUpperCase().startsWith('POD') ? 'event' : 'event',
+        typeConfidence: 0.7,
+        typeReasoning: `${match[1]} indicates relative hospital timeline`,
+        overallConfidence: 0.5, // Low without absolute reference date
+        confidenceFactors: {
+          formatClarity: 0.8,
+          contextQuality: 0.6,
+          temporalCoherence: 0.3,
+          clinicalPlausibility: 0.9,
+        },
+        surroundingText,
+        contextKeywords: [match[1].toUpperCase()],
+        isValid: false,
+        validationErrors: ['Relative date requires procedure/admission date for absolute conversion'],
+      };
+    }
+    
+    // Pattern 3: yesterday, today, tomorrow
+    const simpleRelativeRegex = /\b(yesterday|today|tomorrow)\b/gi;
+    simpleRelativeRegex.lastIndex = position;
+    match = simpleRelativeRegex.exec(text);
+    
+    if (match && match.index === position) {
+      const referenceDate = new Date(this.currentDate);
+      const word = match[1].toLowerCase();
+      
+      if (word === 'yesterday') referenceDate.setDate(referenceDate.getDate() - 1);
+      else if (word === 'tomorrow') referenceDate.setDate(referenceDate.getDate() + 1);
+      
+      const normalized = referenceDate.toISOString().split('T')[0];
+      const surroundingText = this.extractContext(text, match.index, match[0].length);
+      
+      return {
+        original: match[0],
+        normalized,
+        position: { start: match.index, end: match.index + match[0].length },
+        format: 'RELATIVE',
+        formatConfidence: 0.7,
+        inferredType: 'event',
+        typeConfidence: 0.5,
+        typeReasoning: 'Simple relative date',
+        overallConfidence: 0.6,
+        confidenceFactors: {
+          formatClarity: 0.7,
+          contextQuality: 0.5,
+          temporalCoherence: 0.5,
+          clinicalPlausibility: 0.7,
+        },
+        surroundingText,
+        contextKeywords: [word],
+        isValid: true,
+        validationErrors: [],
+      };
+    }
+    
+    return null;
+  }
+
+  /**
+   * Parse partial dates: "January 2025", "2025", "Q1 2025"
+   */
+  private parsePartialDate(text: string, position: number): EnhancedDatePattern | null {
+    const monthNames = ['January', 'February', 'March', 'April', 'May', 'June',
+                       'July', 'August', 'September', 'October', 'November', 'December'];
+    
+    // Pattern 1: Month YYYY
+    const monthYearRegex = new RegExp(`\\b(${monthNames.join('|')})\\s+(\\d{4})\\b`, 'gi');
+    monthYearRegex.lastIndex = position;
+    let match = monthYearRegex.exec(text);
+    
+    if (match && match.index === position) {
+      const monthIndex = monthNames.findIndex(m => m.toLowerCase() === match![1].toLowerCase());
+      const month = (monthIndex + 1).toString().padStart(2, '0');
+      const year = match[2];
+      const normalized = `${year}-${month}-01`; // Default to first of month
+      const surroundingText = this.extractContext(text, match.index, match[0].length);
+      
+      return {
+        original: match[0],
+        normalized,
+        position: { start: match.index, end: match.index + match[0].length },
+        format: 'PARTIAL',
+        formatConfidence: 0.6,
+        inferredType: 'unknown',
+        typeConfidence: 0.3,
+        typeReasoning: 'Partial date (month/year only)',
+        overallConfidence: 0.5,
+        confidenceFactors: {
+          formatClarity: 0.6,
+          contextQuality: 0.5,
+          temporalCoherence: 0.4,
+          clinicalPlausibility: 0.6,
+        },
+        surroundingText,
+        contextKeywords: [],
+        isValid: true,
+        validationErrors: ['Partial date - day defaulted to 01'],
+      };
+    }
+    
+    // Pattern 2: Just year (YYYY)
+    const yearRegex = /\b(19|20)\d{2}\b/g;
+    yearRegex.lastIndex = position;
+    match = yearRegex.exec(text);
+    
+    if (match && match.index === position) {
+      const year = match[0];
+      const normalized = `${year}-01-01`; // Default to Jan 1
+      const surroundingText = this.extractContext(text, match.index, match[0].length);
+      
+      return {
+        original: match[0],
+        normalized,
+        position: { start: match.index, end: match.index + match[0].length },
+        format: 'PARTIAL',
+        formatConfidence: 0.4,
+        inferredType: 'unknown',
+        typeConfidence: 0.2,
+        typeReasoning: 'Partial date (year only)',
+        overallConfidence: 0.3,
+        confidenceFactors: {
+          formatClarity: 0.4,
+          contextQuality: 0.5,
+          temporalCoherence: 0.2,
+          clinicalPlausibility: 0.3,
+        },
+        surroundingText,
+        contextKeywords: [],
+        isValid: true,
+        validationErrors: ['Partial date - month and day defaulted to 01-01'],
+      };
+    }
+    
+    return null;
+  }
+
+  /**
+   * Parse numeric dates: MM/DD/YYYY or DD/MM/YYYY (ambiguous)
+   */
+  private parseNumericDate(text: string, position: number, preferredFormat: DateFormatType): EnhancedDatePattern | null {
+    const regex = /\b(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})\b/g;
+    regex.lastIndex = position;
+    const match = regex.exec(text);
+    
+    if (!match || match.index !== position) return null;
+    
+    const first = parseInt(match[1]);
+    const second = parseInt(match[2]);
+    const yearStr = match[3].length === 2 ? `20${match[3]}` : match[3];
+    const year = parseInt(yearStr);
+    
+    const surroundingText = this.extractContext(text, match.index, match[0].length);
+    
+    // Determine if ambiguous
+    const isAmbiguous = first <= 12 && second <= 12;
+    
+    if (!isAmbiguous) {
+      // Unambiguous - determine format
+      let format: DateFormatClass;
+      let normalized: string;
+      let confidence: number;
+      
+      if (first > 12) {
+        // Must be DD/MM/YYYY
+        format = 'EU_NUMERIC';
+        normalized = `${yearStr}-${match[2].padStart(2, '0')}-${match[1].padStart(2, '0')}`;
+        confidence = 0.95;
+      } else {
+        // Must be MM/DD/YYYY
+        format = 'US_NUMERIC';
+        normalized = `${yearStr}-${match[1].padStart(2, '0')}-${match[2].padStart(2, '0')}`;
+        confidence = 0.95;
+      }
+      
+      return {
+        original: match[0],
+        normalized,
+        position: { start: match.index, end: match.index + match[0].length },
+        format,
+        formatConfidence: confidence,
+        inferredType: 'unknown',
+        typeConfidence: 0.0,
+        typeReasoning: '',
+        overallConfidence: 0.85,
+        confidenceFactors: {
+          formatClarity: confidence,
+          contextQuality: 0.5,
+          temporalCoherence: 0.5,
+          clinicalPlausibility: 1.0,
+        },
+        surroundingText,
+        contextKeywords: [],
+        isValid: true,
+        validationErrors: [],
+      };
+    } else {
+      // Ambiguous - use preferred format
+      let normalized: string;
+      let confidence: number;
+      let reasoning: string;
+      
+      if (preferredFormat === 'DD/MM/YYYY') {
+        normalized = `${yearStr}-${match[2].padStart(2, '0')}-${match[1].padStart(2, '0')}`;
+        confidence = 0.6;
+        reasoning = 'Ambiguous date interpreted as DD/MM/YYYY per configuration';
+      } else {
+        // Default to MM/DD/YYYY (US format)
+        normalized = `${yearStr}-${match[1].padStart(2, '0')}-${match[2].padStart(2, '0')}`;
+        confidence = 0.6;
+        reasoning = 'Ambiguous date interpreted as MM/DD/YYYY (default)';
+      }
+      
+      return {
+        original: match[0],
+        normalized,
+        position: { start: match.index, end: match.index + match[0].length },
+        format: 'AMBIGUOUS',
+        formatConfidence: confidence,
+        inferredType: 'unknown',
+        typeConfidence: 0.0,
+        typeReasoning: '',
+        overallConfidence: 0.55,
+        confidenceFactors: {
+          formatClarity: confidence,
+          contextQuality: 0.5,
+          temporalCoherence: 0.5,
+          clinicalPlausibility: 1.0,
+        },
+        surroundingText,
+        contextKeywords: [],
+        isValid: true,
+        validationErrors: [`Ambiguous date (${match[0]}) - ${reasoning}`],
+      };
+    }
+  }
+    const patterns = {
+      ddmmyyyy: 0,
+      mmddyyyy: 0,
+      yyyymmdd: 0,
+      ambiguous: 0,
+    };
+
+    const unambiguousDates: DatePattern[] = [];
+    const ambiguousDates: DatePattern[] = [];
+
+    // Regex patterns for different date formats
+    const dateRegex = /\b(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})\b/g;
+    const isoRegex = /\b(\d{4})[\/\-](\d{1,2})[\/\-](\d{1,2})\b/g;
+    const monthNameRegex = /\b(\d{1,2})\s+(January|February|March|April|May|June|July|August|September|October|November|December)\s+(\d{2,4})\b/gi;
+
+    let match;
+
+    // Check for ISO format (YYYY-MM-DD)
+    while ((match = isoRegex.exec(clinicalNotes)) !== null) {
+      patterns.yyyymmdd++;
+      unambiguousDates.push({
+        original: match[0],
+        normalized: `${match[1]}-${match[2].padStart(2, '0')}-${match[3].padStart(2, '0')}`,
+        confidence: 'high',
+        reasoning: 'ISO 8601 format',
+        position: { start: match.index, end: match.index + match[0].length },
+      });
+    }
+
+    // Check for month names (unambiguous)
+    while ((match = monthNameRegex.exec(clinicalNotes)) !== null) {
+      const monthNames: { [key: string]: string } = {
+        January: '01', February: '02', March: '03', April: '04',
+        May: '05', June: '06', July: '07', August: '08',
+        September: '09', October: '10', November: '11', December: '12',
+      };
+      const day = match[1].padStart(2, '0');
+      const month = monthNames[match[2]];
+      const year = match[3].length === 2 ? `20${match[3]}` : match[3];
+
+      unambiguousDates.push({
+        original: match[0],
+        normalized: `${year}-${month}-${day}`,
+        confidence: 'high',
+        reasoning: 'Month name present',
+        position: { start: match.index, end: match.index + match[0].length },
+      });
+    }
+
+    // Check ambiguous DD/MM or MM/DD patterns
+    const usedPositions = new Set(
+      [...unambiguousDates].map(d => `${d.position.start}-${d.position.end}`)
+    );
+
+    while ((match = dateRegex.exec(clinicalNotes)) !== null) {
+      const posKey = `${match.index}-${match.index + match[0].length}`;
+      if (usedPositions.has(posKey)) continue; // Skip already processed dates
+
+      const first = parseInt(match[1]);
+      const second = parseInt(match[2]);
+      const year = match[3].length === 2 ? `20${match[3]}` : match[3];
+
+      // Determine if unambiguous
+      if (first > 12) {
+        // Must be DD/MM/YYYY
+        patterns.ddmmyyyy++;
+        unambiguousDates.push({
+          original: match[0],
+          normalized: `${year}-${match[2].padStart(2, '0')}-${match[1].padStart(2, '0')}`,
+          confidence: 'high',
+          reasoning: `Day=${first} > 12, must be DD/MM/YYYY`,
+          position: { start: match.index, end: match.index + match[0].length },
+        });
+      } else if (second > 12) {
+        // Must be MM/DD/YYYY
+        patterns.mmddyyyy++;
+        unambiguousDates.push({
+          original: match[0],
+          normalized: `${year}-${match[1].padStart(2, '0')}-${match[2].padStart(2, '0')}`,
+          confidence: 'high',
+          reasoning: `Day=${second} > 12, must be MM/DD/YYYY`,
+          position: { start: match.index, end: match.index + match[0].length },
+        });
+      } else {
+        // Ambiguous (both ≤ 12)
+        patterns.ambiguous++;
+        ambiguousDates.push({
+          original: match[0],
+          normalized: '', // Will be determined by context
+          confidence: 'low',
+          reasoning: 'Ambiguous - both values ≤ 12',
+          position: { start: match.index, end: match.index + match[0].length },
+        });
+      }
+    }
+
+    // Determine overall format
+    let detectedFormat: DateFormatType = 'AUTO';
+    let confidence: 'high' | 'medium' | 'low' = 'low';
+    let reasoning = '';
+
+    if (patterns.yyyymmdd > patterns.ddmmyyyy && patterns.yyyymmdd > patterns.mmddyyyy) {
+      detectedFormat = 'YYYY-MM-DD';
+      confidence = 'high';
+      reasoning = `ISO 8601 format predominant (${patterns.yyyymmdd} occurrences)`;
+    } else if (patterns.ddmmyyyy > patterns.mmddyyyy * 2) {
+      detectedFormat = 'DD/MM/YYYY';
+      confidence = 'high';
+      reasoning = `DD/MM/YYYY pattern predominant (${patterns.ddmmyyyy} unambiguous occurrences)`;
+    } else if (patterns.mmddyyyy > patterns.ddmmyyyy * 2) {
+      detectedFormat = 'MM/DD/YYYY';
+      confidence = 'high';
+      reasoning = `MM/DD/YYYY pattern predominant (${patterns.mmddyyyy} unambiguous occurrences)`;
+    } else if (patterns.ddmmyyyy > 0 && patterns.mmddyyyy === 0) {
+      detectedFormat = 'DD/MM/YYYY';
+      confidence = 'medium';
+      reasoning = `Some DD/MM/YYYY evidence, no MM/DD/YYYY evidence`;
+    } else if (patterns.mmddyyyy > 0 && patterns.ddmmyyyy === 0) {
+      detectedFormat = 'MM/DD/YYYY';
+      confidence = 'medium';
+      reasoning = `Some MM/DD/YYYY evidence, no DD/MM/YYYY evidence`;
+    } else {
+      detectedFormat = 'AUTO';
+      confidence = 'low';
+      reasoning = `Insufficient evidence to determine format (${patterns.ambiguous} ambiguous dates)`;
+    }
+
+    return {
+      detectedFormat,
+      confidence,
+      reasoning,
+      patternsFound: patterns,
+      unambiguousDates,
+      ambiguousDates,
+    };
+  }
+
+  /**
+   * Preprocess dates in clinical notes with format standardization
+   */
+  preprocessDates(clinicalNotes: string, config: DatePreprocessorConfig): PreprocessResult {
+    const analysis = this.detectDateFormats(clinicalNotes);
+    const conversions: DatePattern[] = [];
+    const warnings: ValidationWarning[] = [];
+
+    // Determine format to use
+    let formatToUse: DateFormatType = config.preferredFormat;
+    if (config.preferredFormat === 'AUTO') {
+      formatToUse = analysis.detectedFormat;
+      if (analysis.confidence === 'low') {
+        warnings.push({
+          type: 'requires_verification',
+          message: `Date format auto-detection has low confidence. ${analysis.reasoning}`,
+          recommendation: 'Manually specify date format (DD/MM/YYYY or MM/DD/YYYY) for better accuracy.',
+        });
+      }
+    }
+
+    // Start with original notes
+    let annotatedNotes = clinicalNotes;
+
+    // Process ambiguous dates with determined format
+    for (const ambigDate of analysis.ambiguousDates) {
+      const match = ambigDate.original.match(/(\d{1,2})[\/\-](\d{1,2})[\/\-](\d{2,4})/);
+      if (!match) continue;
+
+      const first = match[1].padStart(2, '0');
+      const second = match[2].padStart(2, '0');
+      const year = match[3].length === 2 ? `20${match[3]}` : match[3];
+
+      let normalized: string;
+      let interpretation: string;
+
+      if (formatToUse === 'DD/MM/YYYY') {
+        normalized = `${year}-${second}-${first}`;
+        interpretation = `Interpreted as DD/MM/YYYY: ${first}/${second}/${year} → ${normalized}`;
+      } else if (formatToUse === 'MM/DD/YYYY') {
+        normalized = `${year}-${first}-${second}`;
+        interpretation = `Interpreted as MM/DD/YYYY: ${first}/${second}/${year} → ${normalized}`;
+      } else {
+        // Cannot determine - leave ambiguous
+        normalized = ambigDate.original;
+        interpretation = `Ambiguous date format - unable to normalize`;
+        warnings.push({
+          type: 'low_confidence',
+          message: `Date "${ambigDate.original}" is ambiguous (could be DD/MM or MM/DD)`,
+          recommendation: 'Specify date format for accurate extraction',
+        });
+        continue;
+      }
+
+      conversions.push({
+        original: ambigDate.original,
+        normalized,
+        confidence: formatToUse === 'AUTO' ? 'low' : 'medium',
+        reasoning: interpretation,
+        position: ambigDate.position,
+      });
+    }
+
+    // Add conversions for unambiguous dates
+    conversions.push(...analysis.unambiguousDates);
+
+    // Generate summary warning if many ambiguous dates
+    if (analysis.ambiguousDates.length > 3) {
+      warnings.push({
+        type: 'requires_verification',
+        message: `Found ${analysis.ambiguousDates.length} ambiguous dates. All interpreted as ${formatToUse}.`,
+        recommendation: 'Verify date interpretations are correct, especially for critical dates (admission, surgery, discharge).',
+      });
+    }
+
+    return {
+      annotatedNotes,
+      conversions,
+      warnings,
+      analysis,
+    };
+  }
+
+  /**
+   * Generate date warnings for extraction
+   */
+  generateDateWarnings(analysis: DateFormatAnalysis): ValidationWarning[] {
+    const warnings: ValidationWarning[] = [];
+
+    if (analysis.ambiguousDates.length > 0) {
+      warnings.push({
+        type: 'requires_verification',
+        message: `${analysis.ambiguousDates.length} dates with ambiguous format (DD/MM vs MM/DD) detected`,
+        recommendation: 'Verify date format interpretation with source institution or documentation standards',
+      });
+    }
+
+    if (analysis.confidence === 'low') {
+      warnings.push({
+        type: 'low_confidence',
+        message: `Date format detection has low confidence: ${analysis.reasoning}`,
+        recommendation: 'Manually specify date format for better accuracy',
+      });
+    }
+
+    return warnings;
+  }
+}

@@ -1,0 +1,7 @@
+{
+  "clinicalNotes": "Patient DOB: 24/10/1969\n\nSurgery date: 10/10/2025\nProcedure: L4-L5 discectomy and fusion\n\nPOD 1 (11/10/25): Patient stable, tolerating diet\nPOD 2 (12/10/25): Ambulating with PT\n\nDischarged: 27/10/2025 to home with family",
+  "dateFormat": "DD/MM/YYYY",
+  "regionLocale": "CA",
+  "dateFormatHints": "Hamilton General Hospital, Ontario, Canada",
+  "narrativeMode": "STANDARD"
+}

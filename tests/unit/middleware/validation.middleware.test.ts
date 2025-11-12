@@ -39,7 +39,7 @@ describe('validateExtractionRequest', () => {
             code: 'VALIDATION_ERROR',
             errors: expect.arrayContaining([
               expect.objectContaining({
-                code: 'MISSING_FIELD',
+                code: 'MISSING_REQUIRED_FIELD',
                 field: 'clinicalNotes',
               }),
             ]),
@@ -63,7 +63,7 @@ describe('validateExtractionRequest', () => {
           error: expect.objectContaining({
             errors: expect.arrayContaining([
               expect.objectContaining({
-                code: 'INVALID_TYPE',
+                code: 'INVALID_FIELD_TYPE',
                 field: 'clinicalNotes',
               }),
             ]),
@@ -134,7 +134,7 @@ describe('validateExtractionRequest', () => {
           error: expect.objectContaining({
             errors: expect.arrayContaining([
               expect.objectContaining({
-                code: 'EMPTY_FIELD',
+                code: 'FIELD_EMPTY',
                 field: 'clinicalNotes',
               }),
             ]),
@@ -447,7 +447,7 @@ describe('validateExtractionRequest', () => {
           error: expect.objectContaining({
             errors: expect.arrayContaining([
               expect.objectContaining({
-                code: 'INVALID_TYPE',
+                code: 'INVALID_FIELD_TYPE',
                 field: 'dateFormatHints',
               }),
             ]),

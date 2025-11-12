@@ -1,0 +1,129 @@
+Hamilton General Hospital 237 Barton St E Hamilton ON L8L 2X2 Notes Report
+Mir, Salma Shahid MRN: G10279609, DOB: 24/10/1969, Legal Sex: F HCN: 6724793028 Visit date: 1/8/2025
+
+════════════════════════════════════════════════════════════════════════════════
+
+**👤 Kislay Kishore, MD**
+Physician
+**Specialty:** Neurosurgery
+**Progress Notes**
+**Addendum**
+**Encounter Date: 1/8/2025**
+**Addendum**
+Neuro Interventional Ambulatory Clinic Note
+**1/8/2025**
+Dear Dr. Catanese,
+Thank you for your kind referral.
+Salma Shahid Mir is a very pleasant 55 y.o. female who was assessed in the neurosciences ambulatory clinic today.
+
+CLINICAL PRESENTATION:
+Salma was referred to the NIR service for consideration of ICA bypass after an initial stroke in February of this year.
+
+At the end of February, at around 8am she was making breakfast and suddenly felt weak in her legs bilaterally. She was sweating at the time and had to sit down. She then had a likely brief LOC and fell into her husband's arms. She had no dysarthria or aphasia at the time and was able to answer questions.
+
+At around 11am, her daughter came home to see her laying in bed. She briefly assessed her and noted that she had weakness bilaterally and trouble walking. She was then seen in urgent care and was sent to SJH ED at around 2:30pm. At this time, she was found to have primarily left-sided weakness rather than generalized weakness, which may have been present before but had worsened, according to her daughter.
+
+She was then admitted to SJH and transferred to the stroke unit at HGH the next day. She was found to have right caudate, corona radiata, inferior centrum semiovale, and lentiform nucleus infarcts likely secondary to hypoperfusion and was started on DAPT. She subsequently went to rehab at B2N.
+
+[Additional clinical history continues...]
+
+PLAN:
+1. EEG scheduled for August 5th per SPC
+2. Prescription for Keppra 750mg BID provided today, to start on August 6th AFTER EEG
+3. Follow-up appointment with Dr. Catanese September 5th
+4. Follow-up appointment with Dr. Kishore mid-September
+
+════════════════════════════════════════════════════════════════════════════════
+
+**👤 Melissa Lannon, MD**
+Resident
+Neurosurgery
+**Op Note**
+**Date of Service: 10/10/25 0810**
+
+Right STA-MCA Bypass and Vessel Biopsy with Microscope
+
+Date: 10/10/2025
+Location: HGH OR
+Name: Salma Shahid Mir, 24/10/1969, G10279609
+
+**Diagnosis**
+Pre-op Diagnosis: Aneurysm [I72.9]
+
+Indications:
+Salma Shahid Mir is an 55 y.o. female who is having surgery for Aneurysm [I72.9].
+Ms. Mir has a history of progressive bilateral ICA steno-occlusive disease over the past several months and transient ischemic attacks. She was offered EC-IC bypass for this, and booked electively for this procedure.
+
+[Operative details continue...]
+
+Disposition: PACU - hemodynamically stable.
+Condition: stable
+
+════════════════════════════════════════════════════════════════════════════════
+
+**Date of Service: 11/10/25 0823**
+**Neurosurgery Progress Note**
+**11/10/2025**
+Salma Shahid Mir is a 55 y.o. female with Carotid stenosis, bilateral
+LOS: 1 day 1 Day Post-Op
+
+**Subjective**
+Denies headache, nausea or vomiting
+
+**Objective**
+Exam:
+Wound: CDI
+GCS: 15
+Neurological Exam:
+Hypophonic, mouths words to answer. Alert and oriented x3.
+Left facial weakness (UMN distribution).
+5/5 throughout right upper and lower extremities.
+0/5 left upper extremity, 1/5 left lower extremity
+
+**Imaging:**
+Minimal post operative hematoma, no mass effect. No acute infarct.
+
+Assessment & Plan
+- PT and OT for dispo planning.
+- Hold plavix x 1 week.
+
+════════════════════════════════════════════════════════════════════════════════
+
+**Date of Service: 12/10/25 2046**
+**October 12, 2025**
+8 PM
+Postoperative day 2
+
+Immediately postprocedure, she was slow to wake up but about half an hour later, she had woken up reasonably well was conscious, awake, readily following commands and was at least antigravity strength on the left side, may be marginally weaker than baseline.
+
+Overnight there was some deterioration, and the next morning, she was found to have worse motor strength on the left, and was densely weak.
+
+This afternoon around 5 to 6 PM, she became unresponsive, was suspected to have seizure activity, which was aborted and 1g IV keppra was administered.
+
+An urgent CT/CT angiogram was performed which showed the bypass is patent, and no large vessel occlusion or any arterial occlusion as such, but with established infarction involving right ACA and ACA watershed territories.
+
+Plan:
+1. Continue close neuromonitoring
+2. BP target STRICTLY between 120-140 systolic
+3. Continue ASA 81 mg once daily
+4. Continue KEPPRA IV 1g BID
+
+════════════════════════════════════════════════════════════════════════════════
+
+**Date of Service: 27/10/25 2157**
+STROKE NEUROLOGY INPATIENT CONSULTATION:
+**Date of assessment**: October 27, 2025.
+
+[] Currently admitted to the inpatient service at 7W post EC IC bypass. Doing better according to the patient and her daughter. No more episodes of limb shaking. She is now 17 Days Post-Op Procedure(s) (LRB) from a Right STA-MCA Bypass and Vessel Biopsy with Microscope (Right).
+
+After surgery she lost movement of the left hemibody and unfortunately, she developed a large right MCA stroke. She continues to be hemiplegic.
+
+ASSESSMENT/PLAN:
+Cerebral hypoperfusion with limb shaking progressing to the right hand due to suspected moya-moya syndrome. EC-IC bypass complicated by right MCA stroke.
+
+- Continue Aspirin 81mg and Plavix 75mg
+- Continue statins
+- Complete work-up with MRI vessel wall imaging
+- Follow-up: 1 month
+
+Patient remains admitted at 20 days post-op with ongoing rehabilitation needs and disposition planning for stroke rehabilitation facility.

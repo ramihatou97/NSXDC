@@ -1,0 +1,57 @@
+Hamilton General Hospital 237 Barton St E Hamilton ON L8L 2X2 Notes Report
+Mir, Salma Shahid MRN: G10279609, DOB: 24/10/1969, Legal Sex: F HCN: 6724793028 Visit date: 1/8/2025
+
+════════════════════════════════════════════════════════════════════════════════
+
+**👤 Kislay Kishore, MD**
+Physician\
+**Specialty:** Neurosurgery\
+**Progress Notes \**
+**Addendum\**
+**Encounter Date: 1/8/2025\**
+**Addendum**
+Neuro Interventional Ambulatory Clinic Note
+**1/8/2025**
+Dear Dr. Catanese,
+Thank you for your kind referral.
+Salma Shahid Mir is a very pleasant 55 y.o. female who was assessed in the neurosciences ambulatory clinic today.
+CLINICAL PRESENTATION:
+Salma was referred to the NIR service for consideration of ICA bypass after an initial stroke in February of this year.
+At the end of February, at around 8am she was making breakfast and suddenly felt weak in her legs bilaterally. She was sweating at the time and had to sit down. She then had a likely brief LOC and fell into her husband's arms. She had no dysarthria or aphasia at the time and was able to answer questions.
+At around 11am, her daughter came home to see her laying in bed. She briefly assessed her and noted that she had weakness bilaterally and trouble walking. She was then seen in urgent care and was sent to SJH ED at around 2:30pm. At this time, she was found to have primarily left-sided weakness rather than generalized weakness, which may have been present before but had worsened, according to her daughter.
+She was then admitted to SJH and transferred to the stroke unit at HGH the next day. She was found to have right caudate, corona radiata, inferior centrum semiovale, and lentiform nucleus infarcts likely secondary to hypoperfusion and was started on DAPT. She subsequently went to rehab at B2N.
+
+**Op Note by Melissa Lannon, MD**
+**Date of Service: 10/10/25 0810**
+Right STA-MCA Bypass and Vessel Biopsy with Microscope
+Surgeons: Kislay Kishore - Primary
+Pre-op Diagnosis: Aneurysm [I72.9]
+Post-op Diagnosis: Aneurysm [I72.9]
+
+Indications:
+Salma Shahid Mir is an 55 y.o. female who is having surgery for Aneurysm [I72.9].
+Ms. Mir has a history of progressive bilateral ICA steno-occlusive disease over the past several months and transient ischemic attacks. She was offered EC-IC bypass for this, and booked electively for this procedure.
+
+The anastomosis was found to have sluggish flow on post-anastomosis ICG run. As such, indirect anastomosis (EDAS, EMS) was carried out.
+
+**Complications:** None; patient tolerated the procedure well.
+Disposition: PACU - hemodynamically stable.
+
+Electronically signed by Melissa Lannon, MD at 10/10/25 1653
+Electronically signed by Kislay Kishore, MD at 17/10/25 0020
+
+**Postoperative Course:**
+POD 1 (Oct 11): Left facial weakness (UMN). 5/5 right side. 0/5 left upper extremity, 1/5 left lower extremity.
+POD 2 (Oct 12): Seizure activity at 8pm. CTA showed right ACA/MCA infarction. BP had dropped to 109/50 systolic causing hypoperfusion.
+POD 3-20: Ongoing left hemiplegia. Neuro stable. Started on Keppra, baclofen for spasticity. Enteral feeds then advanced to oral diet.
+
+**Discharge Planning:**
+- Neuro: Stable left hemiplegia unchanged
+- Medications: ASA 81mg, Plavix 75mg, Keppra 1g BID, baclofen, midodrine, diabetes meds, statins
+- Disposition: Awaiting stroke rehabilitation placement
+- PT/OT/SLP following
+- Follow-up: Dr. Kishore, Dr. Catanese, stroke neurology
+
+LOS: 20 days (admitted 10/10/2025)
+Diagnosis: Bilateral ICA occlusion, moyamoya variant, right MCA stroke post-bypass
+Status: Medically stable, awaiting rehabilitation placement

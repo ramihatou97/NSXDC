@@ -1,0 +1,241 @@
+.results-panel {
+  max-height: calc(100vh - 40px);
+  overflow-y: auto;
+}
+
+.btn-close {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: #f8f9fa;
+  color: var(--dark);
+  font-size: 1.5rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s ease;
+}
+
+.btn-close:hover {
+  background: var(--danger);
+  color: white;
+  transform: rotate(90deg);
+}
+
+.section-title {
+  font-size: 1.2rem;
+  font-weight: 700;
+  color: var(--dark);
+  margin-bottom: 16px;
+  padding-bottom: 8px;
+  border-bottom: 2px solid var(--light);
+}
+
+.confidence-section {
+  margin-bottom: 24px;
+}
+
+.factors-section {
+  margin-bottom: 24px;
+}
+
+.factors-grid {
+  display: grid;
+  gap: 16px;
+}
+
+.factor-item {
+  display: grid;
+  grid-template-columns: 200px 1fr 60px;
+  align-items: center;
+  gap: 12px;
+}
+
+.factor-label {
+  font-weight: 600;
+  color: var(--dark);
+  font-size: 0.9rem;
+}
+
+.factor-bar {
+  height: 24px;
+  background: #e9ecef;
+  border-radius: 12px;
+  overflow: hidden;
+}
+
+.factor-fill {
+  height: 100%;
+  border-radius: 12px;
+  transition: width 0.5s ease;
+}
+
+.factor-score {
+  text-align: right;
+  font-weight: 700;
+  color: var(--dark);
+  font-size: 0.9rem;
+}
+
+.uncertainties-section,
+.recommendations-section {
+  margin-bottom: 24px;
+  padding: 16px;
+  background: #fff3cd;
+  border-radius: 8px;
+  border-left: 4px solid var(--warning);
+}
+
+.recommendations-section {
+  background: #d1ecf1;
+  border-left-color: var(--info);
+}
+
+.uncertainties-list,
+.recommendations-list {
+  list-style: none;
+  padding-left: 0;
+}
+
+.uncertainties-list li,
+.recommendations-list li {
+  padding: 8px 0;
+  padding-left: 24px;
+  position: relative;
+  font-size: 0.9rem;
+}
+
+.uncertainties-list li:before {
+  content: '⚠️';
+  position: absolute;
+  left: 0;
+}
+
+.recommendations-list li:before {
+  content: '💡';
+  position: absolute;
+  left: 0;
+}
+
+.export-section {
+  display: flex;
+  gap: 12px;
+  margin-top: 24px;
+  padding-top: 24px;
+  border-top: 2px solid var(--light);
+}
+
+.export-section .btn {
+  flex: 1;
+}
+
+@media (max-width: 768px) {
+  .factor-item {
+    grid-template-columns: 1fr;
+    gap: 8px;
+  }
+
+  .factor-score {
+    text-align: left;
+  }
+
+  .export-section {
+    flex-direction: column;
+  }
+}
+
+/* DISCHARGE SUMMARY NARRATIVE - THE CORE DELIVERABLE */
+.narrative-section {
+  margin: 30px 0;
+  padding: 25px;
+  background: linear-gradient(135deg, #fff9c4 0%, #f0f4c3 100%);
+  border: 3px solid #fbc02d;
+  border-radius: 12px;
+  box-shadow: 0 6px 20px rgba(251, 192, 45, 0.3);
+}
+
+.narrative-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+  padding-bottom: 15px;
+  border-bottom: 2px solid #f9a825;
+}
+
+.narrative-header .section-title {
+  font-size: 1.4rem;
+  color: #f57f17;
+  margin: 0 !important;
+  font-weight: 700;
+  padding-bottom: 0 !important;
+  border-bottom: none !important;
+}
+
+.btn-copy-narrative {
+  padding: 10px 20px;
+  background: linear-gradient(135deg, #fbc02d 0%, #f9a825 100%);
+  color: #ffffff;
+  border: none;
+  border-radius: 8px;
+  font-size: 1rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(251, 192, 45, 0.3);
+}
+
+.btn-copy-narrative:hover {
+  background: linear-gradient(135deg, #f9a825 0%, #f57f17 100%);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 15px rgba(251, 192, 45, 0.5);
+}
+
+.narrative-content {
+  background: #ffffff;
+  padding: 25px;
+  border-radius: 8px;
+  font-family: 'Georgia', 'Times New Roman', serif;
+  font-size: 1.05rem;
+  line-height: 1.8;
+  color: #212529;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.05);
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.narrative-content p {
+  margin: 0 0 15px 0;
+  text-align: justify;
+}
+
+.narrative-content p:last-child {
+  margin-bottom: 0;
+}
+
+.narrative-content p:empty {
+  margin: 5px 0;
+}
+
+/* Extracted Data Section with Badge */
+.extracted-data-section {
+  margin: 30px 0 20px 0;
+}
+
+.section-header-with-badge {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.badge-secondary {
+  padding: 6px 12px;
+  background: #6c757d;
+  color: #ffffff;
+  border-radius: 12px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}

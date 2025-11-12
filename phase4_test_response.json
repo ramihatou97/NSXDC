@@ -1,0 +1,1 @@
+{"success":false,"error":{"code":"EXTRACTION_FAILED","message":"Clinical notes too long for processing. Output truncated at 4800 tokens. Please contact support for assistance with very long documents.","details":{}},"metadata":{"extractionMode":"VALIDATED","modelUsed":"claude-sonnet-4-5-20250929","processingTime":52459,"timestamp":"2025-11-11T03:19:33.708Z"}}
