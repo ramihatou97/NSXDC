@@ -148,7 +148,6 @@ export class DocumentationInventoryService {
     if (section.trim().length < 20) return null; // Too short to be a document
 
     const lowerSection = section.toLowerCase();
-    const lines = section.split('\n');
 
     // Extract metadata
     const author = this.extractAuthor(section);
@@ -479,7 +478,7 @@ export class DocumentationInventoryService {
    * Calculate overall completeness score (0-100)
    */
   private calculateCompletenessScore(
-    documents: DocumentInstance[],
+    _documents: DocumentInstance[],
     podCoverage: PODCoverage,
     gaps: DocumentationGaps
   ): number {
@@ -502,7 +501,7 @@ export class DocumentationInventoryService {
    * Generate completeness warnings
    */
   private generateWarnings(
-    documents: DocumentInstance[],
+    _documents: DocumentInstance[],
     podCoverage: PODCoverage,
     gaps: DocumentationGaps
   ): string[] {

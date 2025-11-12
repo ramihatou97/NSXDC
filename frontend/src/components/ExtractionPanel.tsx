@@ -1,4 +1,4 @@
-import { useState, useRef } from 'react';
+import { useState, useRef, DragEvent } from 'react';
 import './ExtractionPanel.css';
 
 interface ExtractionPanelProps {
@@ -16,25 +16,101 @@ export default function ExtractionPanel({
 }: ExtractionPanelProps) {
   const [clinicalNotes, setClinicalNotes] = useState('');
   const [charCount, setCharCount] = useState(0);
+  const [wordCount, setWordCount] = useState(0);
+  const [isDragging, setIsDragging] = useState(false);
+  const [fileError, setFileError] = useState<string | null>(null);
   const fileInputRef = useRef<HTMLInputElement>(null);
+
+  // File size limit: 5MB
+  const MAX_FILE_SIZE = 5 * 1024 * 1024;
+
+  // File size limit: 5MB
 
   const handleTextChange = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const text = e.target.value;
     setClinicalNotes(text);
     setCharCount(text.length);
+    setWordCount(text.trim() ? text.trim().split(/\s+/).length : 0);
+  };
+
+  const processFileContent = (text: string, filename: string) => {
+    setClinicalNotes(text);
+    setCharCount(text.length);
+    setWordCount(text.trim() ? text.trim().split(/\s+/).length : 0);
+    setFileError(null);
+  };
+
+  const validateFile = (file: File): string | null => {
+    // Check file size
+    if (file.size > MAX_FILE_SIZE) {
+      return `File too large (${(file.size / 1024 / 1024).toFixed(2)}MB). Maximum size is 5MB.`;
+    }
+
+    // Check file type
+    const allowedTypes = ['.txt', '.md', '.text'];
+    const fileExt = '.' + file.name.split('.').pop()?.toLowerCase();
+    if (!allowedTypes.includes(fileExt)) {
+      return `Unsupported file type "${fileExt}". Please use .txt or .md files.`;
+    }
+
+    return null;
   };
 
   const handleFileUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
     if (!file) return;
 
+    const validationError = validateFile(file);
+    if (validationError) {
+      setFileError(validationError);
+      return;
+    }
+
     try {
       const text = await file.text();
-      setClinicalNotes(text);
-      setCharCount(text.length);
+      processFileContent(text, file.name);
     } catch (err) {
-      console.error('Error reading file:', err);
-      alert('Error reading file. Please try again.');
+      setFileError('Error reading file. Please try again.');
+    }
+  };
+
+  // Drag and drop handlers
+  const handleDragEnter = (e: DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(true);
+  };
+
+  const handleDragLeave = (e: DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+  };
+
+  const handleDragOver = (e: DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+  };
+
+  const handleDrop = async (e: DragEvent<HTMLDivElement>) => {
+    e.preventDefault();
+    e.stopPropagation();
+    setIsDragging(false);
+
+    const file = e.dataTransfer.files[0];
+    if (!file) return;
+
+    const validationError = validateFile(file);
+    if (validationError) {
+      setFileError(validationError);
+      return;
+    }
+
+    try {
+      const text = await file.text();
+      processFileContent(text, file.name);
+    } catch (err) {
+      setFileError('Error reading file. Please try again.');
     }
   };
 
@@ -95,6 +171,7 @@ FOLLOW-UP:
 
     setClinicalNotes(sample);
     setCharCount(sample.length);
+    setWordCount(sample.trim().split(/\s+/).length);
   };
 
   return (
@@ -112,12 +189,42 @@ FOLLOW-UP:
         </div>
       )}
 
+      {fileError && (
+        <div className="alert alert-error">
+          <strong>File Error:</strong> {fileError}
+        </div>
+      )}
+
       <form onSubmit={handleSubmit}>
+        {/* Drag and Drop Zone */}
+        <div
+          className={`drag-drop-zone ${isDragging ? 'dragging' : ''} ${clinicalNotes ? 'has-content' : ''}`}
+          onDragEnter={handleDragEnter}
+          onDragLeave={handleDragLeave}
+          onDragOver={handleDragOver}
+          onDrop={handleDrop}
+        >
+          {!clinicalNotes && (
+            <div className="drag-drop-placeholder">
+              <div className="drag-drop-icon">📄</div>
+              <div className="drag-drop-text">
+                <strong>Drag and drop</strong> your clinical notes here
+              </div>
+              <div className="drag-drop-subtext">
+                or click "Upload File" below
+              </div>
+              <div className="drag-drop-formats">
+                Supported formats: .txt, .md (max 5MB)
+              </div>
+            </div>
+          )}
+        </div>
+
         <div className="form-group">
           <label htmlFor="clinicalNotes" className="form-label">
             Clinical Documentation
-            <span className="char-count">
-              {charCount.toLocaleString()} characters
+            <span className="stats-count">
+              {charCount.toLocaleString()} chars · {wordCount.toLocaleString()} words
             </span>
           </label>
           <textarea
@@ -125,7 +232,7 @@ FOLLOW-UP:
             className="form-control"
             value={clinicalNotes}
             onChange={handleTextChange}
-            placeholder="Paste clinical notes here or upload a file..."
+            placeholder="Paste clinical notes here, drag and drop a file, or use upload button..."
             disabled={isLoading}
           />
         </div>

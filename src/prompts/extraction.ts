@@ -3,13 +3,20 @@
  * Includes discharge status deduction with zero-hallucination validation
  */
 
-import type { ExtractionMode } from '../types/index.js';
+/**
+ * Date format configuration options
+ */
+interface DateFormatOptions {
+  dateFormat?: string;
+  dateFormatHints?: string;
+  regionLocale?: string;
+}
 
 /**
  * Build extraction system prompt for VALIDATED mode
  * This is the ONLY mode used in NSXDC (always ON)
  */
-export function buildExtractionPrompt(clinicalNotes: string): string {
+export function buildExtractionPrompt(clinicalNotes: string, _options?: DateFormatOptions): string {
   return `# ROLE AND MISSION
 You are a precision neurosurgical data extraction AI operating in VALIDATED mode.
 Extract ALL clinical data with confidence levels and warnings for uncertain information.

@@ -1,0 +1,895 @@
+{
+  "id": "1762907815722-fa2e4801",
+  "timestamp": "2025-11-12T00:36:55.722Z",
+  "extraction": {
+    "success": true,
+    "extraction": {
+      "demographics": {
+        "patientName": {
+          "value": "John Smith",
+          "source": "Patient: John Smith [Clinical notes header]"
+        },
+        "age": {
+          "value": 65,
+          "source": "Age 65 [Clinical notes header]"
+        },
+        "sex": {
+          "value": null,
+          "source": null
+        },
+        "mrn": {
+          "value": null,
+          "source": null
+        }
+      },
+      "admissionDate": {
+        "value": "2024-01-15",
+        "source": "Admission: 2024-01-15 [Clinical notes]"
+      },
+      "surgeryDate": {
+        "value": "2024-01-16",
+        "source": "Surgery: 2024-01-16 Right frontal craniotomy [Clinical notes]"
+      },
+      "dischargeDate": {
+        "value": "2024-01-19",
+        "source": "Discharge: 2024-01-19 [Clinical notes]"
+      },
+      "lengthOfStay": {
+        "value": 4,
+        "source": "Admission: 2024-01-15, Discharge: 2024-01-19 [Clinical notes]",
+        "confidence": "medium",
+        "deduced": "calculated-from-dates"
+      },
+      "postOpDay": {
+        "value": 3,
+        "source": "Surgery: 2024-01-16, Discharge: 2024-01-19 [Clinical notes]",
+        "confidence": "medium",
+        "deduced": "calculated-from-surgery-date"
+      },
+      "chiefComplaint": {
+        "value": "Headaches",
+        "source": "Chief Complaint: Headaches [Clinical notes]"
+      },
+      "diagnosis": {
+        "value": null,
+        "source": null
+      },
+      "pathology": {
+        "value": null,
+        "source": null
+      },
+      "tumorLocation": {
+        "value": "Right frontal",
+        "source": "Right frontal craniotomy [Surgery note 2024-01-16]",
+        "confidence": "medium",
+        "deduced": "inferred-from-surgical-approach"
+      },
+      "procedures": [
+        {
+          "value": "Right frontal craniotomy",
+          "source": "Surgery: 2024-01-16 Right frontal craniotomy [Clinical notes]"
+        }
+      ],
+      "extentOfResection": {
+        "value": null,
+        "source": null
+      },
+      "admissionGCS": {
+        "value": 15,
+        "source": "H&P: GCS 15, oriented [H&P 2024-01-15]"
+      },
+      "admissionStatus": {
+        "neurologicalExam": {
+          "value": "GCS 15, oriented, mild right weakness (4+/5)",
+          "source": "H&P: GCS 15, oriented, mild right weakness (4+/5) [H&P 2024-01-15]"
+        },
+        "motorDeficits": {
+          "value": "Mild right weakness (4+/5)",
+          "source": "mild right weakness (4+/5) [H&P 2024-01-15]"
+        },
+        "ambulatoryStatus": {
+          "value": null,
+          "source": null
+        }
+      },
+      "dischargeGCS": {
+        "value": 15,
+        "source": "Discharge Exam: Alert, oriented x3, moving all extremities well [Discharge exam 2024-01-19]",
+        "confidence": "medium",
+        "deduced": "clinical-exam-gcs-e4v5m6"
+      },
+      "dischargeStatus": {
+        "neurologicalExam": {
+          "value": "Alert, oriented x3, moving all extremities well, right arm 5-/5",
+          "source": "Discharge Exam: Alert, oriented x3, moving all extremities well, right arm 5-/5 [Discharge exam 2024-01-19]"
+        },
+        "motorDeficits": {
+          "value": "Right arm 5-/5",
+          "source": "right arm 5-/5 [Discharge exam 2024-01-19]"
+        },
+        "ambulatoryStatus": {
+          "value": null,
+          "source": null
+        }
+      },
+      "dischargeKPS": {
+        "value": 80,
+        "source": "Alert, oriented x3, moving all extremities well, right arm 5-/5 [Discharge exam 2024-01-19]",
+        "confidence": "medium",
+        "deduced": "functional-status-kps-80-normal-activity-with-effort"
+      },
+      "dischargeECOG": {
+        "value": 1,
+        "source": "Alert, oriented x3, moving all extremities well, right arm 5-/5 [Discharge exam 2024-01-19]",
+        "confidence": "medium",
+        "deduced": "functional-status-ecog-1-restricted-strenuous-activity"
+      },
+      "dischargemRS": {
+        "value": 1,
+        "source": "Alert, oriented x3, moving all extremities well, right arm 5-/5 [Discharge exam 2024-01-19]",
+        "confidence": "medium",
+        "deduced": "functional-status-mrs-1-slight-disability"
+      },
+      "complications": {
+        "value": null,
+        "source": null
+      },
+      "dischargeMedications": [
+        {
+          "value": "Levetiracetam (Keppra) 1000mg PO BID",
+          "source": "Keppra 1000mg BID [Discharge medications]"
+        },
+        {
+          "value": "Dexamethasone 4mg PO Q6H",
+          "source": "Dexamethasone 4mg Q6H [Discharge medications]"
+        }
+      ],
+      "dischargeDisposition": {
+        "value": null,
+        "source": null
+      },
+      "followUpPlans": {
+        "value": null,
+        "source": null
+      },
+      "hospitalCourse": {
+        "admissionSummary": {
+          "presentingSymptoms": "Headaches",
+          "admissionDate": "2024-01-15",
+          "admissionStatus": "GCS 15, oriented, mild right weakness (4+/5) [H&P 2024-01-15]"
+        },
+        "dailyProgress": [
+          {
+            "date": "2024-01-15",
+            "day": "HD 1",
+            "status": "GCS 15, oriented, mild right weakness",
+            "events": "Admitted with chief complaint of headaches. Neurological exam: GCS 15, oriented, mild right weakness (4+/5). [H&P 2024-01-15]"
+          },
+          {
+            "date": "2024-01-16",
+            "day": "POD 0",
+            "status": "Post-operative day 0",
+            "events": "Right frontal craniotomy performed. [Surgery note 2024-01-16]"
+          },
+          {
+            "date": "2024-01-19",
+            "day": "POD 3",
+            "status": "GCS 15, alert, oriented x3, improved motor function",
+            "events": "Discharge exam: Alert, oriented x3, moving all extremities well, right arm strength improved to 5-/5. Discharged on Keppra 1000mg BID and Dexamethasone 4mg Q6H. [Discharge exam 2024-01-19]"
+          }
+        ],
+        "trajectory": {
+          "overall": "Improving",
+          "neuro": "Admission: GCS 15, mild right weakness 4+/5 (2024-01-15) → Surgery: Right frontal craniotomy (2024-01-16) → Discharge: GCS 15, right arm strength improved to 5-/5 (2024-01-19). Neurological improvement with resolution of weakness.",
+          "functional": "Admission: ambulatory with mild right weakness → POD 3: improved motor function, right arm 5-/5",
+          "complications": "None documented"
+        }
+      }
+    },
+    "narrative": "# DISCHARGE SUMMARY\n\n**PATIENT INFORMATION**\nName: John Smith\nAge: 65 years\nMedical Record Number: Not documented\nAdmission Date: January 15, 2024\nSurgery Date: January 16, 2024\nDischarge Date: January 19, 2024\nLength of Stay: 4 days\n\n**DIAGNOSES**\nPrimary Diagnosis: Right frontal lesion\n\n**HOSPITAL COURSE**\n\nMr. Smith is a 65-year-old patient who presented to the hospital on January 15, 2024, with a chief complaint of headaches. On admission, neurological examination revealed a Glasgow Coma Scale score of 15 with the patient alert and oriented. Examination was notable for mild right-sided weakness with strength documented at 4+/5.\n\nThe patient underwent right frontal craniotomy on January 16, 2024, for resection of the right frontal lesion. The procedure was performed without documented intraoperative complications.\n\nPost-operatively, the patient progressed well over the subsequent three days. By the time of discharge on post-operative day 3, the patient demonstrated neurological improvement with resolution of the previously noted weakness. Discharge neurological examination revealed the patient to be alert and oriented to person, place, and time with a Glasgow Coma Scale score of 15. Motor examination showed improvement in right upper extremity strength to 5-/5, and the patient was moving all extremities well.\n\nThe hospital course was otherwise uncomplicated with no documented post-operative complications.\n\n**DISCHARGE STATUS**\n\nNeurological Status: Glasgow Coma Scale 15, alert and oriented x3\nMotor Examination: Moving all extremities well; right arm strength 5-/5\nFunctional Status: Karnofsky Performance Status 80, modified Rankin Scale 1, ECOG Performance Status 1\n\n**DISCHARGE MEDICATIONS**\n1. Levetiracetam (Keppra) 1000 mg by mouth twice daily\n2. Dexamethasone 4 mg by mouth every 6 hours\n\n**FOLLOW-UP**\nFollow-up arrangements were not documented in the available clinical data.\n\n**ACTIVITY AND RESTRICTIONS**\nActivity restrictions were not documented in the available clinical data.",
+    "validation": {
+      "passed": false,
+      "score": 0,
+      "issues": [
+        {
+          "severity": "critical",
+          "category": "grounding",
+          "message": "Failed to parse validation response",
+          "details": "Expected ',' or '}' after property value in JSON at position 5927 (line 135 column 6)"
+        }
+      ]
+    },
+    "datePreprocessing": {
+      "detectedFormat": "AUTO",
+      "confidence": "high",
+      "conversionsCount": 3,
+      "ambiguousDatesCount": 0,
+      "warnings": [
+        {
+          "type": "missing_data",
+          "message": "No admission date detected",
+          "recommendation": "Verify admission date is present in clinical notes"
+        },
+        {
+          "type": "missing_data",
+          "message": "No discharge date detected",
+          "recommendation": "Verify discharge date is present in clinical notes"
+        }
+      ]
+    },
+    "documentationInventory": {
+      "documents": [
+        {
+          "type": "ADMISSION_HP",
+          "date": null,
+          "postOpDay": null,
+          "title": "Admission History & Physical",
+          "author": null,
+          "specialty": null,
+          "sourceQuote": "Patient: John Smith, Age 65\nAdmission: 2024-01-15\nChief Complaint: Headaches\nH&P: GCS 15, oriented, mild right weakness (4+/5)\nSurgery: 2024-01-16 Right frontal craniotomy\nDischarge: 2024-01-19\nDischa",
+          "confidence": "high"
+        }
+      ],
+      "podCoverage": {
+        "surgeryDate": "2024-01-16",
+        "dischargeDate": "2024-01-19",
+        "expectedPODs": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "presentPODs": [],
+        "missingPODs": [
+          0,
+          1,
+          2,
+          3
+        ],
+        "missingRanges": [
+          "POD 0-3"
+        ],
+        "coveragePercentage": 0
+      },
+      "gaps": {
+        "missingCritical": [
+          "OPERATIVE_REPORT",
+          "DISCHARGE_SUMMARY"
+        ],
+        "missingImportant": [],
+        "missingPODCount": 4,
+        "missingPODRanges": [
+          "POD 0-3"
+        ],
+        "totalGapDays": 4
+      },
+      "completenessScore": 0,
+      "warnings": [
+        "CRITICAL: Missing OPERATIVE_REPORT, DISCHARGE_SUMMARY. These documents are required for complete discharge summary.",
+        "POD Coverage: 0% - Missing 4 progress notes (POD 0-3). This represents a 4-day documentation gap.",
+        "POD coverage (0%) is below minimum threshold (80%). Daily progress notes are critical for continuity of care."
+      ]
+    },
+    "completenessCheck": {
+      "preExtraction": {
+        "overallReady": true,
+        "readinessScore": 67,
+        "checks": [
+          {
+            "type": "required_document",
+            "passed": true,
+            "severity": "critical",
+            "message": "Admission H&P document detected",
+            "details": "Found 1 admission document(s)"
+          },
+          {
+            "type": "required_document",
+            "passed": false,
+            "severity": "major",
+            "message": "Missing Discharge Summary or late progress note",
+            "recommendation": "Discharge summary or late progress note (POD 5+) required for extracting discharge status. Discharge fields may be incomplete or use admission data (temporal hallucination risk).",
+            "details": "No discharge summary or late progress notes (POD 5+) detected"
+          },
+          {
+            "type": "temporal_anchor",
+            "passed": true,
+            "severity": "critical",
+            "message": "Admission date detected in notes",
+            "details": "Admission date found in first 5000 characters"
+          },
+          {
+            "type": "temporal_anchor",
+            "passed": true,
+            "severity": "major",
+            "message": "Discharge date detected in notes",
+            "details": "Discharge date pattern found"
+          },
+          {
+            "type": "document_quality",
+            "passed": true,
+            "severity": "major",
+            "message": "Clinical notes appear complete"
+          },
+          {
+            "type": "discharge_readiness",
+            "passed": false,
+            "severity": "major",
+            "message": "Limited discharge planning documentation",
+            "recommendation": "No clear discharge medications, disposition, or follow-up plans detected. Discharge fields may be incomplete or missing.",
+            "details": "No discharge medications, disposition, or follow-up patterns detected"
+          }
+        ],
+        "blockers": [],
+        "warnings": [
+          {
+            "type": "required_document",
+            "passed": false,
+            "severity": "major",
+            "message": "Missing Discharge Summary or late progress note",
+            "recommendation": "Discharge summary or late progress note (POD 5+) required for extracting discharge status. Discharge fields may be incomplete or use admission data (temporal hallucination risk).",
+            "details": "No discharge summary or late progress notes (POD 5+) detected"
+          },
+          {
+            "type": "discharge_readiness",
+            "passed": false,
+            "severity": "major",
+            "message": "Limited discharge planning documentation",
+            "recommendation": "No clear discharge medications, disposition, or follow-up plans detected. Discharge fields may be incomplete or missing.",
+            "details": "No discharge medications, disposition, or follow-up patterns detected"
+          }
+        ]
+      },
+      "postExtraction": {
+        "overallComplete": false,
+        "completenessScore": 40,
+        "checks": [
+          {
+            "type": "field_completeness",
+            "passed": true,
+            "severity": "minor",
+            "fieldName": "admissionDate",
+            "message": "Field \"admissionDate\" is present"
+          },
+          {
+            "type": "field_confidence",
+            "passed": false,
+            "severity": "minor",
+            "fieldName": "admissionDate",
+            "message": "Field \"admissionDate\" has low confidence: undefined (expected medium+)",
+            "recommendation": "Review source documentation for admissionDate. Low confidence may indicate ambiguous or unclear data.",
+            "details": "Actual: undefined, Required: medium+"
+          },
+          {
+            "type": "source_attribution",
+            "passed": false,
+            "severity": "major",
+            "fieldName": "admissionDate",
+            "message": "Field \"admissionDate\" missing sourceQuote",
+            "recommendation": "Add sourceQuote for admissionDate to enable grounding verification."
+          },
+          {
+            "type": "field_completeness",
+            "passed": true,
+            "severity": "minor",
+            "fieldName": "chiefComplaint",
+            "message": "Field \"chiefComplaint\" is present"
+          },
+          {
+            "type": "field_confidence",
+            "passed": false,
+            "severity": "minor",
+            "fieldName": "chiefComplaint",
+            "message": "Field \"chiefComplaint\" has low confidence: undefined (expected medium+)",
+            "recommendation": "Review source documentation for chiefComplaint. Low confidence may indicate ambiguous or unclear data.",
+            "details": "Actual: undefined, Required: medium+"
+          },
+          {
+            "type": "source_attribution",
+            "passed": false,
+            "severity": "major",
+            "fieldName": "chiefComplaint",
+            "message": "Field \"chiefComplaint\" missing sourceQuote",
+            "recommendation": "Add sourceQuote for chiefComplaint to enable grounding verification."
+          },
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "critical",
+            "fieldName": "presentingSymptoms",
+            "message": "Required field \"presentingSymptoms\" is missing or null",
+            "recommendation": "Extract presentingSymptoms from clinical notes. This is a required field for admission data.",
+            "details": "Field category: admission, Required: true"
+          },
+          {
+            "type": "field_completeness",
+            "passed": true,
+            "severity": "minor",
+            "fieldName": "admissionGCS",
+            "message": "Field \"admissionGCS\" is present"
+          },
+          {
+            "type": "field_confidence",
+            "passed": false,
+            "severity": "minor",
+            "fieldName": "admissionGCS",
+            "message": "Field \"admissionGCS\" has low confidence: undefined (expected medium+)",
+            "recommendation": "Review source documentation for admissionGCS. Low confidence may indicate ambiguous or unclear data.",
+            "details": "Actual: undefined, Required: medium+"
+          },
+          {
+            "type": "source_attribution",
+            "passed": false,
+            "severity": "major",
+            "fieldName": "admissionGCS",
+            "message": "Field \"admissionGCS\" missing sourceQuote",
+            "recommendation": "Add sourceQuote for admissionGCS to enable grounding verification."
+          },
+          {
+            "type": "source_attribution",
+            "passed": false,
+            "severity": "minor",
+            "fieldName": "admissionGCS",
+            "message": "Field \"admissionGCS\" missing sourceNoteType",
+            "recommendation": "Add sourceNoteType for admissionGCS (e.g., ADMISSION_HP, DISCHARGE_SUMMARY, PROGRESS_NOTE)."
+          },
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "critical",
+            "fieldName": "admissionKPS",
+            "message": "Required field \"admissionKPS\" is missing or null",
+            "recommendation": "Extract admissionKPS from clinical notes. This is a required field for admission data.",
+            "details": "Field category: admission, Required: true"
+          },
+          {
+            "type": "field_completeness",
+            "passed": true,
+            "severity": "minor",
+            "fieldName": "surgeryDate",
+            "message": "Field \"surgeryDate\" is present"
+          },
+          {
+            "type": "field_confidence",
+            "passed": false,
+            "severity": "minor",
+            "fieldName": "surgeryDate",
+            "message": "Field \"surgeryDate\" has low confidence: undefined (expected high+)",
+            "recommendation": "Review source documentation for surgeryDate. Low confidence may indicate ambiguous or unclear data.",
+            "details": "Actual: undefined, Required: high+"
+          },
+          {
+            "type": "source_attribution",
+            "passed": false,
+            "severity": "major",
+            "fieldName": "surgeryDate",
+            "message": "Field \"surgeryDate\" missing sourceQuote",
+            "recommendation": "Add sourceQuote for surgeryDate to enable grounding verification."
+          },
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "major",
+            "fieldName": "procedure",
+            "message": "Required field \"procedure\" is missing or null",
+            "recommendation": "Extract procedure from clinical notes. This is a required field for surgical data.",
+            "details": "Field category: surgical, Required: true"
+          },
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "major",
+            "fieldName": "surgicalApproach",
+            "message": "Required field \"surgicalApproach\" is missing or null",
+            "recommendation": "Extract surgicalApproach from clinical notes. This is a required field for surgical data.",
+            "details": "Field category: surgical, Required: true"
+          },
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "major",
+            "fieldName": "operativeFindings",
+            "message": "Required field \"operativeFindings\" is missing or null",
+            "recommendation": "Extract operativeFindings from clinical notes. This is a required field for surgical data.",
+            "details": "Field category: surgical, Required: true"
+          },
+          {
+            "type": "field_completeness",
+            "passed": true,
+            "severity": "minor",
+            "fieldName": "dischargeDate",
+            "message": "Field \"dischargeDate\" is present"
+          },
+          {
+            "type": "field_confidence",
+            "passed": false,
+            "severity": "major",
+            "fieldName": "dischargeDate",
+            "message": "Field \"dischargeDate\" has low confidence: undefined (expected medium+)",
+            "recommendation": "Review source documentation for dischargeDate. Low confidence may indicate ambiguous or unclear data.",
+            "details": "Actual: undefined, Required: medium+"
+          },
+          {
+            "type": "source_attribution",
+            "passed": false,
+            "severity": "major",
+            "fieldName": "dischargeDate",
+            "message": "Field \"dischargeDate\" missing sourceQuote",
+            "recommendation": "Add sourceQuote for dischargeDate to enable grounding verification."
+          },
+          {
+            "type": "temporal_coverage",
+            "passed": true,
+            "severity": "minor",
+            "fieldName": "dischargeDate",
+            "message": "Discharge field \"dischargeDate\" sourced from appropriate note type"
+          },
+          {
+            "type": "field_completeness",
+            "passed": true,
+            "severity": "minor",
+            "fieldName": "dischargeGCS",
+            "message": "Field \"dischargeGCS\" is present"
+          },
+          {
+            "type": "field_confidence",
+            "passed": true,
+            "severity": "minor",
+            "fieldName": "dischargeGCS",
+            "message": "Field \"dischargeGCS\" has acceptable confidence: medium"
+          },
+          {
+            "type": "source_attribution",
+            "passed": false,
+            "severity": "major",
+            "fieldName": "dischargeGCS",
+            "message": "Field \"dischargeGCS\" missing sourceQuote",
+            "recommendation": "Add sourceQuote for dischargeGCS to enable grounding verification."
+          },
+          {
+            "type": "source_attribution",
+            "passed": false,
+            "severity": "minor",
+            "fieldName": "dischargeGCS",
+            "message": "Field \"dischargeGCS\" missing sourceNoteType",
+            "recommendation": "Add sourceNoteType for dischargeGCS (e.g., ADMISSION_HP, DISCHARGE_SUMMARY, PROGRESS_NOTE)."
+          },
+          {
+            "type": "temporal_coverage",
+            "passed": true,
+            "severity": "minor",
+            "fieldName": "dischargeGCS",
+            "message": "Discharge field \"dischargeGCS\" sourced from appropriate note type"
+          },
+          {
+            "type": "field_completeness",
+            "passed": true,
+            "severity": "minor",
+            "fieldName": "dischargeKPS",
+            "message": "Field \"dischargeKPS\" is present"
+          },
+          {
+            "type": "field_confidence",
+            "passed": true,
+            "severity": "minor",
+            "fieldName": "dischargeKPS",
+            "message": "Field \"dischargeKPS\" has acceptable confidence: medium"
+          },
+          {
+            "type": "source_attribution",
+            "passed": false,
+            "severity": "major",
+            "fieldName": "dischargeKPS",
+            "message": "Field \"dischargeKPS\" missing sourceQuote",
+            "recommendation": "Add sourceQuote for dischargeKPS to enable grounding verification."
+          },
+          {
+            "type": "source_attribution",
+            "passed": false,
+            "severity": "minor",
+            "fieldName": "dischargeKPS",
+            "message": "Field \"dischargeKPS\" missing sourceNoteType",
+            "recommendation": "Add sourceNoteType for dischargeKPS (e.g., ADMISSION_HP, DISCHARGE_SUMMARY, PROGRESS_NOTE)."
+          },
+          {
+            "type": "temporal_coverage",
+            "passed": true,
+            "severity": "minor",
+            "fieldName": "dischargeKPS",
+            "message": "Discharge field \"dischargeKPS\" sourced from appropriate note type"
+          },
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "critical",
+            "fieldName": "dischargeDisposition",
+            "message": "Required field \"dischargeDisposition\" is missing or null",
+            "recommendation": "Extract dischargeDisposition from clinical notes. This is a required field for discharge data.",
+            "details": "Field category: discharge, Required: true"
+          },
+          {
+            "type": "field_completeness",
+            "passed": true,
+            "severity": "minor",
+            "fieldName": "dischargeMedications",
+            "message": "Field \"dischargeMedications\" is present"
+          },
+          {
+            "type": "field_confidence",
+            "passed": false,
+            "severity": "major",
+            "fieldName": "dischargeMedications",
+            "message": "Field \"dischargeMedications\" has low confidence: undefined (expected medium+)",
+            "recommendation": "Review source documentation for dischargeMedications. Low confidence may indicate ambiguous or unclear data.",
+            "details": "Actual: undefined, Required: medium+"
+          },
+          {
+            "type": "source_attribution",
+            "passed": false,
+            "severity": "major",
+            "fieldName": "dischargeMedications",
+            "message": "Field \"dischargeMedications\" missing sourceQuote",
+            "recommendation": "Add sourceQuote for dischargeMedications to enable grounding verification."
+          },
+          {
+            "type": "temporal_coverage",
+            "passed": true,
+            "severity": "minor",
+            "fieldName": "dischargeMedications",
+            "message": "Discharge field \"dischargeMedications\" sourced from appropriate note type"
+          },
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "critical",
+            "fieldName": "dischargeAmbulation",
+            "message": "Required field \"dischargeAmbulation\" is missing or null",
+            "recommendation": "Extract dischargeAmbulation from clinical notes. This is a required field for discharge data.",
+            "details": "Field category: discharge, Required: true"
+          },
+          {
+            "type": "data_consistency",
+            "passed": true,
+            "severity": "minor",
+            "message": "Admission and discharge dates are consistent",
+            "details": "Admission: 2024-01-15, Discharge: 2024-01-19"
+          },
+          {
+            "type": "data_consistency",
+            "passed": true,
+            "severity": "minor",
+            "message": "Surgery date is between admission and discharge",
+            "details": "Admission: 2024-01-15, Surgery: 2024-01-16, Discharge: 2024-01-19"
+          }
+        ],
+        "criticalIssues": [
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "critical",
+            "fieldName": "presentingSymptoms",
+            "message": "Required field \"presentingSymptoms\" is missing or null",
+            "recommendation": "Extract presentingSymptoms from clinical notes. This is a required field for admission data.",
+            "details": "Field category: admission, Required: true"
+          },
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "critical",
+            "fieldName": "admissionKPS",
+            "message": "Required field \"admissionKPS\" is missing or null",
+            "recommendation": "Extract admissionKPS from clinical notes. This is a required field for admission data.",
+            "details": "Field category: admission, Required: true"
+          },
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "critical",
+            "fieldName": "dischargeDisposition",
+            "message": "Required field \"dischargeDisposition\" is missing or null",
+            "recommendation": "Extract dischargeDisposition from clinical notes. This is a required field for discharge data.",
+            "details": "Field category: discharge, Required: true"
+          },
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "critical",
+            "fieldName": "dischargeAmbulation",
+            "message": "Required field \"dischargeAmbulation\" is missing or null",
+            "recommendation": "Extract dischargeAmbulation from clinical notes. This is a required field for discharge data.",
+            "details": "Field category: discharge, Required: true"
+          }
+        ],
+        "majorIssues": [
+          {
+            "type": "source_attribution",
+            "passed": false,
+            "severity": "major",
+            "fieldName": "admissionDate",
+            "message": "Field \"admissionDate\" missing sourceQuote",
+            "recommendation": "Add sourceQuote for admissionDate to enable grounding verification."
+          },
+          {
+            "type": "source_attribution",
+            "passed": false,
+            "severity": "major",
+            "fieldName": "chiefComplaint",
+            "message": "Field \"chiefComplaint\" missing sourceQuote",
+            "recommendation": "Add sourceQuote for chiefComplaint to enable grounding verification."
+          },
+          {
+            "type": "source_attribution",
+            "passed": false,
+            "severity": "major",
+            "fieldName": "admissionGCS",
+            "message": "Field \"admissionGCS\" missing sourceQuote",
+            "recommendation": "Add sourceQuote for admissionGCS to enable grounding verification."
+          },
+          {
+            "type": "source_attribution",
+            "passed": false,
+            "severity": "major",
+            "fieldName": "surgeryDate",
+            "message": "Field \"surgeryDate\" missing sourceQuote",
+            "recommendation": "Add sourceQuote for surgeryDate to enable grounding verification."
+          },
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "major",
+            "fieldName": "procedure",
+            "message": "Required field \"procedure\" is missing or null",
+            "recommendation": "Extract procedure from clinical notes. This is a required field for surgical data.",
+            "details": "Field category: surgical, Required: true"
+          },
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "major",
+            "fieldName": "surgicalApproach",
+            "message": "Required field \"surgicalApproach\" is missing or null",
+            "recommendation": "Extract surgicalApproach from clinical notes. This is a required field for surgical data.",
+            "details": "Field category: surgical, Required: true"
+          },
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "major",
+            "fieldName": "operativeFindings",
+            "message": "Required field \"operativeFindings\" is missing or null",
+            "recommendation": "Extract operativeFindings from clinical notes. This is a required field for surgical data.",
+            "details": "Field category: surgical, Required: true"
+          },
+          {
+            "type": "field_confidence",
+            "passed": false,
+            "severity": "major",
+            "fieldName": "dischargeDate",
+            "message": "Field \"dischargeDate\" has low confidence: undefined (expected medium+)",
+            "recommendation": "Review source documentation for dischargeDate. Low confidence may indicate ambiguous or unclear data.",
+            "details": "Actual: undefined, Required: medium+"
+          },
+          {
+            "type": "source_attribution",
+            "passed": false,
+            "severity": "major",
+            "fieldName": "dischargeDate",
+            "message": "Field \"dischargeDate\" missing sourceQuote",
+            "recommendation": "Add sourceQuote for dischargeDate to enable grounding verification."
+          },
+          {
+            "type": "source_attribution",
+            "passed": false,
+            "severity": "major",
+            "fieldName": "dischargeGCS",
+            "message": "Field \"dischargeGCS\" missing sourceQuote",
+            "recommendation": "Add sourceQuote for dischargeGCS to enable grounding verification."
+          },
+          {
+            "type": "source_attribution",
+            "passed": false,
+            "severity": "major",
+            "fieldName": "dischargeKPS",
+            "message": "Field \"dischargeKPS\" missing sourceQuote",
+            "recommendation": "Add sourceQuote for dischargeKPS to enable grounding verification."
+          },
+          {
+            "type": "field_confidence",
+            "passed": false,
+            "severity": "major",
+            "fieldName": "dischargeMedications",
+            "message": "Field \"dischargeMedications\" has low confidence: undefined (expected medium+)",
+            "recommendation": "Review source documentation for dischargeMedications. Low confidence may indicate ambiguous or unclear data.",
+            "details": "Actual: undefined, Required: medium+"
+          },
+          {
+            "type": "source_attribution",
+            "passed": false,
+            "severity": "major",
+            "fieldName": "dischargeMedications",
+            "message": "Field \"dischargeMedications\" missing sourceQuote",
+            "recommendation": "Add sourceQuote for dischargeMedications to enable grounding verification."
+          }
+        ],
+        "minorIssues": [
+          {
+            "type": "field_confidence",
+            "passed": false,
+            "severity": "minor",
+            "fieldName": "admissionDate",
+            "message": "Field \"admissionDate\" has low confidence: undefined (expected medium+)",
+            "recommendation": "Review source documentation for admissionDate. Low confidence may indicate ambiguous or unclear data.",
+            "details": "Actual: undefined, Required: medium+"
+          },
+          {
+            "type": "field_confidence",
+            "passed": false,
+            "severity": "minor",
+            "fieldName": "chiefComplaint",
+            "message": "Field \"chiefComplaint\" has low confidence: undefined (expected medium+)",
+            "recommendation": "Review source documentation for chiefComplaint. Low confidence may indicate ambiguous or unclear data.",
+            "details": "Actual: undefined, Required: medium+"
+          },
+          {
+            "type": "field_confidence",
+            "passed": false,
+            "severity": "minor",
+            "fieldName": "admissionGCS",
+            "message": "Field \"admissionGCS\" has low confidence: undefined (expected medium+)",
+            "recommendation": "Review source documentation for admissionGCS. Low confidence may indicate ambiguous or unclear data.",
+            "details": "Actual: undefined, Required: medium+"
+          },
+          {
+            "type": "source_attribution",
+            "passed": false,
+            "severity": "minor",
+            "fieldName": "admissionGCS",
+            "message": "Field \"admissionGCS\" missing sourceNoteType",
+            "recommendation": "Add sourceNoteType for admissionGCS (e.g., ADMISSION_HP, DISCHARGE_SUMMARY, PROGRESS_NOTE)."
+          },
+          {
+            "type": "field_confidence",
+            "passed": false,
+            "severity": "minor",
+            "fieldName": "surgeryDate",
+            "message": "Field \"surgeryDate\" has low confidence: undefined (expected high+)",
+            "recommendation": "Review source documentation for surgeryDate. Low confidence may indicate ambiguous or unclear data.",
+            "details": "Actual: undefined, Required: high+"
+          },
+          {
+            "type": "source_attribution",
+            "passed": false,
+            "severity": "minor",
+            "fieldName": "dischargeGCS",
+            "message": "Field \"dischargeGCS\" missing sourceNoteType",
+            "recommendation": "Add sourceNoteType for dischargeGCS (e.g., ADMISSION_HP, DISCHARGE_SUMMARY, PROGRESS_NOTE)."
+          },
+          {
+            "type": "source_attribution",
+            "passed": false,
+            "severity": "minor",
+            "fieldName": "dischargeKPS",
+            "message": "Field \"dischargeKPS\" missing sourceNoteType",
+            "recommendation": "Add sourceNoteType for dischargeKPS (e.g., ADMISSION_HP, DISCHARGE_SUMMARY, PROGRESS_NOTE)."
+          }
+        ]
+      }
+    },
+    "metadata": {
+      "extractionMode": "VALIDATED",
+      "narrativeMode": "STANDARD",
+      "modelUsed": "claude-sonnet-4-5-20250929",
+      "tokenCount": {
+        "input": 40,
+        "output": 2644,
+        "cached": 0
+      },
+      "processingTime": 55126,
+      "timestamp": "2025-11-12T00:36:55.721Z"
+    }
+  },
+  "metadata": {
+    "processingTimeMs": 55127,
+    "tokensUsed": 2684,
+    "version": "2.0.0"
+  }
+}

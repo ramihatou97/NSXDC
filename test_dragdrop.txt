@@ -1,0 +1,20 @@
+DISCHARGE SUMMARY - TEST FILE
+
+Patient Name: John Doe
+MRN: 123456
+Admission Date: 01/15/2024
+Discharge Date: 01/22/2024
+
+HOSPITAL COURSE:
+This is a test clinical note document to verify drag-and-drop functionality. Patient was admitted for elective craniotomy. Post-operative course was unremarkable with good neurological recovery.
+
+DISCHARGE DIAGNOSIS:
+1. Brain tumor - resected
+2. Post-operative day 7
+
+DISCHARGE MEDICATIONS:
+- Levetiracetam 500mg PO BID
+- Dexamethasone 4mg PO Q6H (taper)
+
+FOLLOW-UP:
+Neurosurgery clinic in 2 weeks.

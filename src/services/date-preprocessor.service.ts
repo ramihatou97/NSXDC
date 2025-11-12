@@ -191,6 +191,7 @@ export class DatePreprocessorService {
     const warnings: ValidationWarning[] = [];
 
     // Determine format to use
+    const wasAutoDetected = config.preferredFormat === 'AUTO';
     let formatToUse: DateFormatType = config.preferredFormat;
     if (config.preferredFormat === 'AUTO') {
       formatToUse = analysis.detectedFormat;
@@ -239,7 +240,7 @@ export class DatePreprocessorService {
       conversions.push({
         original: ambigDate.original,
         normalized,
-        confidence: formatToUse === 'AUTO' ? 'low' : 'medium',
+        confidence: wasAutoDetected ? 'low' : 'medium',
         reasoning: interpretation,
         position: ambigDate.position,
       });

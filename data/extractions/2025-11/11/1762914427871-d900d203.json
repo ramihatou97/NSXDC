@@ -1,0 +1,1670 @@
+{
+  "id": "1762914427871-d900d203",
+  "timestamp": "2025-11-12T02:27:07.871Z",
+  "extraction": {
+    "success": true,
+    "extraction": {
+      "patientDemographics": {
+        "mrn": {
+          "value": "G10279609",
+          "source": "MRN: G10279609 [Multiple notes]"
+        },
+        "dateOfBirth": {
+          "value": "1969-10-24",
+          "source": "DOB: 24/10/1969 [Multiple notes]"
+        },
+        "age": {
+          "value": 55,
+          "source": "55 y.o. female [Clinic note 2025-01-08]",
+          "deduced": "calculated-from-dob-and-admission"
+        },
+        "sex": {
+          "value": "Female",
+          "source": "Legal Sex: F [Multiple notes]"
+        },
+        "name": {
+          "value": "Salma Shahid Mir",
+          "source": "Salma Shahid Mir [Multiple notes]"
+        }
+      },
+      "admissionData": {
+        "admissionDate": {
+          "value": "2025-10-10",
+          "source": "Admitted 1657 [Care Timeline 10/10]"
+        },
+        "presentingSymptoms": {
+          "value": "Progressive bilateral ICA steno-occlusive disease with transient ischemic attacks and limb shaking episodes",
+          "source": "Ms. Mir has a history of progressive bilateral ICA steno-occlusive disease over the past several months and transient ischemic attacks [Op note 2025-10-10]"
+        },
+        "admissionGCS": {
+          "value": null,
+          "source": "No admission GCS documented for this admission",
+          "confidence": "low",
+          "warnings": [
+            {
+              "type": "missing_data",
+              "message": "No admission neurological exam documented for October 2025 admission"
+            }
+          ]
+        },
+        "admissionKPS": {
+          "value": null,
+          "source": "No admission KPS documented"
+        },
+        "admissionECOG": {
+          "value": null,
+          "source": "No admission ECOG documented"
+        },
+        "admissionMRS": {
+          "value": null,
+          "source": "No admission mRS documented"
+        },
+        "admissionFunctionalStatus": {
+          "value": "Baseline left-sided weakness (1/5 strength) from prior stroke, using rollator walker for mobility outside home, requiring assistance with cooking, cleaning, and bathing",
+          "source": "She has mild facial asymmetry and mild left sided weakness remaining at baseline [Clinic note 2025-01-08]. Uses a Rolator since the stroke, only when leaving the house. Daughter assists with cooking and cleaning, PSW for bathing [Clinic note 2025-01-08]. R MCA stroke residual L weakness 1/5 pre op [Progress note 2025-10-11]"
+        }
+      },
+      "diagnosis": {
+        "primary": {
+          "value": "Moyamoya syndrome with bilateral intracranial ICA occlusions",
+          "source": "Moyamoya syndrome with progression of bilateral ICA occlusions [Stroke consult 2025-10-27]. Bilateral intracranial ICA occlusions due to possible accelerated ICAD vs vasculitis [Stroke consult 2025-10-27]"
+        },
+        "secondary": [
+          {
+            "value": "Recurrent right MCA territory ischemic infarcts",
+            "source": "Recurrent Right MCA territory ischemic infarcts [Stroke consult 2025-10-27]"
+          },
+          {
+            "value": "Type 2 diabetes mellitus",
+            "source": "Diabetes mellitus [Multiple notes]"
+          },
+          {
+            "value": "Hypertension",
+            "source": "Hypertension [Multiple notes]"
+          },
+          {
+            "value": "Iron deficiency anemia",
+            "source": "Iron deficiency anemia [Multiple notes]"
+          },
+          {
+            "value": "Psoriasis",
+            "source": "Psoriasis [Multiple notes]"
+          }
+        ]
+      },
+      "surgeryData": {
+        "surgeryDate": {
+          "value": "2025-10-10",
+          "source": "Date: 10/10/2025 [Op note 2025-10-10]"
+        },
+        "procedure": {
+          "value": "Right STA-MCA Bypass and Vessel Biopsy with Microscope, with indirect revascularization (EDAS, EMS)",
+          "source": "Right STA-MCA Bypass and Vessel Biopsy with Microscope [Op note 2025-10-10]. EC-IC bypass complicated by right MCA stroke [Stroke clinic note 2025-10-27]. underwent right STA MCA bypass plus EDAMS (indirect revascularization) on October 10, 2025 [Progress note 2025-10-12]"
+        },
+        "surgeon": {
+          "value": "Kislay Kishore",
+          "source": "Kislay Kishore - Primary [Op note 2025-10-10]"
+        },
+        "laterality": {
+          "value": "Right",
+          "source": "Right STA-MCA Bypass [Op note 2025-10-10]"
+        },
+        "approach": {
+          "value": "Temporal craniotomy with microscopic anastomosis",
+          "source": "A linear temporal incision was made, taking care to preserve the superficial temporal artery, and careful dissection was carried out under microscopic visualization [Op note 2025-10-10]"
+        },
+        "extentOfResection": {
+          "value": "Not applicable - bypass procedure",
+          "source": "Bypass procedure, not a resection [Op note 2025-10-10]"
+        },
+        "estimatedBloodLoss": {
+          "value": 300,
+          "source": "Estimated Blood Loss: 300 mL [Op note 2025-10-10]"
+        },
+        "operativeDuration": {
+          "value": null,
+          "source": "Case Time: 10/10/25 0810 [Op note header], no end time documented",
+          "confidence": "low",
+          "warnings": [
+            {
+              "type": "incomplete_data",
+              "message": "Start time documented but no end time provided"
+            }
+          ]
+        },
+        "intraoperativeComplications": {
+          "value": "Sluggish flow through anastomosis on ICG, requiring conversion to indirect revascularization. Friable STA vessel requiring multiple cut-backs.",
+          "source": "The anastomosis was found to have sluggish flow on post-anastomosis ICG run. As such, indirect anastomosis (EDAS, EMS) was carried out [Op note 2025-10-10]. STA was friable at donor site and cut back twice [Op note 2025-10-10]"
+        },
+        "pathologyFindings": {
+          "value": "Pending at time of operative note dictation - vessel samples sent for analysis",
+          "source": "pathology pending at time of dictation [Op note 2025-10-10]. Vasculitis labs, and pathology results not showing inflammation [Stroke clinic note 2025-10-27]",
+          "confidence": "medium",
+          "deduced": "final-pathology-negative-for-inflammation"
+        }
+      },
+      "hospitalCourse": {
+        "admissionSummary": {
+          "presentingSymptoms": "Elective admission for EC-IC bypass surgery for progressive bilateral ICA steno-occlusive disease with recurrent TIAs and limb shaking episodes",
+          "admissionDate": "2025-10-10",
+          "admissionStatus": "Baseline left-sided weakness 1/5 from prior stroke, using rollator walker, requiring assistance with ADLs [Clinic note 2025-01-08, Progress note 2025-10-11]"
+        },
+        "dailyProgress": [
+          {
+            "date": "2025-10-10",
+            "day": "POD 0",
+            "status": "Post-operative, slow to wake but eventually responsive",
+            "events": "Right STA-MCA bypass performed 08:10. Intraoperative finding of sluggish anastomosis flow, converted to indirect revascularization (EDAS, EMS). Postprocedure slow to wake after prolonged anesthesia, but after 30 minutes started waking and was responsive following commands readily. Left-sided weakness same as preop with antigravity strength. CT scan planned for later that night. [Op note 2025-10-10, Post-procedure note 2025-10-10]"
+          },
+          {
+            "date": "2025-10-11",
+            "day": "POD 1",
+            "status": "Neurological deterioration - left arm 0/5, left leg 1/5",
+            "events": "Denies headache, nausea or vomiting. Wound CDI. GCS 15. Hypophonic, mouths words to answer. Alert and oriented x3. Left facial weakness (UMN distribution). 5/5 throughout right upper and lower extremities. 0/5 left upper extremity, 1/5 left lower extremity (no volitional movement to left lower extremity, flexion to peripheral stimulus - patient reports absent sensation to same). Post-op CT showed minimal post operative hematoma, no mass effect, no acute infarct. PT and OT consulted for disposition planning. Hold plavix x 1 week. [Progress note 2025-10-11]"
+          },
+          {
+            "date": "2025-10-12",
+            "day": "POD 2",
+            "status": "Further deterioration with seizure and dense left hemiplegia",
+            "events": "Patient reported weakness in left side. Hypophonic and dysarthric. Multidirectional nystagmus. Left sided facial weakness. Left Upper 0/5, Left Lower 1/5 with pain stimulus. MRI stroke ordered. Around 5-6 PM became unresponsive, suspected seizure activity which was aborted with 1g IV Keppra. Urgent CT/CTA showed bypass patent, no large vessel occlusion, but established infarction involving right ACA and ACA watershed territories. No major mass effect. Blood pressure had episodes of 109/50 and 113 systolic for at least an hour, likely causing hypoperfusion in perfusion-dependent patient. Strict BP target 120-140 systolic instituted. Arterial line maintained. Continue ASA 81mg, Keppra IV 1g BID. [Progress notes 2025-10-12, 20:46 note by Dr. Kishore]"
+          },
+          {
+            "date": "2025-10-13",
+            "day": "POD 3",
+            "status": "Stable post-seizure, dense left hemiplegia persists",
+            "events": "CTA confirmed new large right MCA territory acute infarct. No midline shift or brain herniation. No frank hemorrhagic transformation. Persistent bilateral ICA occlusion. Wake alert, verbal but hypophonic. NG feeding tube inserted for meds and nutrition. No movement left arm or leg. Left arm swollen. On levophed for sBP 120-140 mmHg. Continue midodrine 10mg q6h. Electrolyte replacement. Enteral feeds started. [Progress notes 2025-10-13]"
+          },
+          {
+            "date": "2025-10-14",
+            "day": "POD 4",
+            "status": "Stable, left hemiplegia unchanged",
+            "events": "Uneventful night. On AED for episode of aphasia. Awake, left neglect, oriented x3. Hypophonic, otherwise language/speech/comprehension intact. Left sided hemiplegia. RUL and RLL at least anti-gravity. Wean off Norepi, utilize midodrine prn. K at 3.0 replaced. Glucose 13.8, started on sliding scale insulin. OT assessment: Min-mod assistance for sitting balance, dependent for transfers, requires mechanical lift. [Progress note 2025-10-14, OT note 2025-10-14]"
+          },
+          {
+            "date": "2025-10-15",
+            "day": "POD 5",
+            "status": "Stable, vomiting after feeds started",
+            "events": "Vomiting after feeds started per nursing. Bedside nurse not convinced it's ICP related. Exam unchanged. Hypokalemia K 2.8, replaced. Anti-emetic prn. CXR to re-confirm NG tube. Disposition: SDU appropriate, may be stroke rehab for long-term. [Progress note 2025-10-15]"
+          },
+          {
+            "date": "2025-10-16",
+            "day": "POD 6",
+            "status": "Improved vomiting, ambulating with assistance",
+            "events": "Vomiting improved. Less hypophonic. GCS 15, ambulating with assistance. Improved hypokalemia at 3.4. [Progress note 2025-10-16]"
+          },
+          {
+            "date": "2025-10-17",
+            "day": "POD 7",
+            "status": "Stable, NG kinked but repositioned",
+            "events": "NG kinked but repositioned. No other issues overnight. Neuro stable. GCS E4V4M6. Awake and oriented to person, place and time. Responding only with short sentences. Right upper and lower 4+/5. Left upper 0/5 sensation intact. Strict BP target SBP 120-140. Continue Keppra. Disposition: stroke rehab. Nutrition: Started on Glucerna 1.2 @ 25ml/hr, increase 10ml q12hrs to goal 55ml/hr. Multiple bowel movements (watery diarrhea). [Progress notes 2025-10-17, Nutrition note 2025-10-17]"
+          },
+          {
+            "date": "2025-10-18",
+            "day": "POD 8",
+            "status": "Stable, ongoing dense left hemiplegia",
+            "events": "Stable overnight. No acute issues. GCS E4V5M6. Aox3. Left facial droop. Right side 4+/5. Left upper 0/5 sensation intact, Left lower 2/5 only to pain. Ongoing SBP target 110-140. Continue DAPT. On Keppra. Disposition: stroke rehab. [Progress note 2025-10-18]"
+          },
+          {
+            "date": "2025-10-19",
+            "day": "POD 9",
+            "status": "Stable",
+            "events": "No documented progress note for this date. Multiple bowel movements documented (watery diarrhea, green stool). [Flowsheet data]"
+          },
+          {
+            "date": "2025-10-20",
+            "day": "POD 10",
+            "status": "Stable, reporting headache and nausea",
+            "events": "Reporting headache and nausea. No vomiting. No acute issues overnight. Power 5/5 right upper and lower. No movement in left side. Sensation intact on the left. Neuro stable with ongoing left dense plegia. Continue SBP target 120-140. On DAPT and Keppra. PT/OT. SLP following. Disposition: stroke rehab once NG removed. Diet upgraded to pureed texture, diabetic, halal. Started on oral supplements (Glucerna, Ensure Clear). Consuming <50% of meal trays. Tube feeds adjusted to nocturnal (18:00-06:00). [Progress note 2025-10-20, Nutrition note 2025-10-20]"
+          },
+          {
+            "date": "2025-10-21",
+            "day": "POD 11",
+            "status": "Stable",
+            "events": "No documented progress note for this date."
+          },
+          {
+            "date": "2025-10-22",
+            "day": "POD 12",
+            "status": "Stable, diet upgraded to regular",
+            "events": "Stable. Diet upgraded to regular, diabetic, halal. Family bringing food from home. Tube feeds continued nocturnally. Started on baclofen 5mg TID. Multiple bowel movements. [Progress note 2025-10-22, Nutrition note 2025-10-23]"
+          },
+          {
+            "date": "2025-10-23",
+            "day": "POD 13",
+            "status": "Stable",
+            "events": "No documented progress note for this date. Nutrition following, calorie counts ordered."
+          },
+          {
+            "date": "2025-10-24",
+            "day": "POD 14",
+            "status": "Stable, transfusion for anemia",
+            "events": "Administered ordered packed red blood cells. Patient reported itchiness at the site. Vitally stable, denied chest pain, SOB, itchiness elsewhere. Reduced dose to 50mL/hr, patient tolerating well. [Nursing note 2025-10-24]"
+          },
+          {
+            "date": "2025-10-25",
+            "day": "POD 15",
+            "status": "Stable",
+            "events": "No documented progress note for this date."
+          },
+          {
+            "date": "2025-10-26",
+            "day": "POD 16",
+            "status": "Stable",
+            "events": "No documented progress note for this date."
+          },
+          {
+            "date": "2025-10-27",
+            "day": "POD 17",
+            "status": "Stable, seen by stroke neurology",
+            "events": "Seen in Stroke Prevention Clinic. Doing better according to patient and daughter. No more episodes of limb shaking. Continues to be hemiplegic. Feels better in terms of appetite. Socializing well, memory good, interactive albeit slow. Exam: NIHSS 5. Aox3. Fluent speech, intact comprehension. EOM full, no gaze preference. Left UMN facial droop (mild). Left arm no movement. Left leg minor drift. Normal FtoN on right. Symmetric sensation. Stroke neurology inpatient consult: NIHSS 5. Left face/arm paralysis from postoperative day 1 evening (October 12). Likely postprocedural sequelae related to hypoperfusion (sBP in low 100s). Stroke symptoms stabilized. Paralysis of left arm persists. Higher cortical function spared. Plan: MRI with vessel wall imaging, repeat vasculitic bloodwork. [Stroke clinic note 2025-10-27, Stroke consult 2025-10-27]"
+          },
+          {
+            "date": "2025-10-28",
+            "day": "POD 18",
+            "status": "Stable, removed Dobhoff tube",
+            "events": "No concerns voiced by nursing. Denies headache. Removed Dobhoff overnight. Oriented at least for name and year, remains dysphonic with low volume voice and minimal verbal output. Slight spasticity on left side. Left lower limb pain resolved after starting baclofen, likely related to spasticity. Doppler negative for DVT. Hemoglobin dropping to 66, postprocedural likely iron deficiency anemia. No signs of ongoing bleeding. Reactive increase in platelets without signs of infection. Given IV iron and 1 unit RBC. Urine and blood cultures sent. Pantoloc for gastro protection. [Progress note 2025-10-28]"
+          },
+          {
+            "date": "2025-10-29",
+            "day": "POD 19",
+            "status": "Stable, improved hemoglobin",
+            "events": "No complaints. Power at least anti-gravity on right, appear strong. Plegic left side. Neuro stable with ongoing left dense plegia. Improved Hgb at 95 post transfusion and IV Fe. PLT still elevated although normal white count, likely non-infectious and reactive. [Progress note 2025-10-29]"
+          },
+          {
+            "date": "2025-10-30",
+            "day": "POD 20",
+            "status": "Stable, platelets normalized",
+            "events": "Exam unchanged compared to yesterday. Improved Hgb. PLT within normal limit. One episode of small emesis after eating, patient denies nausea, no other episodes. Consuming <50% of meal trays but eating food from home (cereal+milk at breakfast, sandwich from home at lunch, rice+beans from home at dinner). Calorie counts show improved intake. [Progress note 2025-10-30, Nutrition note 2025-10-30]"
+          }
+        ],
+        "trajectory": {
+          "overall": "Declining then stabilizing",
+          "neuro": "Admission: Baseline left-sided weakness 1/5 from prior stroke (2025-10-10) → Nadir: POD 2 (2025-10-12) with seizure and dense left hemiplegia 0/5 left arm, 1/5 left leg due to large right MCA infarct → Discharge timeframe: POD 20 (2025-10-30) persistent dense left hemiplegia 0/5 left arm, minimal movement left leg, right side 4+/5 to 5/5, GCS 15, oriented x3, stable neurologically",
+          "functional": "Admission: Using rollator walker, requiring assistance with cooking/cleaning/bathing → POD 0: Extubated, following commands → POD 1-2: Severe deterioration with left hemiplegia → POD 4: Dependent for transfers, requires mechanical lift → POD 6: Ambulating with assistance → POD 20: Remains dependent for most ADLs, plegic left side, consuming oral diet with family bringing food from home",
+          "complications": "Major: Large right MCA territory infarct POD 2 (2025-10-12) with seizure, likely secondary to intraoperative/postoperative hypoperfusion. Minor: Postoperative anemia requiring transfusion POD 14, reactive thrombocytosis (resolved), hypokalemia (corrected), vomiting with tube feeds (resolved), diarrhea with tube feeds (managed)"
+        }
+      },
+      "complications": [
+        {
+          "complication": "Large right MCA territory acute infarct",
+          "date": "2025-10-12",
+          "severity": "Major",
+          "description": "New large right MCA territory acute infarct on POD 2, presenting with seizure and dense left hemiplegia",
+          "source": "New large right MCA territory acute infarct. No midline shift or brain herniation. No frank hemorrhagic transformation [CTA 2025-10-12]. Around 5 to 6 PM, she became unresponsive, was suspected to have seizure activity, which was aborted and 1g IV keppra was administered [Progress note 2025-10-12]",
+          "management": "Seizure aborted with IV Keppra 1g, strict BP control 120-140 systolic, arterial line monitoring, continued DAPT after 1 week hold on Plavix",
+          "outcome": "Persistent dense left hemiplegia, neurologically stable by POD 20"
+        },
+        {
+          "complication": "Postoperative anemia",
+          "date": "2025-10-28",
+          "severity": "Moderate",
+          "description": "Hemoglobin dropping to 66, postprocedural iron deficiency anemia",
+          "source": "Hemoglobin dropping 66, postprocedural likely iron related deficiency anemia. There is no signs of ongoing bleeding whatsoever [Progress note 2025-10-28]",
+          "management": "IV iron and 1 unit RBC transfusion, Pantoloc for gastro protection",
+          "outcome": "Improved Hgb to 95 post transfusion and IV Fe by POD 19"
+        },
+        {
+          "complication": "Reactive thrombocytosis",
+          "date": "2025-10-28",
+          "severity": "Minor",
+          "description": "Reactive increase in platelets without signs of infection",
+          "source": "There is also a reactive increase in platelets without any signs of infection or identified potential foci of infection. This may be secondary to iron deficiency anemia [Progress note 2025-10-28]",
+          "management": "Cultures sent to exclude infection, monitoring",
+          "outcome": "PLT within normal limit by POD 20"
+        },
+        {
+          "complication": "Hypokalemia",
+          "date": "2025-10-14",
+          "severity": "Minor",
+          "description": "Potassium levels 2.8-3.0",
+          "source": "K at 3.0 this am. Replaced [Progress note 2025-10-14]. Hypokalemia. K at 2.8 this am. Replaced [Progress note 2025-10-15]",
+          "management": "Potassium replacement",
+          "outcome": "Improved hypokalemia at 3.4 by POD 6"
+        },
+        {
+          "complication": "Vomiting with tube feeds",
+          "date": "2025-10-15",
+          "severity": "Minor",
+          "description": "Vomiting after enteral feeds started",
+          "source": "Vomiting yesterday after feeds started as per nursing [Progress note 2025-10-15]",
+          "management": "Anti-emetic prn, CXR to confirm NG tube placement",
+          "outcome": "Vomiting improved by POD 6"
+        },
+        {
+          "complication": "Diarrhea",
+          "date": "2025-10-17",
+          "severity": "Minor",
+          "description": "Multiple episodes of watery diarrhea with tube feeds",
+          "source": "Multiple bowel movements (watery diarrhea) [Flowsheet 2025-10-17]. Stool Consistency: Watery, no solid pieces (entirely liquid diarrhea) [Nutrition note 2025-10-17]",
+          "management": "Loperamide prn, adjustment of tube feeds, fiber management",
+          "outcome": "Managed with medication and feed adjustments"
+        }
+      ],
+      "dischargeMedications": [
+        {
+          "value": "Acetylsalicylic acid (ASA) 80mg PO Daily with breakfast",
+          "source": "acetylsalicylic acid (ASA) chewable tablet 80 mg, 80 mg, oral, Daily with breakfast [Medication list 2025-10-27]"
+        },
+        {
+          "value": "Clopidogrel (Plavix) 75mg PO Daily",
+          "source": "clopidogrel (Plavix) tablet 75 mg, 75 mg, oral, Daily [Medication list 2025-10-27]"
+        },
+        {
+          "value": "Levetiracetam (Keppra) 1000mg PO BID",
+          "source": "levETIRAcetam (Keppra) tablet 1,000 mg, 1 g, oral, BID [Medication list 2025-10-27]"
+        },
+        {
+          "value": "Rosuvastatin (Crestor) 40mg PO qHS",
+          "source": "rosuvastatin (Crestor) tablet 40 mg, 40 mg, oral, qHS [Medication list 2025-10-27]"
+        },
+        {
+          "value": "Metformin 1000mg/Sitagliptin 50mg PO BID with breakfast and dinner",
+          "source": "metFORMIN 1,000 mg, sitagliptin phosphate 50 mg for metFORMIN/sitagliptin 1000-50 mg, oral, BID CC breakfast & dinner [Medication list 2025-10-27]"
+        },
+        {
+          "value": "Midodrine 10mg PO q8h",
+          "source": "midodrine tablet 10 mg, 10 mg, oral, q8h [Medication list 2025-10-27]"
+        },
+        {
+          "value": "Baclofen (Lioresal) 5mg PO TID",
+          "source": "baclofen (Lioresal) half tablet 5 mg, 5 mg, oral, TID [Medication list 2025-10-27]"
+        },
+        {
+          "value": "Lansoprazole (Prevacid Fastab) 30mg translingual AC breakfast",
+          "source": "lansoprazole (Prevacid Fastab) disintegrating tablet 30 mg, 30 mg, translingual, AC breakfast [Medication list 2025-10-27]"
+        },
+        {
+          "value": "Pregabalin (Lyrica) 25mg PO qHS",
+          "source": "pregabalin (Lyrica) capsule 25 mg, 25 mg, oral, qHS [Medication list 2025-10-27]"
+        },
+        {
+          "value": "Ferrous gluconate 300mg PO qPM",
+          "source": "ferrous gluconate tablet 300 mg, 300 mg, oral, qPM [Medication list 2025-10-27]"
+        },
+        {
+          "value": "Dalteparin (Fragmin) 5000 Units SQ qPM",
+          "source": "dalteparin (Fragmin) injection 5,000 Units, 5,000 Units, subcutaneous, qPM [Medication list 2025-10-27]"
+        },
+        {
+          "value": "Polyethylene glycol 3350 (Miralax) 17g PO Daily",
+          "source": "polyethylene glycol 3350 (Miralax) powder 17 g, 17 g, oral, Daily [Medication list 2025-10-27]"
+        },
+        {
+          "value": "Sennosides (Senokot) 17.2mg PO Nightly at 2300",
+          "source": "sennosides (Senokot) tablet 17.2 mg, 17.2 mg, oral, Nightly at 2300 [Medication list 2025-10-27]"
+        },
+        {
+          "value": "Acetaminophen (Tylenol) 325-650mg PO q4h PRN",
+          "source": "acetaminophen (Tylenol) tablet 325-650 mg, 325-650 mg, oral, q4h PRN [Medication list 2025-10-27]"
+        },
+        {
+          "value": "Hydromorphone (Dilaudid) 0.5-2mg PO q4h PRN",
+          "source": "HYDROmorphone (Dilaudid) tablet 0.5-2 mg, 0.5-2 mg, oral, q4h PRN [Medication list 2025-10-27]"
+        },
+        {
+          "value": "Ondansetron (Zofran) 4-8mg PO q6h PRN",
+          "source": "ondansetron (Zofran) tablet 4-8 mg, 4-8 mg, oral, q6h PRN [Medication list 2025-10-27]"
+        },
+        {
+          "value": "Zolpidem (Sublinox) 10mg sublingual qHS PRN",
+          "source": "zolpidem (Sublinox) tablet 10 mg, 10 mg, sublingual, qHS PRN [Medication list 2025-10-27]"
+        },
+        {
+          "value": "Bisacodyl (Dulcolax) 10mg rectal Daily PRN",
+          "source": "bisACODYL (Dulcolax) suppository 10 mg, 10 mg, rectal, Daily PRN [Medication list 2025-10-27]"
+        },
+        {
+          "value": "Loperamide (Imodium) 2mg feeding tube After loose BM PRN",
+          "source": "loperamide (Imodium) tablet 2 mg, 2 mg, feeding tube, After loose BM PRN [Medication list 2025-10-27]"
+        }
+      ],
+      "dischargeData": {
+        "dischargeDate": {
+          "value": null,
+          "source": "Patient still admitted as of last note 2025-10-30",
+          "confidence": "low",
+          "warnings": [
+            {
+              "type": "patient_not_discharged",
+              "message": "Patient remains admitted, no discharge date available"
+            }
+          ]
+        },
+        "dischargeDisposition": {
+          "value": "Planned discharge to stroke rehabilitation",
+          "source": "dispo: stroke rehab [Progress note 2025-10-17]. Disposition: stroke rehab once NG removed [Progress note 2025-10-20]"
+        },
+        "dischargeGCS": {
+          "value": 15,
+          "source": "GCS: E4V5M6 [Progress note 2025-10-18]. Exam unchanged compared to yesterday [Progress note 2025-10-30]",
+          "confidence": "medium",
+          "deduced": "most-recent-documented-gcs-pod-18-stable-through-pod-20"
+        },
+        "dischargeKPS": {
+          "value": 40,
+          "source": "Plegic left side [Progress note 2025-10-29]. Dependent for transfers, requires mechanical lift [OT note 2025-10-14]. Consuming oral diet with family bringing food from home [Nutrition note 2025-10-30]",
+          "confidence": "medium",
+          "deduced": "disabled-requires-special-care-assistance-kps-30-50"
+        },
+        "dischargeECOG": {
+          "value": 3,
+          "source": "Dependent for transfers, requires mechanical lift [OT note 2025-10-14]. Plegic left side [Progress note 2025-10-29]. Consuming <50% of meal trays but eating food from home [Nutrition note 2025-10-30]",
+          "confidence": "medium",
+          "deduced": "capable-limited-selfcare-confined-bed-chair-ecog-3"
+        },
+        "dischargeMRS": {
+          "value": 5,
+          "source": "Dependent for transfers, requires mechanical lift [OT note 2025-10-14]. Plegic left side [Progress note 2025-10-29]. Requires ongoing assistance with all ADLs",
+          "confidence": "medium",
+          "deduced": "severe-disability-bedridden-incontinent-constant-care-mrs-5"
+        },
+        "dischargeNIHSS": {
+          "value": 5,
+          "source": "NIHSS: 5. UMN Left facial droop 1, Left arm 4 [Stroke consult 2025-10-27]"
+        },
+        "dischargeFunctionalStatus": {
+          "value": "Dense left hemiplegia with 0/5 left arm strength, minimal movement left leg, right side 4+/5 to 5/5 strength. Dependent for transfers requiring mechanical lift. Consuming oral diet with family assistance. Oriented x3, fluent speech with intact comprehension but hypophonic. Requires ongoing stroke rehabilitation.",
+          "source": "Power at least anti-gravity on right, appear strong. Plegic left side [Progress note 2025-10-29]. Dependent for transfers, requires mechanical lift [OT note 2025-10-14]. Consuming <50% of meal trays but eating food from home (cereal+milk at breakfast, sandwich from home at lunch, rice+beans from home at dinner) [Nutrition note 2025-10-30]. Oriented at least for name and year, remains dysphonic with low volume voice and minimal verbal output [Progress note 2025-10-28]"
+        }
+      },
+      "followUpPlan": {
+        "appointments": [
+          {
+            "specialty": "Stroke Prevention Clinic",
+            "provider": "Dr. Luciana Catanese",
+            "timeframe": "1 month",
+            "source": "Follow-up: 1 month [Stroke clinic note 2025-10-27]"
+          },
+          {
+            "specialty": "Neurosurgery",
+            "provider": "Dr. Kislay Kishore",
+            "timeframe": "Mid-September (documented in August clinic note)",
+            "source": "Follow-up appointment with Dr. Kishore mid-September [Clinic note 2025-01-08]"
+          }
+        ],
+        "imaging": [
+          {
+            "study": "MRI brain with vessel wall imaging",
+            "indication": "To evaluate bilateral ICA occlusions and rule out vasculitis",
+            "source": "Complete work-up with MRI vessel wall imaging [Stroke clinic note 2025-10-27]. Will ask the inpatient team to proceed with the vessel wall imaging MRI [Stroke clinic note 2025-10-27]"
+          }
+        ],
+        "labs": [
+          {
+            "test": "Repeat vasculitic bloodwork",
+            "indication": "To evaluate for inflammatory vasculitis as cause of bilateral ICA occlusions",
+            "source": "We will consider repeating the vasculitic bloodwork as well [Stroke consult 2025-10-27]"
+          }
+        ],
+        "other": [
+          {
+            "recommendation": "Lumbar puncture may be done in future to rule out infectious etiologies such as VZV",
+            "source": "LP may be done in the future but not of value post-op as it will show inflammation. May be done to rule out infectious etiologies such as VZV [Stroke clinic note 2025-10-27]"
+          },
+          {
+            "recommendation": "Blood pressure diary and monitoring",
+            "source": "Blood pressure diary discussed. Ensure blood pressure is below 140/90 mmHg or <130/80 mmHg If diabetic [Stroke clinic note 2025-10-27]"
+          },
+          {
+            "recommendation": "Secondary prevention targets: LDL<1.8, TG<1.7 (or <1.5 if diabetic), HbA1C<6 (or <7 if diabetic)",
+            "source": "Please ensure LDL<1.8, TG <1.7 or TG <1.5 if diabetic. Please ensure HbA1C <6 or <7 if diabetic [Stroke clinic note 2025-10-27]"
+          },
+          {
+            "recommendation": "Mediterranean MIND diet, moderate to vigorous exercise 150 min per week (if appropriate)",
+            "source": "Mediterranean MIND diet. Moderate to vigorous exercise 150 in per week (if appropriate) [Stroke clinic note 2025-10-27]"
+          },
+          {
+            "recommendation": "Call 911 if develops new focal neurological deficits",
+            "source": "I instructed the patient to call 911 if he/she develops new focal neurological deficits such as, but not limited to, weakness, numbness, facial droop, difficulty articulating words, gait imbalance, or any other concerning symptoms [Stroke clinic note 2025-10-27]"
+          }
+        ]
+      },
+      "additionalClinicalData": {
+        "priorStrokes": [
+          {
+            "date": "2025-02-28",
+            "description": "Right caudate, corona radiata, inferior centrum semiovale, and lentiform nucleus infarcts",
+            "presentation": "Bilateral leg weakness, brief LOC, fall. Later found to have primarily left-sided weakness",
+            "source": "At the end of February, at around 8am she was making breakfast and suddenly felt weak in her legs bilaterally. She was sweating at the time and had to sit down. She then had a likely brief LOC and fell into her husband's arms [Clinic note 2025-01-08]. She was found to have right caudate, corona radiata, inferior centrum semiovale, and lentiform nucleus infarcts likely secondary to hypoperfusion [Clinic note 2025-01-08]",
+            "outcome": "Mild facial asymmetry and mild left sided weakness remaining at baseline"
+          }
+        ],
+        "priorTIAs": [
+          {
+            "date": "2025-07-17",
+            "description": "Recurrent left sided weakness and unresponsiveness lasting a few minutes",
+            "source": "She went to SJH on July 17th due to recurrent left sided weakness and unresponsiveness lasting a few minutes. At this time, she was not eating or drinking well and was found to have AKI likely secondary to dehydration. There was no acute infarct on CT/CTA [Clinic note 2025-01-08]"
+          },
+          {
+            "date": "2025-07-22",
+            "description": "Unresponsive for about 1 minute while taking medications, unable to swallow",
+            "source": "On July 22, she was unresponsive again for about 1 minute in the morning while taking her medications. Her daughter witnessed that she took a sip of water but was unable to swallow her medications with water spilling out of her mouth during this episode. She was unable to speak until EMS arrived and then started to make sounds. At this time, her CT/CTA showed complete occlusion of bilateral ICAs (previously only right ICA) [Clinic note 2025-01-08]"
+          }
+        ],
+        "imagingStudies": [
+          {
+            "study": "CTA head and neck",
+            "date": "2025-07-22",
+            "findings": "Bilateral ICAs occluded intracranially with diminished caliber in the cervical segments. Both reconstitute to a diminutive supraclinoid ICA with low caliber of proximal MCA and ACA branches. No change in the right ICA, worsening of the left ICA compared to prior. Vertebrobasilar system is patent.",
+            "source": "CTA (July 22, 2025): Bilateral ICAs occluded intracranially with diminished caliber in the cervical segments. Both reconstitute to a diminutive supraclinoid ICA with low caliber of proximal MCA and ACA branches. No change in the right ICA, worsening of the left ICA compared to prior. Vertebrobasilar system is patent [Clinic note 2025-01-08]"
+          },
+          {
+            "study": "MRI brain",
+            "date": "2025-06-06",
+            "findings": "No new infarcts",
+            "source": "MRI brain (June 6, 2025) - no new infarcts [Clinic note 2025-01-08]"
+          },
+          {
+            "study": "CT head",
+            "date": "2025-10-11",
+            "findings": "Minimal post operative hematoma, no mass effect. No acute infarct.",
+            "source": "Minimal post operative hematoma, no mass effect. No acute infarct [Progress note 2025-10-11]"
+          },
+          {
+            "study": "CT/CTA head",
+            "date": "2025-10-12",
+            "findings": "New large right MCA territory acute infarct. No midline shift or brain herniation. No frank hemorrhagic transformation. Persistent bilateral ICA occlusion with reconstitution at the supraclinoid ICAs. Diminutive caliber of the right MCA branches and bilateral ACA branches, worsened compared to prior. Bypass patent.",
+            "source": "New large right MCA territory acute infarct. No midline shift or brain herniation. No frank hemorrhagic transformation. Persistent bilateral ICA occlusion with reconstitution at the supraclinoid ICAs. Diminutive caliber of the right MCA branches and bilateral ACA branches, worsened compared to prior [CTA 2025-10-12]. Urgent CT/CT angiogram was performed which showed the bypass is patent, and no large vessel occlusion or any arterial occlusion as such, but with established infarction involving right ACA and ACA watershed territories [Progress note 2025-10-12]"
+          },
+          {
+            "study": "TTE",
+            "date": "2025-06-01",
+            "findings": "Normal size LA, EF 57%, no shunt",
+            "source": "TTE- June 2025: Normal size LA, EF-57%, no shunt [Stroke clinic note 2025-10-27]"
+          },
+          {
+            "study": "Holter monitor 24 hours",
+            "date": "2025-06-01",
+            "findings": "No atrial fibrillation",
+            "source": "Holter 24 hours - June 2025: no Atrial fibrillation [Stroke clinic note 2025-10-27]"
+          },
+          {
+            "study": "EEG routine",
+            "date": "2025-08-05",
+            "findings": "Abnormal video-EEG with mixed theta/delta slowing over the right anterior quadrant. No epileptogenic discharges were recorded. Findings represent a non-specific underlying cortical dysfunction.",
+            "source": "EEG routine: Abnormal video-EEG with mixed theta/delta slowing over the right anterior quadrant. No epileptogenic discharges were recorded. Findings represent a non-specific underlying cortical dysfunction [Stroke clinic note 2025-10-27]"
+          }
+        ],
+        "labValues": {
+          "hemoglobin": {
+            "value": 116,
+            "date": "2025-10-27",
+            "source": "HB:116 [Stroke clinic note 2025-10-27]"
+          },
+          "platelets": {
+            "value": 232,
+            "date": "2025-10-27",
+            "source": "PLT: 232 [Stroke clinic note 2025-10-27]"
+          },
+          "creatinine": {
+            "value": 103,
+            "date": "2025-10-27",
+            "source": "Creatinine:103 [Stroke clinic note 2025-10-27]"
+          },
+          "ldl": {
+            "value": 0.93,
+            "date": "2025-10-27",
+            "source": "LDL:0.93 [Stroke clinic note 2025-10-27]"
+          },
+          "hba1c": {
+            "value": 7.1,
+            "date": "2025-10-27",
+            "source": "Hba1c:7.1 [Stroke clinic note 2025-10-27]"
+          }
+        },
+        "socialHistory": {
+          "livingArrangement": {
+            "value": "Lives with daughter, daughter's husband, and 2 grandchildren",
+            "source": "Lives with her daughter (and her daughter's husband and 2 kids) [Clinic note 2025-01-08]"
+          },
+          "smokingStatus": {
+            "value": "Lifelong non-smoker",
+            "source": "Lifelong non-smoker, no alcohol, no other drugs [Clinic note 2025-01-08]"
+          },
+          "alcoholUse": {
+            "value": "No alcohol use",
+            "source": "Lifelong non-smoker, no alcohol, no other drugs [Clinic note 2025-01-08]"
+          },
+          "functionalSupport": {
+            "value": "Daughter assists with cooking and cleaning, PSW for bathing",
+            "source": "Daughter assists with cooking and cleaning, PSW for bathing [Clinic note 2025-01-08]"
+          }
+        },
+        "dietaryRestrictions": {
+          "value": "Halal diet, no fish (dislikes hospital fish)",
+          "source": "Patient follows a HALAL diet [Nutrition note 2025-10-14]. Halal, No Fish [Diet orders multiple dates]. pt eats fish at home, dislikes it in the hospital [Nutrition note 2025-10-20]"
+        }
+      }
+    },
+    "narrative": "# DISCHARGE SUMMARY\n\n**PATIENT INFORMATION**\nName: Salma Shahid Mir\nDate of Birth: October 24, 1969\nAge: 55 years\nSex: Female\nMedical Record Number: G10279609\n\nAdmission Date: October 10, 2025\nSurgery Date: October 10, 2025\nDischarge Date: Patient remains admitted as of October 30, 2025\n\n---\n\n**DIAGNOSES**\n\nPrimary Diagnosis:\n- Moyamoya syndrome with bilateral intracranial internal carotid artery occlusions\n\nSecondary Diagnoses:\n- Recurrent right middle cerebral artery territory ischemic infarcts\n- Type 2 diabetes mellitus\n- Hypertension\n- Iron deficiency anemia\n- Psoriasis\n\n---\n\n**HOSPITAL COURSE**\n\nMs. Mir is a 55-year-old female with a history of progressive bilateral intracranial ICA steno-occlusive disease who was electively admitted on October 10, 2025, for cerebral revascularization surgery. The patient had experienced recurrent transient ischemic attacks and limb shaking episodes over several months, with a prior right MCA territory stroke in February 2025 that left her with baseline left-sided weakness (1/5 strength). At baseline, she used a rollator walker for mobility outside the home and required assistance with cooking, cleaning, and bathing.\n\n**Surgical Intervention:**\nOn October 10, 2025, the patient underwent right superficial temporal artery to middle cerebral artery (STA-MCA) bypass with indirect revascularization (encephaloduroarteriosynangiosis and encephalomyosynangiosis) and vessel biopsy under the care of Dr. Kislay Kishore. Intraoperatively, the superficial temporal artery was noted to be friable, requiring multiple cut-backs at the donor site. Post-anastomosis indocyanine green angiography demonstrated sluggish flow through the direct bypass, prompting the addition of indirect revascularization techniques. Estimated blood loss was 300 mL. Vessel samples were sent for pathological analysis to evaluate for vasculitis; final pathology showed no evidence of inflammation.\n\n**Post-Operative Course:**\nThe patient's post-operative course was complicated by a large right MCA territory infarct on post-operative day 2. Initially, the patient was slow to wake following prolonged anesthesia but eventually became responsive and was following commands readily, with left-sided weakness unchanged from baseline. On post-operative day 1, the patient developed worsening neurological status with dense left hemiplegia (0/5 left upper extremity, 1/5 left lower extremity) and hypophonic speech. Post-operative CT imaging showed minimal post-operative hematoma without mass effect or acute infarct at that time.\n\nOn post-operative day 2, the patient experienced further deterioration with an episode of unresponsiveness and suspected seizure activity around 5-6 PM, which was aborted with 1 gram intravenous levetiracetam. Urgent CT and CTA imaging revealed a new large right MCA territory acute infarct involving the right ACA and ACA watershed territories, with no midline shift, brain herniation, or frank hemorrhagic transformation. The bypass was confirmed to be patent with no large vessel occlusion. Review of the patient's blood pressure records revealed episodes of systolic pressures in the low 100s (109/50 mmHg and 113 systolic) for at least one hour prior to the neurological decline, likely causing hypoperfusion in this perfusion-dependent patient. Strict blood pressure parameters were instituted (systolic 120-140 mmHg), an arterial line was placed for continuous monitoring, and the patient was started on vasopressor support with norepinephrine and midodrine.\n\nOver the subsequent days, the patient remained neurologically stable with persistent dense left hemiplegia. The patient was alert and oriented to person, place, and time, with fluent speech and intact comprehension, though speech remained hypophonic with low volume and minimal verbal output. Right-sided strength was preserved at 4+/5 to 5/5 throughout the upper and lower extremities. The patient was weaned off norepinephrine by post-operative day 4 and maintained on midodrine for blood pressure support. Levetiracetam was continued for seizure prophylaxis at 1000 mg twice daily.\n\n**Medical Complications:**\nThe patient developed several medical issues during the hospitalization. A nasogastric feeding tube was placed on post-operative day 3 for medication administration and nutritional support given the patient's hypophonic speech and initial difficulty with oral intake. The patient experienced vomiting after enteral feeds were initiated on post-operative day 5, which improved with anti-emetic medication and feed adjustments. Multiple episodes of watery diarrhea occurred with tube feeding, managed with loperamide as needed and modification of the feeding regimen to nocturnal administration.\n\nHypokalemia was identified on post-operative day 4 (potassium 3.0 mmol/L) and post-operative day 5 (potassium 2.8 mmol/L), requiring electrolyte replacement. Potassium levels improved to 3.4 mmol/L by post-operative day 6.\n\nOn post-operative day 18, the patient's hemoglobin dropped to 66 g/L, consistent with post-procedural iron deficiency anemia without evidence of ongoing bleeding. The patient received intravenous iron supplementation and one unit of packed red blood cells, with hemoglobin improving to 95 g/L by post-operative day 19. An additional unit of packed red blood cells was administered on post-operative day 14 for symptomatic anemia. Pantoprazole was initiated for gastroprotection.\n\nReactive thrombocytosis was noted on post-operative day 18, likely secondary to iron deficiency anemia. Blood and urine cultures were sent to exclude infection, and platelet counts normalized to within normal limits by post-operative day 20 without specific intervention.\n\nLeft lower limb pain developed during the hospitalization, attributed to spasticity. Baclofen 5 mg three times daily was initiated on post-operative day 12 with resolution of pain. Doppler ultrasound of the left lower extremity was negative for deep vein thrombosis.\n\n**Functional Progress:**\nPhysical therapy and occupational therapy were consulted early in the hospitalization for disposition planning. On post-operative day 4, occupational therapy assessment documented that the patient required minimal to moderate assistance for sitting balance and was dependent for transfers, requiring a mechanical lift. By post-operative day 6, the patient was ambulating with assistance. Speech-language pathology followed the patient throughout the admission.\n\nThe nasogastric feeding tube was removed on post-operative day 18. The patient's diet was upgraded from pureed texture to regular texture, diabetic, and halal by post-operative day 12. The patient's oral intake gradually improved, consuming less than 50% of meal trays but supplementing with food brought from home by family (cereal and milk at breakfast, sandwiches at lunch, rice and beans at dinner). Oral nutritional supplements (Glucerna and Ensure Clear) were provided. Tube feeds were adjusted to nocturnal administration (18:00-06:00) to support nutritional needs while encouraging oral intake during the day.\n\n**Consultations:**\nStroke neurology was consulted on post-operative day 17 and evaluated the patient in the Stroke Prevention Clinic. The patient and daughter reported improvement with no further episodes of limb shaking, though the left hemiplegia persisted. Neurological examination revealed a National Institutes of Health Stroke Scale (NIHSS) score of 5, with the patient alert and oriented times three, fluent speech with intact comprehension, full extraocular movements without gaze preference, mild left upper motor neuron facial droop, left arm paralysis, and minor drift of the left leg. Higher cortical functions were preserved. The stroke team recommended completion of MRI brain with vessel wall imaging and repeat vasculitic bloodwork to further evaluate the etiology of the bilateral ICA occlusions. The differential diagnosis included accelerated intracranial atherosclerotic disease versus vasculitis, though initial vasculitis laboratory studies and vessel pathology were negative for inflammation.\n\n**Discharge Status:**\nAt the time of the most recent documentation on post-operative day 20, the patient remained neurologically stable with Glasgow Coma Scale score of 15 (E4V5M6). The patient was alert and oriented to person, place, and time. Dense left hemiplegia persisted with 0/5 strength in the left upper extremity and minimal movement in the left lower extremity. Right-sided strength was preserved at 4+/5 to 5/5. The patient remained dependent for most activities of daily living and transfers, requiring mechanical lift assistance. The patient was consuming a regular oral diet with family support and supplementation.\n\n---\n\n**DISCHARGE MEDICATIONS**\n\n1. Acetylsalicylic acid (ASA) 80 mg oral daily with breakfast\n2. Clopidogrel (Plavix) 75 mg oral daily\n3. Levetiracetam (Keppra) 1000 mg oral twice daily\n4. Rosuvastatin (Crestor) 40 mg oral nightly at bedtime\n5. Metformin 1000 mg/Sitagliptin 50 mg oral twice daily with breakfast and dinner\n6. Midodrine 10 mg oral every 8 hours\n7. Baclofen (Lioresal) 5 mg oral three times daily\n8. Lansoprazole (Prevacid Fastab) 30 mg translingual before breakfast\n9. Pregabalin (Lyrica) 25 mg oral nightly at bedtime\n10. Ferrous gluconate 300 mg oral every evening\n11. Dalteparin (Fragmin) 5000 Units subcutaneous every evening\n12. Polyethylene glycol 3350 (Miralax) 17 g oral daily\n13. Sennosides (Senokot) 17.2 mg oral nightly at 2300\n14. Acetaminophen (Tylenol) 325-650 mg oral every 4 hours as needed\n15. Hydromorphone (Dilaudid) 0.5-2 mg oral every 4 hours as needed\n16. Ondansetron (Zofran) 4-8 mg oral every 6 hours as needed\n17. Zolpidem (Sublinox) 10 mg sublingual nightly at bedtime as needed\n18. Bisacodyl (Dulcolax) 10 mg rectal daily as needed\n19. Loperamide (Imodium) 2 mg via feeding tube after loose bowel movement as needed\n\n---\n\n**FOLLOW-UP**\n\n**Appointments:**\n- Stroke Prevention Clinic with Dr. Luciana Catanese in 1 month\n- Neurosurgery follow-up with Dr. Kislay Kishore as scheduled\n\n**Imaging:**\n- MRI brain with vessel wall imaging to evaluate bilateral ICA occlusions and assess for vasculitis\n\n**Laboratory Studies:**\n- Repeat vasculitic bloodwork to further evaluate for inflammatory vasculitis\n- Lumbar puncture may be considered in the future to rule out infectious etiologies such as varicella-zoster virus (deferred in immediate post-operative period)\n\n**Activity and Restrictions:**\n- Blood pressure monitoring with target systolic blood pressure below 140/90 mmHg (or below 130/80 mmHg given diabetes)\n- Blood pressure diary recommended\n- Moderate to vigorous exercise 150 minutes per week when appropriate given functional status\n\n**Dietary Recommendations:**\n- Mediterranean MIND diet\n- Continue halal diet as per patient preference\n- Target HbA1c less than 7% (current 7.1%)\n\n**Secondary Prevention Targets:**\n- LDL cholesterol less than 1.8 mmol/L (current 0.93 mmol/L - at goal)\n- Triglycerides less than 1.5 mmol/L (diabetic patient)\n- HbA1c less than 7% (diabetic patient)\n\n**Special Instructions:**\n- Call 911 immediately if new focal neurological deficits develop, including weakness, numbness, facial droop, difficulty articulating words, gait imbalance, or any other concerning symptoms\n- Continue stroke rehabilitation as planned\n- Disposition planned to inpatient stroke rehabilitation facility for intensive therapy\n\n---\n\n**DISPOSITION**\n\nThe patient is planned for discharge to an inpatient stroke rehabilitation facility for intensive physical, occupational, and speech therapy to maximize functional recovery following the post-operative stroke.",
+    "validation": {
+      "passed": false,
+      "score": 59,
+      "issues": [
+        {
+          "severity": "critical",
+          "category": "temporal",
+          "message": "Discharge date is null but patient appears to still be admitted as of POD 20 (2025-10-30). Cannot validate discharge status fields without confirmed discharge timeframe.",
+          "location": "dischargeData.dischargeDate",
+          "suggestedFix": "Confirm patient discharge date before finalizing discharge status assessments. Current extraction correctly notes patient not yet discharged."
+        },
+        {
+          "severity": "critical",
+          "category": "temporal",
+          "message": "Discharge GCS (15) is deduced from POD 18 (2025-10-18) exam, not from discharge timeframe. Patient not yet discharged as of last note POD 20 (2025-10-30).",
+          "location": "dischargeData.dischargeGCS",
+          "suggestedFix": "Label as 'most recent GCS' rather than 'discharge GCS' since patient not discharged. Add warning that this is pre-discharge assessment."
+        },
+        {
+          "severity": "critical",
+          "category": "temporal",
+          "message": "Discharge KPS (40) is deduced from multiple timepoints (POD 4, POD 19, POD 20) but patient not yet discharged. Cannot definitively assign discharge KPS.",
+          "location": "dischargeData.dischargeKPS",
+          "suggestedFix": "Relabel as 'most recent KPS assessment' or 'anticipated discharge KPS' with explicit warning that patient remains admitted."
+        },
+        {
+          "severity": "critical",
+          "category": "temporal",
+          "message": "Discharge ECOG (3) is deduced from POD 4, POD 19, POD 20 data but patient not discharged. Temporal misattribution of 'discharge' status.",
+          "location": "dischargeData.dischargeECOG",
+          "suggestedFix": "Change to 'most recent ECOG' with note that patient remains admitted as of POD 20."
+        },
+        {
+          "severity": "critical",
+          "category": "temporal",
+          "message": "Discharge mRS (5) is deduced from POD 4, POD 19 data but patient not discharged. Cannot assign discharge mRS without discharge exam.",
+          "location": "dischargeData.dischargeMRS",
+          "suggestedFix": "Relabel as 'most recent mRS assessment' with warning that patient not yet discharged."
+        },
+        {
+          "severity": "critical",
+          "category": "temporal",
+          "message": "Discharge functional status compiled from POD 19, POD 4, POD 30, POD 28 but patient not discharged. This is pre-discharge status, not discharge status.",
+          "location": "dischargeData.dischargeFunctionalStatus",
+          "suggestedFix": "Relabel as 'current functional status as of POD 20' or 'pre-discharge functional status' with explicit note patient remains admitted."
+        },
+        {
+          "severity": "critical",
+          "category": "grounding",
+          "message": "Clinic note dated 2025-01-08 describes events from February 2025 (future relative to clinic date). This is temporally impossible - likely the clinic note is from 2025-08-01 (August 1) not January 8.",
+          "location": "additionalClinicalData.priorStrokes[0].date",
+          "suggestedFix": "Verify clinic note date. Text states 'At the end of February, at around 8am' and 'over the last 4 to 5 months' which would place clinic visit in July-August 2025, not January. Likely date format error: should be 2025-08-01 not 2025-01-08."
+        },
+        {
+          "severity": "critical",
+          "category": "temporal",
+          "message": "Prior stroke dated 2025-02-28 but clinic note discussing it is dated 2025-01-08. Cannot discuss February stroke in January. Confirms clinic note date is incorrect.",
+          "location": "additionalClinicalData.priorStrokes[0]",
+          "suggestedFix": "Correct clinic note date to 2025-08-01 (August 1, 2025) based on temporal context of discussion."
+        },
+        {
+          "severity": "critical",
+          "category": "temporal",
+          "message": "TIA events dated July 2025 (2025-07-17, 2025-07-22) discussed in clinic note dated 2025-01-08. Temporally impossible. Confirms clinic note misdated.",
+          "location": "additionalClinicalData.priorTIAs",
+          "suggestedFix": "Correct clinic note date to 2025-08-01 and verify all events discussed in that note occurred prior to August 2025."
+        },
+        {
+          "severity": "major",
+          "category": "gcs",
+          "message": "GCS components documented as E4V5M6 (total 15) on POD 8, but also documented as E4V4M6 (total 14) on POD 7. Inconsistency in verbal component scoring.",
+          "location": "hospitalCourse.dailyProgress[POD 7-8]",
+          "suggestedFix": "Verify verbal component: V4 on POD 7 vs V5 on POD 8. If patient 'responding only with short sentences' (POD 7), V4 may be more accurate than V5. Document improvement if verbal score increased."
+        },
+        {
+          "severity": "major",
+          "category": "temporal",
+          "message": "Discharge medications list dated 2025-10-27 (POD 17) but patient remains admitted through POD 20. This is current inpatient medication list, not discharge medications.",
+          "location": "dischargeMedications",
+          "suggestedFix": "Relabel as 'Current Medications as of POD 17' or 'Anticipated Discharge Medications' since patient not yet discharged."
+        },
+        {
+          "severity": "major",
+          "category": "medication",
+          "message": "Clopidogrel (Plavix) listed in discharge medications but was held x 1 week post-op per POD 1 note. Need to verify when restarted and if appropriate for discharge.",
+          "location": "dischargeMedications[1]",
+          "suggestedFix": "Verify Plavix restart date. POD 1 note states 'Hold plavix x 1 week' (would be until ~POD 7). Confirm medication was restarted before listing as discharge medication."
+        },
+        {
+          "severity": "major",
+          "category": "completeness",
+          "message": "Operative duration not documented - only start time (08:10) provided without end time.",
+          "location": "surgeryData.operativeDuration",
+          "suggestedFix": "Request complete operative time documentation or note as 'not documented' rather than null."
+        },
+        {
+          "severity": "major",
+          "category": "temporal",
+          "message": "Follow-up appointment with Dr. Kishore listed as 'mid-September' but this was documented in August clinic note for a different context (pre-operative planning). Post-operative follow-up plan not clearly documented.",
+          "location": "followUpPlan.appointments[1]",
+          "suggestedFix": "Remove pre-operative appointment reference or clearly label as 'pre-operative plan, superseded by surgery'. Document actual post-operative neurosurgery follow-up plan if available."
+        },
+        {
+          "severity": "major",
+          "category": "anatomical",
+          "message": "Diagnosis states 'Moyamoya syndrome' but stroke clinic note indicates 'unlikely to be moyamoya syndrome as her stenosis is not isolated to supraclinoid segment'. Diagnostic uncertainty not reflected in primary diagnosis.",
+          "location": "diagnosis.primary",
+          "suggestedFix": "Revise primary diagnosis to reflect uncertainty: 'Bilateral intracranial ICA occlusions, etiology uncertain (possible accelerated atherosclerosis vs vasculitis vs atypical moyamoya variant)' per stroke consult assessment."
+        },
+        {
+          "severity": "minor",
+          "category": "completeness",
+          "message": "Admission GCS not documented for October 2025 admission. Patient admitted electively for surgery, likely neurologically stable, but baseline exam not recorded.",
+          "location": "admissionData.admissionGCS",
+          "suggestedFix": "Note that patient admitted electively for surgery with known baseline left-sided weakness, but formal admission GCS not documented."
+        },
+        {
+          "severity": "minor",
+          "category": "completeness",
+          "message": "No progress notes documented for POD 9, 11, 21, 23, 25, 26. Gaps in daily documentation.",
+          "location": "hospitalCourse.dailyProgress",
+          "suggestedFix": "Note documentation gaps: 'No progress note available for POD 9, 11, 21, 23, 25, 26. Clinical status inferred from adjacent days and flowsheet data.'"
+        },
+        {
+          "severity": "minor",
+          "category": "medication",
+          "message": "Insulin sliding scale mentioned on POD 4 but not included in discharge medication list. Unclear if diabetes management changed or if omission.",
+          "location": "dischargeMedications",
+          "suggestedFix": "Verify if insulin sliding scale continued or if diabetes controlled on oral agents alone. Document rationale if insulin discontinued."
+        },
+        {
+          "severity": "minor",
+          "category": "completeness",
+          "message": "Pathology results mentioned as 'not showing inflammation' in stroke clinic note but detailed pathology report not included in extracted data.",
+          "location": "surgeryData.pathologyFindings",
+          "suggestedFix": "Request formal pathology report for vessel biopsy specimens sent intraoperatively. Current note only states negative for inflammation."
+        },
+        {
+          "severity": "minor",
+          "category": "temporal",
+          "message": "Length of stay calculated as 20 days (POD 20 = 2025-10-30) but discharge date null. LOS incomplete without discharge date.",
+          "location": "hospitalCourse.dailyProgress",
+          "suggestedFix": "Note 'Length of stay: 20+ days as of last documented note (2025-10-30), patient remains admitted.'"
+        },
+        {
+          "severity": "minor",
+          "category": "completeness",
+          "message": "Braden scale scores documented (14, 15) indicating moderate risk for pressure injury, but no documentation of pressure injury prevention measures or skin assessment outcomes.",
+          "location": "additionalClinicalData",
+          "suggestedFix": "Document pressure injury prevention interventions and skin integrity status throughout admission."
+        },
+        {
+          "severity": "minor",
+          "category": "medical",
+          "message": "Patient on dual antiplatelet therapy (ASA + Plavix) plus prophylactic anticoagulation (Dalteparin 5000 Units). Triple antithrombotic therapy increases bleeding risk, though may be appropriate post-stroke/bypass.",
+          "location": "dischargeMedications",
+          "suggestedFix": "Verify appropriateness of triple therapy (DAPT + prophylactic LMWH) and document rationale. Consider if Dalteparin for DVT prophylaxis only or therapeutic indication."
+        }
+      ]
+    },
+    "datePreprocessing": {
+      "detectedFormat": "AUTO",
+      "confidence": "high",
+      "conversionsCount": 203,
+      "ambiguousDatesCount": 52,
+      "warnings": [
+        {
+          "type": "temporal_inconsistency",
+          "message": "Discharge date is before admission date",
+          "recommendation": "Verify dates in source document and correct if needed"
+        },
+        {
+          "type": "temporal_inconsistency",
+          "message": "Negative length of stay",
+          "recommendation": "Verify dates in source document and correct if needed"
+        },
+        {
+          "type": "temporal_inconsistency",
+          "message": "Surgery date is outside admission-discharge range",
+          "recommendation": "Verify dates in source document and correct if needed"
+        },
+        {
+          "type": "requires_verification",
+          "message": "Future date detected: next week (2025-11-19)",
+          "recommendation": "Review dates for accuracy"
+        },
+        {
+          "type": "requires_verification",
+          "message": "Future date detected: 12/10/25 (2025-12-10)",
+          "recommendation": "Review dates for accuracy"
+        },
+        {
+          "type": "requires_verification",
+          "message": "Future date detected: 12/10/2025 (2025-12-10)",
+          "recommendation": "Review dates for accuracy"
+        },
+        {
+          "type": "requires_verification",
+          "message": "Future date detected: 12/10/25 (2025-12-10)",
+          "recommendation": "Review dates for accuracy"
+        },
+        {
+          "type": "requires_verification",
+          "message": "Future date detected: 12/10/25 (2025-12-10)",
+          "recommendation": "Review dates for accuracy"
+        },
+        {
+          "type": "requires_verification",
+          "message": "Future date detected: 12/10/25 (2025-12-10)",
+          "recommendation": "Review dates for accuracy"
+        },
+        {
+          "type": "requires_verification",
+          "message": "Future date detected: 12/10/25 (2025-12-10)",
+          "recommendation": "Review dates for accuracy"
+        },
+        {
+          "type": "requires_verification",
+          "message": "Date more than 5 years old: 24/10/1969 (1969-10-24)",
+          "recommendation": "Review dates for accuracy"
+        },
+        {
+          "type": "requires_verification",
+          "message": "Date more than 5 years old: 24/10/1969 (1969-10-24)",
+          "recommendation": "Review dates for accuracy"
+        },
+        {
+          "type": "requires_verification",
+          "message": "Date more than 5 years old: 24/10/1969 (1969-10-24)",
+          "recommendation": "Review dates for accuracy"
+        },
+        {
+          "type": "requires_verification",
+          "message": "Date more than 5 years old: 24/10/1969 (1969-10-24)",
+          "recommendation": "Review dates for accuracy"
+        },
+        {
+          "type": "requires_verification",
+          "message": "52 dates with ambiguous format",
+          "recommendation": "Verify date interpretations match source document"
+        }
+      ]
+    },
+    "documentationInventory": {
+      "documents": [
+        {
+          "type": "OTHER",
+          "date": "1/8/2025",
+          "postOpDay": null,
+          "title": "Unknown Document",
+          "author": null,
+          "specialty": null,
+          "sourceQuote": "\\decimal\\. .; ; ;\nHamilton General Hospital 237 Barton St E Hamilton ON L8L 2X2 Notes Report\nMir, Salma Shahid MRN: G10279609, DOB: 24/10/1969, Legal Sex: F HCN: 6724793028 Visit date: 1/8/2025",
+          "confidence": "medium"
+        },
+        {
+          "type": "PROGRESS_NOTE",
+          "date": "1/8/2025",
+          "postOpDay": null,
+          "title": "Progress Note",
+          "author": "Kislay Kishore",
+          "specialty": "Neurosurgery\\",
+          "sourceQuote": "**👤 Kislay Kishore, MD**\nPhysician\\\n**Specialty:** Neurosurgery\\\n**Progress Notes \\**\n**Addendum\\**\n**Encounter Date: 1/8/2025\\**\n**Addendum**\nNeuro Interventional Ambulatory Clinic Note\n**1/8/2025*",
+          "confidence": "high"
+        },
+        {
+          "type": "PROGRESS_NOTE",
+          "date": null,
+          "postOpDay": null,
+          "title": "Progress Note",
+          "author": "Sabiha Haseeb",
+          "specialty": null,
+          "sourceQuote": "**👤 Sabiha Haseeb, MD**\n**6/8/2025 1:57 PM**\n**Progress Notes by Kislay Kishore, MD**\n**Luciana Catanese, MD**\nOrders Placed\\\nFollow-up Appt Request HGH NEURO AMBULATORY; Routine Follow Up\\\nMedicati",
+          "confidence": "high"
+        },
+        {
+          "type": "OPERATIVE_REPORT",
+          "date": "10/10/25",
+          "postOpDay": null,
+          "title": "Operative Report",
+          "author": "Melissa Lannon",
+          "specialty": "Neurosurgery",
+          "sourceQuote": "**👤 Melissa Lannon, MD**\nResident\\\nNeurosurgery\\\n**Op Note \\**\n**Date of Service: 10/10/25 0810\\**\n**Case Time:**\n**Procedures:**\n**Surgeons:**\n**10/10/25 0810**\nRight STA-MCA Bypass and Vessel Biop",
+          "confidence": "high"
+        },
+        {
+          "type": "OPERATIVE_REPORT",
+          "date": "10/10/25",
+          "postOpDay": null,
+          "title": "Operative Report",
+          "author": "Kislay Kishore, MD at 17/10/25 0020",
+          "specialty": "Neurosurgery",
+          "sourceQuote": "**👤 Kislay Kishore, MD at 17/10/25 0020**\n**Electronically signed by Melissa Lannon, MD at 10/10/25 1653 Electronically signed by Kislay Kishore, MD at 17/10/25 0020\\**\n1. Note shared with patient\\",
+          "confidence": "high"
+        },
+        {
+          "type": "PROGRESS_NOTE",
+          "date": "11/10/25",
+          "postOpDay": 1,
+          "title": "Progress Note POD 1",
+          "author": "Electronically signed by Kislay Kishore, MD at 10/10/25 1733\\",
+          "specialty": "Neurosurgery",
+          "sourceQuote": "**👤 Electronically signed by Kislay Kishore, MD at 10/10/25 1733\\**\n**Date of Service: 11/10/25 0823\\**\nShow: \\\nWrittenTemplatedCopied\\\nAdded by: \\\n**Melissa Lannon, MD\\**\nHover for details\\\n**Neuro",
+          "confidence": "high"
+        },
+        {
+          "type": "PROGRESS_NOTE",
+          "date": "11/10/25",
+          "postOpDay": null,
+          "title": "Progress Note",
+          "author": "Electronically signed by Melissa Lannon, MD at 11/10/25 0828\\",
+          "specialty": null,
+          "sourceQuote": "**👤 Electronically signed by Melissa Lannon, MD at 11/10/25 0828\\**\nCindy Maia Hamielec, MD\nIntensive Care\\\n**Date of Service: 11/10/25 1214\\**\nCindy Maia Hamielec, MD\\\nNSxSD Progress Note\n55 F post",
+          "confidence": "high"
+        },
+        {
+          "type": "PROGRESS_NOTE",
+          "date": "12/10/25",
+          "postOpDay": 2,
+          "title": "Progress Note POD 2",
+          "author": null,
+          "specialty": null,
+          "sourceQuote": "**📅 Date of Service: 12/10/25 1014\\**\nZhra Muneer M Al Sadah, MD\\\n**12/10/2025**\nLOS: 2 days 2 Days Post-Op Procedure(s) (LRB):\nThe patient reported weakness in her left side.\nHypophonic and dysarth",
+          "confidence": "high"
+        },
+        {
+          "type": "PROGRESS_NOTE",
+          "date": "12/10/25",
+          "postOpDay": 2,
+          "title": "Progress Note POD 2",
+          "author": null,
+          "specialty": null,
+          "sourceQuote": "**📅 Date of Service: 12/10/25 2046\\**\n**Kislay Kishore, MD\\**\n**October 12, 2025**\n8 PM\nPostoperative day 2, underwent right STA MCA bypass plus EDAMS (indirect revascularization) on October 10, 202",
+          "confidence": "high"
+        },
+        {
+          "type": "PROGRESS_NOTE",
+          "date": "13/10/25",
+          "postOpDay": 3,
+          "title": "Progress Note POD 3",
+          "author": "Electronically signed by Kislay Kishore, MD at 12/10/25 2100\\",
+          "specialty": "Neurosurgery",
+          "sourceQuote": "**👤 Electronically signed by Kislay Kishore, MD at 12/10/25 2100\\**\n**Date of Service: 13/10/25 0821\\**\n**13/10/2025**\nLOS: 3 days 3 Days Post-Op Procedure(s) (LRB):\nYesterday, the patient had a sei",
+          "confidence": "high"
+        },
+        {
+          "type": "PROGRESS_NOTE",
+          "date": "14/10/25",
+          "postOpDay": 4,
+          "title": "Progress Note POD 4",
+          "author": "Rufus Alubankudi",
+          "specialty": null,
+          "sourceQuote": "**👤 Rufus Alubankudi, MD**\n**Date of Service: 14/10/25 0736\\**\n**Rufus Alubankudi, MD\\**\n**14/10/2025**\nLOS: 4 days 4 Days Post-Op Procedure(s) (LRB):\nUneventful night as per nursing team.\nOn AED fo",
+          "confidence": "high"
+        },
+        {
+          "type": "OTHER",
+          "date": "14/10/25",
+          "postOpDay": null,
+          "title": "Unknown Document",
+          "author": "Rufus Alubankudi, MD PGY2",
+          "specialty": null,
+          "sourceQuote": "**👤 Rufus Alubankudi, MD PGY2**\n**Electronically signed by Rufus Alubankudi, MD at 14/10/25 0748\\**\nKerri Dietz, RD\nRegistered Dietitian\\\nNutrition\\\nDate of Service: 14/10/25 1054\\\nKerri Dietz, RD\\",
+          "confidence": "medium"
+        },
+        {
+          "type": "PROGRESS_NOTE",
+          "date": "14/10/25",
+          "postOpDay": null,
+          "title": "Progress Note",
+          "author": null,
+          "specialty": null,
+          "sourceQuote": "**📅 13/10/25**\n**12/10/25**\n**11/10/25**\n**10/10/25**\n**09/10/25**\nCREATININE\numol/L\nUREA\nmmol/L\nSODIUM\nPOTASSIUM\nCHLORIDE\nMAGNESIUM\nPHOSPHORUS\nCALCIUM\nALBUMIN\ng/L\nWBC AUTO\nx10 9/L\nHEMOGLOBIN\nHEMATO",
+          "confidence": "high"
+        },
+        {
+          "type": "PROGRESS_NOTE",
+          "date": "15/10/25",
+          "postOpDay": 5,
+          "title": "Progress Note POD 5",
+          "author": null,
+          "specialty": null,
+          "sourceQuote": "**📅 Date of Service: 15/10/25 0653\\**\n**15/10/2025**\nLOS: 5 days 5 Days Post-Op Procedure(s) (LRB):\nVomiting yesterday after feeds started as per nursing. Bedside nurse not convinced it's ICP relate",
+          "confidence": "high"
+        },
+        {
+          "type": "PROGRESS_NOTE",
+          "date": "16/10/25",
+          "postOpDay": 6,
+          "title": "Progress Note POD 6",
+          "author": "Electronically signed by Rufus Alubankudi, MD at 15/10/25 0833\\",
+          "specialty": null,
+          "sourceQuote": "**👤 Electronically signed by Rufus Alubankudi, MD at 15/10/25 0833\\**\n**Date of Service: 16/10/25 0701\\**\n**16/10/2025**\nLOS: 6 days 6 Days Post-Op Procedure(s) (LRB):\nVomiting improved.\nLess Hypoph",
+          "confidence": "high"
+        },
+        {
+          "type": "PROGRESS_NOTE",
+          "date": "17/10/25",
+          "postOpDay": null,
+          "title": "Progress Note",
+          "author": "Electronically signed by Rufus Alubankudi, MD at 16/10/25 0818\\",
+          "specialty": null,
+          "sourceQuote": "**👤 Electronically signed by Rufus Alubankudi, MD at 16/10/25 0818\\**\n**Date of Service: 17/10/25 1518\\**\nNutrition Enteral Progress Note\nAdmit Day:\nLOS:\nID:\n55 y.o. female admitted on 10/10/2025 wi",
+          "confidence": "high"
+        },
+        {
+          "type": "OTHER",
+          "date": null,
+          "postOpDay": null,
+          "title": "Unknown Document",
+          "author": null,
+          "specialty": null,
+          "sourceQuote": "**📅 17/10/25**\n**16/10/25**\n**15/10/25**\nMeds\nclopidogrel\nBID\nq8h\nphosphate\n500 mg\nsennosides\n17.2 mg\nNightly at 2300\nEdema: Hands (L side)\nPitting Edema: 0+, none\nDate/Time\nUnmeasured Stool Occurre",
+          "confidence": "medium"
+        },
+        {
+          "type": "OTHER",
+          "date": null,
+          "postOpDay": null,
+          "title": "Unknown Document",
+          "author": null,
+          "specialty": null,
+          "sourceQuote": "**📅 17/10/25 0400**\nSmall (less than 250 mL)\n**17/10/25 0130**\n**16/10/25 1410**\nLarge (more than 500 mL)\nFluffy pieces with ragged edges (diarrhea)\nBrown;Green\n**16/10/25 1245**\nGastrointestinal (W",
+          "confidence": "medium"
+        },
+        {
+          "type": "PROGRESS_NOTE",
+          "date": "18/10/25",
+          "postOpDay": 8,
+          "title": "Progress Note POD 8",
+          "author": null,
+          "specialty": null,
+          "sourceQuote": "**📅 Date of Service: 18/10/25 0906\\**\n**Kislay Kishore, MDNadeen Alkhoori, MD\\**\n**18/10/2025**\nLOS: 8 days 8 Days Post-Op Procedure(s) (LRB):\nHx.o of ICA steno-occlusive disease underwent EC-IC byp",
+          "confidence": "high"
+        },
+        {
+          "type": "PROGRESS_NOTE",
+          "date": "17/10/25",
+          "postOpDay": 7,
+          "title": "Progress Note POD 7",
+          "author": "Nadeen Alkhoori, MD PGY4 NSx",
+          "specialty": null,
+          "sourceQuote": "**👤 Nadeen Alkhoori, MD PGY4 NSx**\n**Electronically signed by Kislay Kishore, MD at 19/10/25 1442\\**\nDate of Service: 17/10/25 0642\\\n17/10/2025\nLOS: 7 days 7 Days Post-Op Procedure(s) (LRB):\nNG kink",
+          "confidence": "high"
+        },
+        {
+          "type": "PROGRESS_NOTE",
+          "date": "20/10/25",
+          "postOpDay": 10,
+          "title": "Progress Note POD 10",
+          "author": "Nadeen Alkhoori",
+          "specialty": null,
+          "sourceQuote": "**👤 Nadeen Alkhoori, MD**\n**Date of Service: 20/10/25 0742\\**\n**20/10/2025**\nLOS: 10 days 10 Days Post-Op Procedure(s) (LRB):\nReporting headache and nausea\nNo vomiting\nNo acute issues overnight\nPowe",
+          "confidence": "high"
+        },
+        {
+          "type": "OTHER",
+          "date": "20/10/25",
+          "postOpDay": null,
+          "title": "Unknown Document",
+          "author": "Electronically signed by Nadeen Alkhoori, MD at 20/10/25 0748\\",
+          "specialty": "Cardiology",
+          "sourceQuote": "**👤 Electronically signed by Nadeen Alkhoori, MD at 20/10/25 0748\\**\n**Date of Service: 20/10/25 0945\\**\n**20/10/25**\n**19/10/25**\n**18/10/25**\nEdema: Hands\nPitting Edema: 1+, mild, 2 mm or less\n**1",
+          "confidence": "medium"
+        },
+        {
+          "type": "THERAPY_NOTE",
+          "date": null,
+          "postOpDay": null,
+          "title": "Therapy Note",
+          "author": null,
+          "specialty": null,
+          "sourceQuote": "**📅 17/10/25 1550**\n**17/10/25 1528**\nDietary nutrition supplements Dinner; Liquid Oral Supplement; Ensure Clear Apple - 117ml; 1\nUntil discontinued\nMeal/Snack Period:\nDinner\nSupplement or Additive:",
+          "confidence": "medium"
+        },
+        {
+          "type": "PROGRESS_NOTE",
+          "date": "22/10/25",
+          "postOpDay": 12,
+          "title": "Progress Note POD 12",
+          "author": "Rami Hatoum",
+          "specialty": null,
+          "sourceQuote": "**👤 Rami Hatoum, MD**\n**Date of Service: 22/10/25 0656\\**\n**22/10/2025**\nLOS: 12 days 12 Days Post-Op Procedure(s) (LRB):\n**Rami Hatoum, MD PGY4 NSx**\n**Electronically signed by Rami Hatoum, MD at 2",
+          "confidence": "high"
+        },
+        {
+          "type": "NURSING_NOTE",
+          "date": null,
+          "postOpDay": null,
+          "title": "Nursing Note",
+          "author": null,
+          "specialty": null,
+          "sourceQuote": "**📅 22/10/25 1102**\nAdult Diet Regular; No Concentrated Sugar/Diabetic; Halal, No Fish; Complimentary Menu\n22/10/25 1101\n20/10/25 1358\nDiet Office Message (Food Services)\nComments: Add HP milk @ BLD",
+          "confidence": "medium"
+        },
+        {
+          "type": "CONSULT_NOTE",
+          "date": "24/10/25",
+          "postOpDay": null,
+          "title": "Consultation Note",
+          "author": null,
+          "specialty": "Neurology\\",
+          "sourceQuote": "**📅 Date of Service: 24/10/25 1804\\**\n**Bryanna Romanyk, RN\\**\nWriter administered ordered packed red blood cells. Pt reported itchiness at the site, writer completed a set of vitals and an assessme",
+          "confidence": "medium"
+        },
+        {
+          "type": "PROGRESS_NOTE",
+          "date": "27/10/2025",
+          "postOpDay": 17,
+          "title": "Progress Note POD 17",
+          "author": null,
+          "specialty": null,
+          "sourceQuote": "**📅 Encounter Date: 27/10/2025\\**\n**Luciana Catanese, MD\\**\nStroke Prevention Clinic Progress Note\nLast seen in SPC:\n**26/9/2025**\nLast seen in Stroke Unit:\nADMISSION DATE\n3/6/2025\\\nDISCHARGE DATE\n1",
+          "confidence": "high"
+        },
+        {
+          "type": "PROGRESS_NOTE",
+          "date": "27/10/25",
+          "postOpDay": 1,
+          "title": "Progress Note POD 1",
+          "author": "Electronically signed by Luciana Catanese, MD at 27/10/25 1457\\",
+          "specialty": "Neurosurgery",
+          "sourceQuote": "**👤 Electronically signed by Luciana Catanese, MD at 27/10/25 1457\\**\n**27/10/2025 2:57 PM**\n**Outpatient Consult Notes by Luciana Catanese, MD**\n**27/10/2025 2:56 PM**\n**27/10/2025 2:54 PM**\n1. Non",
+          "confidence": "high"
+        },
+        {
+          "type": "PROGRESS_NOTE",
+          "date": "28/10/25",
+          "postOpDay": 18,
+          "title": "Progress Note POD 18",
+          "author": "Maksim Son MD FRCPC",
+          "specialty": null,
+          "sourceQuote": "**👤 Maksim Son MD FRCPC**\nVascular and interventional neurologist.\n**Electronically signed by Maksim Son, MD at 27/10/25 2228\\**\n27/10/2025 10:28 PM\nConsults by Maksim Son, MD\nAssel Isam A Kabbani,",
+          "confidence": "high"
+        },
+        {
+          "type": "PROGRESS_NOTE",
+          "date": "29/10/25",
+          "postOpDay": 19,
+          "title": "Progress Note POD 19",
+          "author": null,
+          "specialty": null,
+          "sourceQuote": "**📅 Date of Service: 29/10/25 0727\\**\n**29/10/2025**\nLOS: 19 days 19 Days Post-Op Procedure(s) (LRB):\nSeen this am. Had no complains.\nPower is at least anti-gravity on the right, appear strong.\nPleg",
+          "confidence": "high"
+        },
+        {
+          "type": "PROGRESS_NOTE",
+          "date": "30/10/25",
+          "postOpDay": 20,
+          "title": "Progress Note POD 20",
+          "author": "Electronically signed by Rufus Alubankudi, MD at 29/10/25 0737\\",
+          "specialty": null,
+          "sourceQuote": "**👤 Electronically signed by Rufus Alubankudi, MD at 29/10/25 0737\\**\n**Date of Service: 30/10/25 0656\\**\n**30/10/2025**\nLOS: 20 days 20 Days Post-Op Procedure(s) (LRB):\nExam: Unchanged exam compare",
+          "confidence": "high"
+        },
+        {
+          "type": "THERAPY_NOTE",
+          "date": "30/10/25",
+          "postOpDay": null,
+          "title": "Therapy Note",
+          "author": null,
+          "specialty": null,
+          "sourceQuote": "**📅 Date of Service: 30/10/25 0916\\**\n56 y.o. female admitted on 10/10/2025 with Aneurysm [I72.9]\n30/10/25\n29/10/25\n28/10/25\n27/10/25\n26/10/25\n25/10/25\nEdema: None\nEmesis Amount: Small (one episode",
+          "confidence": "medium"
+        },
+        {
+          "type": "OTHER",
+          "date": null,
+          "postOpDay": null,
+          "title": "Unknown Document",
+          "author": null,
+          "specialty": null,
+          "sourceQuote": "**📅 28/10/25 0846**\n**27/10/25 1538**\nComments: Add boiled egg @ B\nSubstitute orange juice instead of other juice IF juice on\n27/10/25 1539\n- Consuming < 50% of meal trays\npt follows halal diet\n- di",
+          "confidence": "medium"
+        }
+      ],
+      "podCoverage": {
+        "surgeryDate": null,
+        "dischargeDate": null,
+        "expectedPODs": [],
+        "presentPODs": [
+          1,
+          2,
+          3,
+          4,
+          5,
+          6,
+          7,
+          8,
+          10,
+          12,
+          17,
+          18,
+          19,
+          20
+        ],
+        "missingPODs": [],
+        "missingRanges": [],
+        "coveragePercentage": 100
+      },
+      "gaps": {
+        "missingCritical": [
+          "DISCHARGE_SUMMARY"
+        ],
+        "missingImportant": [
+          "ADMISSION_HP"
+        ],
+        "missingPODCount": 0,
+        "missingPODRanges": [],
+        "totalGapDays": 0
+      },
+      "completenessScore": 40,
+      "warnings": [
+        "CRITICAL: Missing DISCHARGE_SUMMARY. These documents are required for complete discharge summary.",
+        "IMPORTANT: Missing ADMISSION_HP. These documents provide important context for patient care."
+      ]
+    },
+    "completenessCheck": {
+      "preExtraction": {
+        "overallReady": false,
+        "readinessScore": 50,
+        "checks": [
+          {
+            "type": "required_document",
+            "passed": false,
+            "severity": "critical",
+            "message": "Missing Admission History & Physical document",
+            "recommendation": "Admission H&P is required for extracting admission baseline (GCS, KPS, presenting symptoms). Cannot extract admission data without this document.",
+            "details": "No admission documentation detected in clinical notes"
+          },
+          {
+            "type": "required_document",
+            "passed": true,
+            "severity": "major",
+            "message": "Discharge documentation detected",
+            "details": "Found 0 discharge summary, 10 late progress notes"
+          },
+          {
+            "type": "temporal_anchor",
+            "passed": false,
+            "severity": "critical",
+            "message": "Admission date not clearly identified",
+            "recommendation": "Admission date is required as temporal anchor for timeline reconstruction. Without it, POD calculations will fail.",
+            "details": "No clear admission date pattern found in early portion of notes"
+          },
+          {
+            "type": "temporal_anchor",
+            "passed": false,
+            "severity": "major",
+            "message": "Discharge date not clearly identified",
+            "recommendation": "Discharge date required as temporal endpoint. Without it, cannot validate recency principle for discharge fields.",
+            "details": "No clear discharge date pattern found"
+          },
+          {
+            "type": "document_quality",
+            "passed": true,
+            "severity": "major",
+            "message": "Clinical notes appear complete"
+          },
+          {
+            "type": "discharge_readiness",
+            "passed": true,
+            "severity": "major",
+            "message": "Discharge planning documentation detected",
+            "details": "Found discharge-related keywords in notes"
+          }
+        ],
+        "blockers": [
+          {
+            "type": "required_document",
+            "passed": false,
+            "severity": "critical",
+            "message": "Missing Admission History & Physical document",
+            "recommendation": "Admission H&P is required for extracting admission baseline (GCS, KPS, presenting symptoms). Cannot extract admission data without this document.",
+            "details": "No admission documentation detected in clinical notes"
+          },
+          {
+            "type": "temporal_anchor",
+            "passed": false,
+            "severity": "critical",
+            "message": "Admission date not clearly identified",
+            "recommendation": "Admission date is required as temporal anchor for timeline reconstruction. Without it, POD calculations will fail.",
+            "details": "No clear admission date pattern found in early portion of notes"
+          }
+        ],
+        "warnings": [
+          {
+            "type": "temporal_anchor",
+            "passed": false,
+            "severity": "major",
+            "message": "Discharge date not clearly identified",
+            "recommendation": "Discharge date required as temporal endpoint. Without it, cannot validate recency principle for discharge fields.",
+            "details": "No clear discharge date pattern found"
+          }
+        ]
+      },
+      "postExtraction": {
+        "overallComplete": false,
+        "completenessScore": 16,
+        "checks": [
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "critical",
+            "fieldName": "admissionDate",
+            "message": "Required field \"admissionDate\" is missing or null",
+            "recommendation": "Extract admissionDate from clinical notes. This is a required field for admission data.",
+            "details": "Field category: admission, Required: true"
+          },
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "critical",
+            "fieldName": "chiefComplaint",
+            "message": "Required field \"chiefComplaint\" is missing or null",
+            "recommendation": "Extract chiefComplaint from clinical notes. This is a required field for admission data.",
+            "details": "Field category: admission, Required: true"
+          },
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "critical",
+            "fieldName": "presentingSymptoms",
+            "message": "Required field \"presentingSymptoms\" is missing or null",
+            "recommendation": "Extract presentingSymptoms from clinical notes. This is a required field for admission data.",
+            "details": "Field category: admission, Required: true"
+          },
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "critical",
+            "fieldName": "admissionGCS",
+            "message": "Required field \"admissionGCS\" is missing or null",
+            "recommendation": "Extract admissionGCS from clinical notes. This is a required field for admission data.",
+            "details": "Field category: admission, Required: true"
+          },
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "critical",
+            "fieldName": "admissionKPS",
+            "message": "Required field \"admissionKPS\" is missing or null",
+            "recommendation": "Extract admissionKPS from clinical notes. This is a required field for admission data.",
+            "details": "Field category: admission, Required: true"
+          },
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "critical",
+            "fieldName": "dischargeDate",
+            "message": "Required field \"dischargeDate\" is missing or null",
+            "recommendation": "Extract dischargeDate from clinical notes. This is a required field for discharge data.",
+            "details": "Field category: discharge, Required: true"
+          },
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "critical",
+            "fieldName": "dischargeGCS",
+            "message": "Required field \"dischargeGCS\" is missing or null",
+            "recommendation": "Extract dischargeGCS from clinical notes. This is a required field for discharge data.",
+            "details": "Field category: discharge, Required: true"
+          },
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "critical",
+            "fieldName": "dischargeKPS",
+            "message": "Required field \"dischargeKPS\" is missing or null",
+            "recommendation": "Extract dischargeKPS from clinical notes. This is a required field for discharge data.",
+            "details": "Field category: discharge, Required: true"
+          },
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "critical",
+            "fieldName": "dischargeDisposition",
+            "message": "Required field \"dischargeDisposition\" is missing or null",
+            "recommendation": "Extract dischargeDisposition from clinical notes. This is a required field for discharge data.",
+            "details": "Field category: discharge, Required: true"
+          },
+          {
+            "type": "field_completeness",
+            "passed": true,
+            "severity": "minor",
+            "fieldName": "dischargeMedications",
+            "message": "Field \"dischargeMedications\" is present"
+          },
+          {
+            "type": "field_confidence",
+            "passed": false,
+            "severity": "major",
+            "fieldName": "dischargeMedications",
+            "message": "Field \"dischargeMedications\" has low confidence: undefined (expected medium+)",
+            "recommendation": "Review source documentation for dischargeMedications. Low confidence may indicate ambiguous or unclear data.",
+            "details": "Actual: undefined, Required: medium+"
+          },
+          {
+            "type": "source_attribution",
+            "passed": false,
+            "severity": "major",
+            "fieldName": "dischargeMedications",
+            "message": "Field \"dischargeMedications\" missing sourceQuote",
+            "recommendation": "Add sourceQuote for dischargeMedications to enable grounding verification."
+          },
+          {
+            "type": "temporal_coverage",
+            "passed": true,
+            "severity": "minor",
+            "fieldName": "dischargeMedications",
+            "message": "Discharge field \"dischargeMedications\" sourced from appropriate note type"
+          },
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "critical",
+            "fieldName": "dischargeAmbulation",
+            "message": "Required field \"dischargeAmbulation\" is missing or null",
+            "recommendation": "Extract dischargeAmbulation from clinical notes. This is a required field for discharge data.",
+            "details": "Field category: discharge, Required: true"
+          },
+          {
+            "type": "field_confidence",
+            "passed": false,
+            "severity": "minor",
+            "fieldName": "complications",
+            "message": "Field \"complications\" has low confidence: undefined (expected medium+)",
+            "recommendation": "Review source documentation for complications. Low confidence may indicate ambiguous or unclear data.",
+            "details": "Actual: undefined, Required: medium+"
+          },
+          {
+            "type": "source_attribution",
+            "passed": false,
+            "severity": "major",
+            "fieldName": "complications",
+            "message": "Field \"complications\" missing sourceQuote",
+            "recommendation": "Add sourceQuote for complications to enable grounding verification."
+          },
+          {
+            "type": "field_confidence",
+            "passed": false,
+            "severity": "major",
+            "fieldName": "followUpPlan",
+            "message": "Field \"followUpPlan\" has low confidence: undefined (expected medium+)",
+            "recommendation": "Review source documentation for followUpPlan. Low confidence may indicate ambiguous or unclear data.",
+            "details": "Actual: undefined, Required: medium+"
+          },
+          {
+            "type": "source_attribution",
+            "passed": false,
+            "severity": "major",
+            "fieldName": "followUpPlan",
+            "message": "Field \"followUpPlan\" missing sourceQuote",
+            "recommendation": "Add sourceQuote for followUpPlan to enable grounding verification."
+          },
+          {
+            "type": "temporal_coverage",
+            "passed": true,
+            "severity": "minor",
+            "fieldName": "followUpPlan",
+            "message": "Discharge field \"followUpPlan\" sourced from appropriate note type"
+          }
+        ],
+        "criticalIssues": [
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "critical",
+            "fieldName": "admissionDate",
+            "message": "Required field \"admissionDate\" is missing or null",
+            "recommendation": "Extract admissionDate from clinical notes. This is a required field for admission data.",
+            "details": "Field category: admission, Required: true"
+          },
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "critical",
+            "fieldName": "chiefComplaint",
+            "message": "Required field \"chiefComplaint\" is missing or null",
+            "recommendation": "Extract chiefComplaint from clinical notes. This is a required field for admission data.",
+            "details": "Field category: admission, Required: true"
+          },
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "critical",
+            "fieldName": "presentingSymptoms",
+            "message": "Required field \"presentingSymptoms\" is missing or null",
+            "recommendation": "Extract presentingSymptoms from clinical notes. This is a required field for admission data.",
+            "details": "Field category: admission, Required: true"
+          },
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "critical",
+            "fieldName": "admissionGCS",
+            "message": "Required field \"admissionGCS\" is missing or null",
+            "recommendation": "Extract admissionGCS from clinical notes. This is a required field for admission data.",
+            "details": "Field category: admission, Required: true"
+          },
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "critical",
+            "fieldName": "admissionKPS",
+            "message": "Required field \"admissionKPS\" is missing or null",
+            "recommendation": "Extract admissionKPS from clinical notes. This is a required field for admission data.",
+            "details": "Field category: admission, Required: true"
+          },
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "critical",
+            "fieldName": "dischargeDate",
+            "message": "Required field \"dischargeDate\" is missing or null",
+            "recommendation": "Extract dischargeDate from clinical notes. This is a required field for discharge data.",
+            "details": "Field category: discharge, Required: true"
+          },
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "critical",
+            "fieldName": "dischargeGCS",
+            "message": "Required field \"dischargeGCS\" is missing or null",
+            "recommendation": "Extract dischargeGCS from clinical notes. This is a required field for discharge data.",
+            "details": "Field category: discharge, Required: true"
+          },
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "critical",
+            "fieldName": "dischargeKPS",
+            "message": "Required field \"dischargeKPS\" is missing or null",
+            "recommendation": "Extract dischargeKPS from clinical notes. This is a required field for discharge data.",
+            "details": "Field category: discharge, Required: true"
+          },
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "critical",
+            "fieldName": "dischargeDisposition",
+            "message": "Required field \"dischargeDisposition\" is missing or null",
+            "recommendation": "Extract dischargeDisposition from clinical notes. This is a required field for discharge data.",
+            "details": "Field category: discharge, Required: true"
+          },
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "critical",
+            "fieldName": "dischargeAmbulation",
+            "message": "Required field \"dischargeAmbulation\" is missing or null",
+            "recommendation": "Extract dischargeAmbulation from clinical notes. This is a required field for discharge data.",
+            "details": "Field category: discharge, Required: true"
+          }
+        ],
+        "majorIssues": [
+          {
+            "type": "field_confidence",
+            "passed": false,
+            "severity": "major",
+            "fieldName": "dischargeMedications",
+            "message": "Field \"dischargeMedications\" has low confidence: undefined (expected medium+)",
+            "recommendation": "Review source documentation for dischargeMedications. Low confidence may indicate ambiguous or unclear data.",
+            "details": "Actual: undefined, Required: medium+"
+          },
+          {
+            "type": "source_attribution",
+            "passed": false,
+            "severity": "major",
+            "fieldName": "dischargeMedications",
+            "message": "Field \"dischargeMedications\" missing sourceQuote",
+            "recommendation": "Add sourceQuote for dischargeMedications to enable grounding verification."
+          },
+          {
+            "type": "source_attribution",
+            "passed": false,
+            "severity": "major",
+            "fieldName": "complications",
+            "message": "Field \"complications\" missing sourceQuote",
+            "recommendation": "Add sourceQuote for complications to enable grounding verification."
+          },
+          {
+            "type": "field_confidence",
+            "passed": false,
+            "severity": "major",
+            "fieldName": "followUpPlan",
+            "message": "Field \"followUpPlan\" has low confidence: undefined (expected medium+)",
+            "recommendation": "Review source documentation for followUpPlan. Low confidence may indicate ambiguous or unclear data.",
+            "details": "Actual: undefined, Required: medium+"
+          },
+          {
+            "type": "source_attribution",
+            "passed": false,
+            "severity": "major",
+            "fieldName": "followUpPlan",
+            "message": "Field \"followUpPlan\" missing sourceQuote",
+            "recommendation": "Add sourceQuote for followUpPlan to enable grounding verification."
+          }
+        ],
+        "minorIssues": [
+          {
+            "type": "field_confidence",
+            "passed": false,
+            "severity": "minor",
+            "fieldName": "complications",
+            "message": "Field \"complications\" has low confidence: undefined (expected medium+)",
+            "recommendation": "Review source documentation for complications. Low confidence may indicate ambiguous or unclear data.",
+            "details": "Actual: undefined, Required: medium+"
+          }
+        ]
+      }
+    },
+    "metadata": {
+      "extractionMode": "VALIDATED",
+      "narrativeMode": "STANDARD",
+      "modelUsed": "claude-sonnet-4-5-20250929",
+      "tokenCount": {
+        "input": 40,
+        "output": 15114,
+        "cached": 0
+      },
+      "processingTime": 277391,
+      "timestamp": "2025-11-12T02:27:07.871Z"
+    }
+  },
+  "metadata": {
+    "processingTimeMs": 277392,
+    "tokensUsed": 15154,
+    "version": "2.0.0"
+  }
+}

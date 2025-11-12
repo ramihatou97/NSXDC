@@ -7,6 +7,7 @@ import { LLMService } from './llm.service.js';
 import { DatePreprocessorEnhancedService } from './date-preprocessor-enhanced.service.js';
 import { DocumentationInventoryService } from './documentation-inventory.service.js';
 import { CompletenessCheckerService } from './completeness-checker.service.js';
+import { ProgressService, ProgressStage } from './progress.service.js';
 import { buildExtractionPrompt } from '../prompts/extraction.js';
 import { buildNarrativePrompt } from '../prompts/narrative.js';
 import { buildValidationPrompt } from '../prompts/validation.js';
@@ -102,13 +103,30 @@ export class OrchestratorService {
   /**
    * Run complete extraction pipeline
    * Validation is ALWAYS performed (cannot be disabled)
+   * 
+   * @param request - Extraction request
+   * @param progressService - Optional progress tracking service
+   * @param jobId - Optional job ID for progress tracking
    */
-  async extract(request: ExtractionRequest): Promise<ExtractionResponse> {
+  async extract(
+    request: ExtractionRequest,
+    progressService?: ProgressService,
+    jobId?: string
+  ): Promise<ExtractionResponse> {
     const startTime = Date.now();
 
     try {
+      // Initialize progress tracking if provided
+      if (progressService && jobId) {
+        progressService.startJob(jobId, !!request.narrativeMode);
+      }
+
       // Step 0: Preprocess dates (Week 1 Day 2 - Enhanced Date Preprocessing)
       console.log('📅 Step 0: Preprocessing dates with enhanced analysis...');
+      if (progressService && jobId) {
+        progressService.updateStage(jobId, ProgressStage.DATE_PREPROCESSING, 'Preprocessing dates and temporal data...');
+      }
+      
       const preprocessResult = this.datePreprocessor.preprocessDates(request.clinicalNotes);
 
       const keyDates = this.datePreprocessor.getKeyDates(preprocessResult);
@@ -124,10 +142,17 @@ export class OrchestratorService {
 
       // Step 1: Extract structured data (VALIDATED mode)
       console.log('🔍 Step 1: Extracting structured data (VALIDATED mode)...');
+      if (progressService && jobId) {
+        progressService.updateStage(jobId, ProgressStage.EXTRACTION, 'Extracting structured medical data...');
+      }
+      
       const extraction = await this.performExtraction(request);
 
       // Step 1.5: Analyze documentation inventory (Phase 2 - Gap Detection)
       console.log('📋 Step 1.5: Analyzing documentation inventory for gaps...');
+      if (progressService && jobId) {
+        progressService.updateStage(jobId, ProgressStage.DOCUMENTATION_ANALYSIS, 'Analyzing documentation inventory...');
+      }
 
       // Extract date values from GroundedValue objects (extraction returns {value, sourceQuote, ...})
       const surgeryDateValue = extraction.data.surgeryDate?.value || null;
@@ -147,6 +172,10 @@ export class OrchestratorService {
 
       // Step 1.75: Pre-extraction completeness check (Phase 8)
       console.log('✅ Step 1.75: Running pre-extraction completeness check (Phase 8)...');
+      if (progressService && jobId) {
+        progressService.updateStage(jobId, ProgressStage.PRE_COMPLETENESS_CHECK, 'Running pre-extraction completeness check...');
+      }
+      
       const preExtractionChecklist = this.completenessChecker.preExtractionCheck(
         request.clinicalNotes,
         inventoryResult
@@ -169,6 +198,10 @@ export class OrchestratorService {
 
       // Step 1.9: Post-extraction completeness check (Phase 8)
       console.log('✅ Step 1.9: Running post-extraction completeness check (Phase 8)...');
+      if (progressService && jobId) {
+        progressService.updateStage(jobId, ProgressStage.POST_COMPLETENESS_CHECK, 'Running post-extraction completeness check...');
+      }
+      
       const postExtractionChecklist = this.completenessChecker.postExtractionCheck(
         extraction.data,
         inventoryResult
@@ -197,6 +230,9 @@ export class OrchestratorService {
 
       if (request.narrativeMode) {
         console.log(`📝 Step 2 & 3: Running narrative generation and validation in parallel...`);
+        if (progressService && jobId) {
+          progressService.updateStage(jobId, ProgressStage.NARRATIVE_GENERATION, 'Generating clinical narrative...');
+        }
 
         // Run narrative and extraction-only validation in parallel for speed
         const [narrativeResult, validationResult] = await Promise.all([
@@ -213,6 +249,10 @@ export class OrchestratorService {
       } else {
         // Step 3: ALWAYS validate (enforced)
         console.log('✅ Step 3: Running QA validation (ALWAYS ON)...');
+        if (progressService && jobId) {
+          progressService.updateStage(jobId, ProgressStage.VALIDATION, 'Running quality validation...');
+        }
+        
         validation = await this.performValidation(
           request.clinicalNotes,
           extraction.data,
@@ -260,6 +300,11 @@ export class OrchestratorService {
         },
       };
 
+      // Finalize
+      if (progressService && jobId) {
+        progressService.updateStage(jobId, ProgressStage.FINALIZING, 'Finalizing results...');
+      }
+
       console.log(`✨ Extraction complete in ${response.metadata.processingTime}ms`);
       console.log(`   - Date Format Detected: ${response.datePreprocessing?.detectedFormat} (${response.datePreprocessing?.confidence} confidence)`);
       console.log(`   - Ambiguous Dates: ${response.datePreprocessing?.ambiguousDatesCount}`);
@@ -272,9 +317,20 @@ export class OrchestratorService {
       console.log(`   - Validation Score: ${validation.score}/100`);
       console.log(`   - Issues Found: ${validation.issues.length}`);
 
+      // Mark as complete
+      if (progressService && jobId) {
+        progressService.completeJob(jobId, 'Extraction completed successfully');
+      }
+
       return response;
     } catch (error) {
       console.error('❌ Extraction failed:', error);
+      
+      // Mark as failed
+      if (progressService && jobId) {
+        progressService.failJob(jobId, (error as Error).message);
+      }
+      
       return {
         success: false,
         error: {
@@ -562,12 +618,29 @@ export class OrchestratorService {
     try {
       return JSON.parse(text);
     } catch (error) {
-      // Try to find JSON object
-      const jsonMatch = text.match(/\{[\s\S]*\}/);
-      if (jsonMatch) {
-        return JSON.parse(jsonMatch[0]);
+      console.error('Initial JSON parse failed, attempting repair...');
+      console.error('Raw text (first 500 chars):', text.substring(0, 500));
+      
+      // Try jsonrepair library
+      try {
+        const repaired = jsonrepair(text);
+        return JSON.parse(repaired);
+      } catch (repairError) {
+        console.error('JSON repair failed:', repairError);
+        
+        // Try to find JSON object
+        const jsonMatch = text.match(/\{[\s\S]*\}/);
+        if (jsonMatch) {
+          try {
+            return JSON.parse(jsonMatch[0]);
+          } catch (e) {
+            // Last resort: try repairing the extracted JSON
+            const repairedMatch = jsonrepair(jsonMatch[0]);
+            return JSON.parse(repairedMatch);
+          }
+        }
+        throw new Error('No valid JSON found in response');
       }
-      throw new Error('No valid JSON found in response');
     }
   }
 }

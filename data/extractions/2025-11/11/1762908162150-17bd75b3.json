@@ -1,0 +1,628 @@
+{
+  "id": "1762908162150-17bd75b3",
+  "timestamp": "2025-11-12T00:42:42.150Z",
+  "extraction": {
+    "success": true,
+    "extraction": {
+      "demographics": {
+        "patientName": {
+          "value": "Jane Doe",
+          "source": "Patient: Jane Doe [Clinical notes header]"
+        },
+        "age": {
+          "value": 58,
+          "source": "Age 58 [Clinical notes header]; 58-year-old female [H&P 2024-11-08]"
+        },
+        "mrn": {
+          "value": "98765",
+          "source": "MRN: 98765 [Clinical notes header]"
+        },
+        "sex": {
+          "value": "Female",
+          "source": "58-year-old female [H&P 2024-11-08]"
+        }
+      },
+      "admissionData": {
+        "admissionDate": {
+          "value": "2024-11-08",
+          "source": "Admission Date: 2024-11-08 [Clinical notes]"
+        },
+        "chiefComplaint": {
+          "value": "Right-sided weakness and speech difficulty",
+          "source": "Chief Complaint: Right-sided weakness and speech difficulty [H&P 2024-11-08]"
+        },
+        "presentingSymptoms": {
+          "value": "Sudden onset right hemiparesis and expressive aphasia",
+          "source": "presented to ED with sudden onset right hemiparesis and expressive aphasia [H&P 2024-11-08]"
+        },
+        "admissionGCS": {
+          "value": 13,
+          "source": "Admission GCS 13 (E4V3M6) [H&P 2024-11-08]"
+        },
+        "admissionNeuroExam": {
+          "value": "GCS 13 (E4V3M6), right arm/leg weakness 2/5, expressive aphasia",
+          "source": "Admission GCS 13 (E4V3M6), right arm/leg weakness 2/5 [H&P 2024-11-08]; expressive aphasia [H&P 2024-11-08]"
+        }
+      },
+      "imaging": {
+        "admissionCT": {
+          "value": "Large left MCA territory infarct with significant mass effect",
+          "source": "CT showed large left MCA territory infarct with significant mass effect [H&P 2024-11-08]"
+        },
+        "intraoperativeFindings": {
+          "value": "Large left MCA infarct with 8mm midline shift",
+          "source": "Large left MCA infarct with 8mm midline shift [Operative Report 2024-11-08]"
+        }
+      },
+      "diagnosis": {
+        "primary": {
+          "value": "Large left MCA territory infarct with mass effect",
+          "source": "CT showed large left MCA territory infarct with significant mass effect [H&P 2024-11-08]; Large left MCA infarct with 8mm midline shift [Operative Report 2024-11-08]"
+        }
+      },
+      "surgicalData": {
+        "surgeryDate": {
+          "value": "2024-11-08",
+          "source": "Surgery Date: 2024-11-08 (emergent) [Clinical notes]"
+        },
+        "surgeryUrgency": {
+          "value": "Emergent",
+          "source": "Emergent decompressive hemicraniectomy indicated [H&P 2024-11-08]; Surgery Date: 2024-11-08 (emergent) [Clinical notes]"
+        },
+        "procedure": {
+          "value": "Left hemicraniectomy with duraplasty",
+          "source": "Procedure: Left hemicraniectomy with duraplasty [Surgery Date 2024-11-08]"
+        },
+        "operativeDetails": {
+          "value": "Bone flap removed, duraplasty performed",
+          "source": "Bone flap removed, duraplasty performed [Operative Report 2024-11-08]"
+        },
+        "estimatedBloodLoss": {
+          "value": "200ml",
+          "source": "EBL 200ml [Operative Report 2024-11-08]"
+        },
+        "intraoperativeComplications": {
+          "value": "None",
+          "source": "No complications [Operative Report 2024-11-08]"
+        }
+      },
+      "hospitalCourse": {
+        "admissionSummary": {
+          "presentingSymptoms": "Sudden onset right hemiparesis and expressive aphasia",
+          "admissionDate": "2024-11-08",
+          "admissionStatus": "GCS 13 (E4V3M6), right arm/leg weakness 2/5, expressive aphasia [H&P 2024-11-08]"
+        },
+        "dailyProgress": [
+          {
+            "date": "2024-11-08",
+            "day": "HD 1 / POD 0",
+            "status": "GCS 13, right hemiparesis 2/5, aphasic",
+            "events": "Presented to ED with sudden onset right hemiparesis and expressive aphasia. CT showed large left MCA territory infarct with significant mass effect. Emergent left hemicraniectomy with duraplasty performed. Bone flap removed, duraplasty performed. EBL 200ml. No intraoperative complications. [H&P and Operative Report 2024-11-08]"
+          },
+          {
+            "date": "2024-11-09",
+            "day": "POD 1",
+            "status": "Intubated, GCS 10T (E3VTM6), right hemiparesis 2/5",
+            "events": "Remains intubated. GCS 10T (E3VTM6). Right hemiparesis persists 2/5. ICP monitor placed, pressures 12-18. [Progress note POD 1, 2024-11-09]"
+          },
+          {
+            "date": "2024-11-11",
+            "day": "POD 3",
+            "status": "Extubated, GCS 13 (E4V3M6), right weakness 2/5",
+            "events": "Extubated successfully. GCS 13 (E4V3M6). Following simple commands. Right weakness unchanged. [Progress note POD 3, 2024-11-11]"
+          },
+          {
+            "date": "2024-11-15",
+            "day": "POD 7",
+            "status": "GCS 15, aphasic improving, right arm 3/5, right leg 3+/5",
+            "events": "Transferred to floor. GCS 15 (E4V5M6). Aphasic but improving. Right arm 3/5, right leg 3+/5. PT/OT working with patient. [Progress note POD 7, 2024-11-15]"
+          },
+          {
+            "date": "2024-11-20",
+            "day": "POD 12",
+            "status": "GCS 15, ambulating with walker, right arm 4-/5, right leg 4/5",
+            "events": "Significant functional improvement. Ambulating 50 feet with walker. Speech improving daily. Right arm 4-/5, right leg 4/5. Cleared for discharge to acute rehab. [Progress note POD 12, 2024-11-20]"
+          }
+        ],
+        "trajectory": {
+          "overall": "Improving",
+          "neuro": "Admission: GCS 13 (E4V3M6), right hemiparesis 2/5, expressive aphasia (2024-11-08) → Nadir: POD 1 intubated, GCS 10T (E3VTM6) (2024-11-09) → Discharge: GCS 15 (E4V5M6), mild expressive aphasia, right arm 4-/5, right leg 4/5 (2024-11-20). Steady neurological improvement throughout hospital course.",
+          "functional": "Admission: unable to ambulate, severe right hemiparesis → POD 1: intubated, bedbound → POD 3: extubated, following commands → POD 7: transferred to floor, working with PT/OT → POD 12: ambulating 50 feet with walker independently → Discharge: ambulating with walker independently, requiring acute rehab",
+          "complications": "ICP monitor placed POD 1 for monitoring (pressures 12-18, within normal limits). No other complications documented. Routine post-hemicraniectomy course with steady improvement."
+        }
+      },
+      "postoperativeCourse": {
+        "pod1Status": {
+          "value": "Intubated, GCS 10T (E3VTM6), right hemiparesis 2/5, ICP monitor placed",
+          "source": "Remains intubated. GCS 10T (E3VTM6). Right hemiparesis persists 2/5. ICP monitor placed, pressures 12-18 [POD 1, 2024-11-09]"
+        },
+        "pod3Status": {
+          "value": "Extubated, GCS 13 (E4V3M6), following simple commands, right weakness unchanged",
+          "source": "Extubated successfully. GCS 13 (E4V3M6). Following simple commands. Right weakness unchanged [POD 3, 2024-11-11]"
+        },
+        "pod7Status": {
+          "value": "Transferred to floor, GCS 15 (E4V5M6), aphasic improving, right arm 3/5, right leg 3+/5",
+          "source": "Transferred to floor. GCS 15 (E4V5M6). Aphasic but improving. Right arm 3/5, right leg 3+/5. PT/OT working with patient [POD 7, 2024-11-15]"
+        },
+        "interventions": {
+          "value": "ICP monitor placed POD 1",
+          "source": "ICP monitor placed, pressures 12-18 [POD 1, 2024-11-09]"
+        }
+      },
+      "complications": {
+        "major": {
+          "value": null,
+          "source": "No complications documented in operative report or progress notes"
+        },
+        "minor": {
+          "value": null,
+          "source": "No minor complications documented"
+        }
+      },
+      "dischargeData": {
+        "dischargeDate": {
+          "value": "2024-11-20",
+          "source": "Discharge Date: 2024-11-20 [Clinical notes]"
+        },
+        "lengthOfStay": {
+          "value": 13,
+          "source": "Admission Date: 2024-11-08, Discharge Date: 2024-11-20 [Clinical notes]",
+          "deduced": "date-calculation-discharge-minus-admission",
+          "confidence": "medium"
+        },
+        "dischargeGCS": {
+          "value": 15,
+          "source": "Alert, oriented x3. Following all commands [Discharge Exam 2024-11-20]",
+          "deduced": "clinical-exam-gcs-e4v5m6",
+          "confidence": "medium"
+        },
+        "dischargeNeuroExam": {
+          "value": "Alert, oriented x3, mild expressive aphasia, following all commands, right arm 4-/5, right leg 4/5",
+          "source": "Alert, oriented x3. Expressive aphasia mild. Following all commands. Right arm 4-/5, right leg 4/5 [Discharge Exam 2024-11-20]"
+        },
+        "dischargeFunctionalStatus": {
+          "value": "Ambulating with walker independently",
+          "source": "Ambulating with walker independently [Discharge Exam 2024-11-20]; Ambulating 50 feet with walker [POD 12, 2024-11-20]"
+        },
+        "dischargeKPS": {
+          "value": 70,
+          "source": "Ambulating with walker independently. Alert, oriented x3. Following all commands [Discharge Exam 2024-11-20]",
+          "deduced": "functional-status-requires-assistance-ambulation",
+          "confidence": "medium"
+        },
+        "dischargeECOG": {
+          "value": 2,
+          "source": "Ambulating with walker independently [Discharge Exam 2024-11-20]",
+          "deduced": "ambulatory-self-care-capable",
+          "confidence": "medium"
+        },
+        "dischargemRS": {
+          "value": 3,
+          "source": "Ambulating with walker independently. Right arm 4-/5, right leg 4/5. Expressive aphasia mild [Discharge Exam 2024-11-20]",
+          "deduced": "moderate-disability-walks-unassisted-with-device",
+          "confidence": "medium"
+        },
+        "dischargeNIHSS": {
+          "value": null,
+          "source": "NIHSS not explicitly documented at discharge"
+        },
+        "dischargeDisposition": {
+          "value": "Acute rehab facility",
+          "source": "Discharge Disposition: Acute rehab facility [Discharge summary 2024-11-20]"
+        },
+        "dischargeMedications": [
+          {
+            "value": "Aspirin 325mg PO daily",
+            "source": "Aspirin 325mg PO daily [Discharge Medications 2024-11-20]"
+          },
+          {
+            "value": "Levetiracetam (Keppra) 1000mg PO BID",
+            "source": "Keppra 1000mg PO BID [Discharge Medications 2024-11-20]"
+          },
+          {
+            "value": "Atorvastatin 80mg PO daily",
+            "source": "Atorvastatin 80mg PO daily [Discharge Medications 2024-11-20]"
+          },
+          {
+            "value": "Metoprolol 25mg PO BID",
+            "source": "Metoprolol 25mg PO BID [Discharge Medications 2024-11-20]"
+          }
+        ]
+      },
+      "followUp": {
+        "neurosurgeryClinic": {
+          "value": "2 weeks post-discharge",
+          "source": "Follow-up: Neurosurgery clinic 2 weeks [Discharge summary 2024-11-20]"
+        },
+        "plannedProcedures": {
+          "value": "Cranioplasty in 3 months",
+          "source": "cranioplasty in 3 months [Discharge summary 2024-11-20]"
+        }
+      }
+    },
+    "narrative": "# DISCHARGE SUMMARY\n\n**PATIENT INFORMATION**\nName: Jane Doe\nAge: 58 years\nSex: Female\nMedical Record Number: 98765\nAdmission Date: November 8, 2024\nSurgery Date: November 8, 2024 (emergent)\nDischarge Date: November 20, 2024\nLength of Stay: 13 days\n\n**DIAGNOSES**\nPrimary: Large left middle cerebral artery (MCA) territory infarct with significant mass effect\n\n**HOSPITAL COURSE**\n\nMs. Doe is a 58-year-old female who presented to the emergency department on November 8, 2024, with sudden onset right-sided hemiparesis and expressive aphasia. On admission, her Glasgow Coma Scale was 13 (E4V3M6) with right arm and leg weakness graded at 2/5 strength. Computed tomography of the head revealed a large left MCA territory infarct with significant mass effect and 8mm midline shift.\n\nGiven the extent of the infarct and associated mass effect, the patient was taken emergently to the operating room on the day of admission for left decompressive hemicraniectomy with duraplasty. The bone flap was removed and duraplasty was performed without intraoperative complications. Estimated blood loss was 200ml.\n\nPost-operatively, the patient was managed in the intensive care unit. On post-operative day 1, she remained intubated with a Glasgow Coma Scale of 10T (E3VTM6). An intracranial pressure monitor was placed, with pressures ranging from 12-18 mmHg, which remained within normal limits throughout monitoring. Right hemiparesis persisted at 2/5 strength. The patient was successfully extubated on post-operative day 3, at which time her Glasgow Coma Scale improved to 13 (E4V3M6). She was following simple commands, though right-sided weakness remained unchanged.\n\nBy post-operative day 7, the patient demonstrated significant neurological improvement and was transferred from the intensive care unit to the floor. Her Glasgow Coma Scale was 15 (E4V5M6), and while expressive aphasia persisted, notable improvement was observed. Motor strength had improved to 3/5 in the right arm and 3+/5 in the right leg. Physical therapy and occupational therapy began working intensively with the patient.\n\nThe patient continued to make steady functional gains throughout the remainder of her hospitalization. By post-operative day 12, she demonstrated significant functional improvement, ambulating 50 feet independently with a walker. Speech continued to improve daily. Motor strength had further improved to 4-/5 in the right arm and 4/5 in the right leg. The patient was medically stable and cleared for discharge to an acute rehabilitation facility.\n\n**DISCHARGE STATUS**\n\nNeurological Examination: The patient is alert and oriented to person, place, and time. She demonstrates mild expressive aphasia but is able to follow all commands appropriately. Motor examination reveals right arm strength of 4-/5 and right leg strength of 4/5. Glasgow Coma Scale is 15 (E4V5M6).\n\nFunctional Status: The patient is ambulating independently with a walker. Karnofsky Performance Status is estimated at 70. Modified Rankin Scale score is 3, reflecting moderate disability with ability to walk unassisted with assistive device. ECOG Performance Status is 2.\n\n**DISCHARGE MEDICATIONS**\n1. Aspirin 325mg by mouth daily\n2. Levetiracetam (Keppra) 1000mg by mouth twice daily\n3. Atorvastatin 80mg by mouth daily\n4. Metoprolol 25mg by mouth twice daily\n\n**FOLLOW-UP**\n1. Neurosurgery clinic appointment in 2 weeks post-discharge\n2. Cranioplasty planned in 3 months\n\n**DISCHARGE DISPOSITION**\nAcute rehabilitation facility",
+    "validation": {
+      "passed": true,
+      "score": 100,
+      "issues": []
+    },
+    "datePreprocessing": {
+      "detectedFormat": "AUTO",
+      "confidence": "high",
+      "conversionsCount": 7,
+      "ambiguousDatesCount": 0,
+      "warnings": []
+    },
+    "documentationInventory": {
+      "documents": [
+        {
+          "type": "OPERATIVE_REPORT",
+          "date": null,
+          "postOpDay": 1,
+          "title": "Operative Report",
+          "author": null,
+          "specialty": "Neurosurgery",
+          "sourceQuote": "Patient: Jane Doe, Age 58, MRN: 98765\n\nAdmission Date: 2024-11-08\nChief Complaint: Right-sided weakness and speech difficulty\n\nH&P: 58-year-old female presented to ED with sudden onset right hemipares",
+          "confidence": "high"
+        }
+      ],
+      "podCoverage": {
+        "surgeryDate": null,
+        "dischargeDate": null,
+        "expectedPODs": [],
+        "presentPODs": [],
+        "missingPODs": [],
+        "missingRanges": [],
+        "coveragePercentage": 100
+      },
+      "gaps": {
+        "missingCritical": [
+          "DISCHARGE_SUMMARY"
+        ],
+        "missingImportant": [
+          "ADMISSION_HP"
+        ],
+        "missingPODCount": 0,
+        "missingPODRanges": [],
+        "totalGapDays": 0
+      },
+      "completenessScore": 40,
+      "warnings": [
+        "CRITICAL: Missing DISCHARGE_SUMMARY. These documents are required for complete discharge summary.",
+        "IMPORTANT: Missing ADMISSION_HP. These documents provide important context for patient care."
+      ]
+    },
+    "completenessCheck": {
+      "preExtraction": {
+        "overallReady": false,
+        "readinessScore": 67,
+        "checks": [
+          {
+            "type": "required_document",
+            "passed": false,
+            "severity": "critical",
+            "message": "Missing Admission History & Physical document",
+            "recommendation": "Admission H&P is required for extracting admission baseline (GCS, KPS, presenting symptoms). Cannot extract admission data without this document.",
+            "details": "No admission documentation detected in clinical notes"
+          },
+          {
+            "type": "required_document",
+            "passed": false,
+            "severity": "major",
+            "message": "Missing Discharge Summary or late progress note",
+            "recommendation": "Discharge summary or late progress note (POD 5+) required for extracting discharge status. Discharge fields may be incomplete or use admission data (temporal hallucination risk).",
+            "details": "No discharge summary or late progress notes (POD 5+) detected"
+          },
+          {
+            "type": "temporal_anchor",
+            "passed": true,
+            "severity": "critical",
+            "message": "Admission date detected in notes",
+            "details": "Admission date found in first 5000 characters"
+          },
+          {
+            "type": "temporal_anchor",
+            "passed": true,
+            "severity": "major",
+            "message": "Discharge date detected in notes",
+            "details": "Discharge date pattern found"
+          },
+          {
+            "type": "document_quality",
+            "passed": true,
+            "severity": "major",
+            "message": "Clinical notes appear complete"
+          },
+          {
+            "type": "discharge_readiness",
+            "passed": true,
+            "severity": "major",
+            "message": "Discharge planning documentation detected",
+            "details": "Found discharge-related keywords in notes"
+          }
+        ],
+        "blockers": [
+          {
+            "type": "required_document",
+            "passed": false,
+            "severity": "critical",
+            "message": "Missing Admission History & Physical document",
+            "recommendation": "Admission H&P is required for extracting admission baseline (GCS, KPS, presenting symptoms). Cannot extract admission data without this document.",
+            "details": "No admission documentation detected in clinical notes"
+          }
+        ],
+        "warnings": [
+          {
+            "type": "required_document",
+            "passed": false,
+            "severity": "major",
+            "message": "Missing Discharge Summary or late progress note",
+            "recommendation": "Discharge summary or late progress note (POD 5+) required for extracting discharge status. Discharge fields may be incomplete or use admission data (temporal hallucination risk).",
+            "details": "No discharge summary or late progress notes (POD 5+) detected"
+          }
+        ]
+      },
+      "postExtraction": {
+        "overallComplete": false,
+        "completenessScore": 0,
+        "checks": [
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "critical",
+            "fieldName": "admissionDate",
+            "message": "Required field \"admissionDate\" is missing or null",
+            "recommendation": "Extract admissionDate from clinical notes. This is a required field for admission data.",
+            "details": "Field category: admission, Required: true"
+          },
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "critical",
+            "fieldName": "chiefComplaint",
+            "message": "Required field \"chiefComplaint\" is missing or null",
+            "recommendation": "Extract chiefComplaint from clinical notes. This is a required field for admission data.",
+            "details": "Field category: admission, Required: true"
+          },
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "critical",
+            "fieldName": "presentingSymptoms",
+            "message": "Required field \"presentingSymptoms\" is missing or null",
+            "recommendation": "Extract presentingSymptoms from clinical notes. This is a required field for admission data.",
+            "details": "Field category: admission, Required: true"
+          },
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "critical",
+            "fieldName": "admissionGCS",
+            "message": "Required field \"admissionGCS\" is missing or null",
+            "recommendation": "Extract admissionGCS from clinical notes. This is a required field for admission data.",
+            "details": "Field category: admission, Required: true"
+          },
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "critical",
+            "fieldName": "admissionKPS",
+            "message": "Required field \"admissionKPS\" is missing or null",
+            "recommendation": "Extract admissionKPS from clinical notes. This is a required field for admission data.",
+            "details": "Field category: admission, Required: true"
+          },
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "critical",
+            "fieldName": "dischargeDate",
+            "message": "Required field \"dischargeDate\" is missing or null",
+            "recommendation": "Extract dischargeDate from clinical notes. This is a required field for discharge data.",
+            "details": "Field category: discharge, Required: true"
+          },
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "critical",
+            "fieldName": "dischargeGCS",
+            "message": "Required field \"dischargeGCS\" is missing or null",
+            "recommendation": "Extract dischargeGCS from clinical notes. This is a required field for discharge data.",
+            "details": "Field category: discharge, Required: true"
+          },
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "critical",
+            "fieldName": "dischargeKPS",
+            "message": "Required field \"dischargeKPS\" is missing or null",
+            "recommendation": "Extract dischargeKPS from clinical notes. This is a required field for discharge data.",
+            "details": "Field category: discharge, Required: true"
+          },
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "critical",
+            "fieldName": "dischargeDisposition",
+            "message": "Required field \"dischargeDisposition\" is missing or null",
+            "recommendation": "Extract dischargeDisposition from clinical notes. This is a required field for discharge data.",
+            "details": "Field category: discharge, Required: true"
+          },
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "critical",
+            "fieldName": "dischargeMedications",
+            "message": "Required field \"dischargeMedications\" is missing or null",
+            "recommendation": "Extract dischargeMedications from clinical notes. This is a required field for discharge data.",
+            "details": "Field category: discharge, Required: true"
+          },
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "critical",
+            "fieldName": "dischargeAmbulation",
+            "message": "Required field \"dischargeAmbulation\" is missing or null",
+            "recommendation": "Extract dischargeAmbulation from clinical notes. This is a required field for discharge data.",
+            "details": "Field category: discharge, Required: true"
+          },
+          {
+            "type": "field_confidence",
+            "passed": false,
+            "severity": "minor",
+            "fieldName": "complications",
+            "message": "Field \"complications\" has low confidence: undefined (expected medium+)",
+            "recommendation": "Review source documentation for complications. Low confidence may indicate ambiguous or unclear data.",
+            "details": "Actual: undefined, Required: medium+"
+          },
+          {
+            "type": "source_attribution",
+            "passed": false,
+            "severity": "major",
+            "fieldName": "complications",
+            "message": "Field \"complications\" missing sourceQuote",
+            "recommendation": "Add sourceQuote for complications to enable grounding verification."
+          }
+        ],
+        "criticalIssues": [
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "critical",
+            "fieldName": "admissionDate",
+            "message": "Required field \"admissionDate\" is missing or null",
+            "recommendation": "Extract admissionDate from clinical notes. This is a required field for admission data.",
+            "details": "Field category: admission, Required: true"
+          },
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "critical",
+            "fieldName": "chiefComplaint",
+            "message": "Required field \"chiefComplaint\" is missing or null",
+            "recommendation": "Extract chiefComplaint from clinical notes. This is a required field for admission data.",
+            "details": "Field category: admission, Required: true"
+          },
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "critical",
+            "fieldName": "presentingSymptoms",
+            "message": "Required field \"presentingSymptoms\" is missing or null",
+            "recommendation": "Extract presentingSymptoms from clinical notes. This is a required field for admission data.",
+            "details": "Field category: admission, Required: true"
+          },
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "critical",
+            "fieldName": "admissionGCS",
+            "message": "Required field \"admissionGCS\" is missing or null",
+            "recommendation": "Extract admissionGCS from clinical notes. This is a required field for admission data.",
+            "details": "Field category: admission, Required: true"
+          },
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "critical",
+            "fieldName": "admissionKPS",
+            "message": "Required field \"admissionKPS\" is missing or null",
+            "recommendation": "Extract admissionKPS from clinical notes. This is a required field for admission data.",
+            "details": "Field category: admission, Required: true"
+          },
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "critical",
+            "fieldName": "dischargeDate",
+            "message": "Required field \"dischargeDate\" is missing or null",
+            "recommendation": "Extract dischargeDate from clinical notes. This is a required field for discharge data.",
+            "details": "Field category: discharge, Required: true"
+          },
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "critical",
+            "fieldName": "dischargeGCS",
+            "message": "Required field \"dischargeGCS\" is missing or null",
+            "recommendation": "Extract dischargeGCS from clinical notes. This is a required field for discharge data.",
+            "details": "Field category: discharge, Required: true"
+          },
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "critical",
+            "fieldName": "dischargeKPS",
+            "message": "Required field \"dischargeKPS\" is missing or null",
+            "recommendation": "Extract dischargeKPS from clinical notes. This is a required field for discharge data.",
+            "details": "Field category: discharge, Required: true"
+          },
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "critical",
+            "fieldName": "dischargeDisposition",
+            "message": "Required field \"dischargeDisposition\" is missing or null",
+            "recommendation": "Extract dischargeDisposition from clinical notes. This is a required field for discharge data.",
+            "details": "Field category: discharge, Required: true"
+          },
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "critical",
+            "fieldName": "dischargeMedications",
+            "message": "Required field \"dischargeMedications\" is missing or null",
+            "recommendation": "Extract dischargeMedications from clinical notes. This is a required field for discharge data.",
+            "details": "Field category: discharge, Required: true"
+          },
+          {
+            "type": "field_completeness",
+            "passed": false,
+            "severity": "critical",
+            "fieldName": "dischargeAmbulation",
+            "message": "Required field \"dischargeAmbulation\" is missing or null",
+            "recommendation": "Extract dischargeAmbulation from clinical notes. This is a required field for discharge data.",
+            "details": "Field category: discharge, Required: true"
+          }
+        ],
+        "majorIssues": [
+          {
+            "type": "source_attribution",
+            "passed": false,
+            "severity": "major",
+            "fieldName": "complications",
+            "message": "Field \"complications\" missing sourceQuote",
+            "recommendation": "Add sourceQuote for complications to enable grounding verification."
+          }
+        ],
+        "minorIssues": [
+          {
+            "type": "field_confidence",
+            "passed": false,
+            "severity": "minor",
+            "fieldName": "complications",
+            "message": "Field \"complications\" has low confidence: undefined (expected medium+)",
+            "recommendation": "Review source documentation for complications. Low confidence may indicate ambiguous or unclear data.",
+            "details": "Actual: undefined, Required: medium+"
+          }
+        ]
+      }
+    },
+    "metadata": {
+      "extractionMode": "VALIDATED",
+      "narrativeMode": "STANDARD",
+      "modelUsed": "claude-sonnet-4-5-20250929",
+      "tokenCount": {
+        "input": 40,
+        "output": 4716,
+        "cached": 0
+      },
+      "processingTime": 71601,
+      "timestamp": "2025-11-12T00:42:42.149Z"
+    }
+  },
+  "metadata": {
+    "processingTimeMs": 71603,
+    "tokensUsed": 4756,
+    "version": "2.0.0"
+  }
+}

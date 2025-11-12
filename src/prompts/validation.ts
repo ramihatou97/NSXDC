@@ -9,7 +9,8 @@
 export function buildValidationPrompt(
   originalNotes: string,
   extractedData: Record<string, any>,
-  narrative?: string
+  narrative?: string,
+  _documentationInventory?: any
 ): string {
   const hasNarrative = !!narrative;
 

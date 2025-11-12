@@ -38,10 +38,7 @@ export function getLLMConfig(): LLMConfig {
  * FORCE_VALIDATED_MODE and FORCE_VALIDATION cannot be disabled
  */
 export function getOrchestratorConfig(): OrchestratorConfig {
-  const forceValidated = process.env.FORCE_VALIDATED_MODE !== 'false';
-  const forceValidation = process.env.FORCE_VALIDATION !== 'false';
-
-  // Log warnings if someone tries to disable
+  // Log warnings if someone tries to disable (enforced settings)
   if (process.env.FORCE_VALIDATED_MODE === 'false') {
     console.warn('⚠️  WARNING: FORCE_VALIDATED_MODE=false detected. Ignoring - VALIDATED mode is enforced for safety.');
   }

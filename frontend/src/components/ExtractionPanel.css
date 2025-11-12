@@ -75,3 +75,105 @@
     min-width: 0;
   }
 }
+
+/* Drag and Drop Zone */
+.drag-drop-zone {
+  border: 3px dashed #dee2e6;
+  border-radius: 12px;
+  padding: 40px 20px;
+  text-align: center;
+  background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+  transition: all 0.3s ease;
+  margin-bottom: 20px;
+  cursor: pointer;
+}
+
+.drag-drop-zone.dragging {
+  border-color: var(--primary);
+  background: linear-gradient(135deg, #e3f2fd 0%, #bbdefb 100%);
+  transform: scale(1.02);
+  box-shadow: 0 8px 24px rgba(33, 150, 243, 0.3);
+}
+
+.drag-drop-zone.has-content {
+  padding: 0;
+  border: none;
+  background: none;
+  margin-bottom: 0;
+}
+
+.drag-drop-placeholder {
+  pointer-events: none;
+}
+
+.drag-drop-icon {
+  font-size: 3rem;
+  margin-bottom: 12px;
+  opacity: 0.7;
+}
+
+.drag-drop-zone.dragging .drag-drop-icon {
+  transform: scale(1.2);
+  opacity: 1;
+}
+
+.drag-drop-text {
+  font-size: 1.1rem;
+  color: var(--dark);
+  margin-bottom: 8px;
+}
+
+.drag-drop-text strong {
+  color: var(--primary);
+}
+
+.drag-drop-subtext {
+  font-size: 0.95rem;
+  color: #6c757d;
+  margin-bottom: 12px;
+}
+
+.drag-drop-formats {
+  font-size: 0.85rem;
+  color: #6c757d;
+  font-style: italic;
+}
+
+/* Stats Count */
+.stats-count {
+  float: right;
+  font-size: 0.85rem;
+  color: #6c757d;
+  font-weight: normal;
+}
+
+/* File Error Alert Enhancement */
+.alert-error {
+  animation: slideIn 0.3s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Responsive Drag Drop */
+@media (max-width: 768px) {
+  .drag-drop-zone {
+    padding: 30px 15px;
+  }
+  
+  .drag-drop-icon {
+    font-size: 2.5rem;
+  }
+  
+  .drag-drop-text {
+    font-size: 1rem;
+  }
+}

@@ -273,7 +273,7 @@ export class CompletenessCheckerService {
    */
   postExtractionCheck(
     extractedData: Record<string, any>,
-    inventoryResult: DocumentationInventoryResult
+    _inventoryResult: DocumentationInventoryResult
   ): PostExtractionChecklist {
     const checks: PostExtractionCheck[] = [];
 

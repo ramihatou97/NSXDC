@@ -68,7 +68,6 @@ function App() {
       setExtractionResult(result);
     } catch (err) {
       setError(err instanceof Error ? err.message : 'An unexpected error occurred');
-      console.error('Extraction error:', err);
     } finally {
       setIsLoading(false);
     }
