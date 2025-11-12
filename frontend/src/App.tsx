@@ -2,29 +2,9 @@ import { useState } from 'react';
 import Header from './components/Header';
 import ExtractionPanel from './components/ExtractionPanel';
 import ResultsPanel from './components/ResultsPanel';
+import APIClient, { APIError } from './services/api-client';
+import type { ExtractionResult } from './types';
 import './App.css';
-
-export interface ExtractionResult {
-  extraction: Record<string, any>;
-  narrative?: string;  // The discharge summary narrative - CORE DELIVERABLE
-  validation?: {
-    overallConfidence: number;
-    passed: boolean;
-    score?: number;
-  };
-  confidence?: {
-    score: number;
-    level?: string;
-    factors?: Record<string, number>;
-    uncertainties?: string[];
-    recommendations?: string[];
-  };
-  warnings?: string[];
-}
-
-// API configuration from environment variables
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || '';
-const API_KEY = import.meta.env.VITE_API_KEY || 'demo-key';
 
 function App() {
   const [extractionResult, setExtractionResult] = useState<ExtractionResult | null>(null);
@@ -36,25 +16,11 @@ function App() {
     setError(null);
 
     try {
-      const response = await fetch(`${API_BASE_URL}/api/v1/extract`, {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-          'X-API-Key': API_KEY,
-        },
-        body: JSON.stringify({
-          clinicalNotes,
-          narrativeMode: 'STANDARD', // CRITICAL: Generate discharge summary narrative
-        }),
+      const data = await APIClient.extract({
+        clinicalNotes,
+        narrativeMode: 'STANDARD', // CRITICAL: Generate discharge summary narrative
       });
 
-      if (!response.ok) {
-        const errorData = await response.json();
-        throw new Error(errorData.error || `HTTP error! status: ${response.status}`);
-      }
-
-      const data = await response.json();
-      
       // Transform backend response to frontend format
       const result: ExtractionResult = {
         extraction: data.extraction || {},
@@ -65,13 +31,31 @@ function App() {
           score: data.validation?.score || 0,
         },
         warnings: data.validation?.issues
-          ?.filter((issue: any) => issue.severity === 'major' || issue.severity === 'critical')
-          .map((issue: any) => `${issue.severity.toUpperCase()}: ${issue.message}`) || [],
+          ?.filter(issue => issue.severity === 'major' || issue.severity === 'critical')
+          .map(issue => `${issue.severity.toUpperCase()}: ${issue.message}`) || [],
       };
-      
+
       setExtractionResult(result);
     } catch (err) {
-      setError(err instanceof Error ? err.message : 'An unexpected error occurred');
+      // Handle different error types
+      if (err instanceof APIError) {
+        setError(`API Error: ${err.message}${err.code ? ` (${err.code})` : ''}`);
+      } else if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError('An unexpected error occurred');
+      }
+
+      // Log error to server
+      if (err instanceof Error) {
+        APIClient.logError({
+          message: err.message,
+          stack: err.stack,
+          context: { component: 'App', action: 'handleExtraction' },
+        }).catch(() => {
+          // Silently fail if error logging fails
+        });
+      }
     } finally {
       setIsLoading(false);
     }

@@ -1,8 +1,9 @@
 import { useState } from 'react';
+import type { ExtractionData } from '../types';
 import './ExtractedData.css';
 
 interface ExtractedDataProps {
-  data: any;
+  data: ExtractionData;
 }
 
 export default function ExtractedData({ data }: ExtractedDataProps) {
@@ -40,26 +41,35 @@ export default function ExtractedData({ data }: ExtractedDataProps) {
             </button>
             {expandedSections.has(sectionName) && (
               <div className="section-content">
-                {Object.entries(sectionData).map(([key, value]: [string, any]) => (
-                  <div key={key} className="data-field">
-                    <div className="field-label">{formatFieldName(key)}</div>
-                    <div className="field-value">
-                      {renderFieldValue(value)}
+                {Object.entries(sectionData).map(([key, value]) => {
+                  // Type guard for GroundedValue
+                  const isGroundedValue = (v: unknown): v is { source?: string; confidence?: string; sourceQuote?: string } => {
+                    return typeof v === 'object' && v !== null;
+                  };
+
+                  const groundedValue = isGroundedValue(value) ? value : null;
+
+                  return (
+                    <div key={key} className="data-field">
+                      <div className="field-label">{formatFieldName(key)}</div>
+                      <div className="field-value">
+                        {renderFieldValue(value)}
+                      </div>
+                      {groundedValue?.sourceQuote && (
+                        <div className="field-source">
+                          <strong>Source:</strong> {groundedValue.sourceQuote}
+                        </div>
+                      )}
+                      {groundedValue?.confidence && (
+                        <div className="field-confidence">
+                          <span className={`confidence-badge confidence-${groundedValue.confidence}`}>
+                            {groundedValue.confidence}
+                          </span>
+                        </div>
+                      )}
                     </div>
-                    {value?.source && (
-                      <div className="field-source">
-                        <strong>Source:</strong> {value.source}
-                      </div>
-                    )}
-                    {value?.confidence && (
-                      <div className="field-confidence">
-                        <span className={`confidence-badge confidence-${value.confidence}`}>
-                          {value.confidence}
-                        </span>
-                      </div>
-                    )}
-                  </div>
-                ))}
+                  );
+                })}
               </div>
             )}
           </div>
@@ -69,8 +79,8 @@ export default function ExtractedData({ data }: ExtractedDataProps) {
   );
 }
 
-function organizeSections(data: any): Record<string, any> {
-  const sections: Record<string, any> = {
+function organizeSections(data: ExtractionData): Record<string, Record<string, unknown>> {
+  const sections: Record<string, Record<string, unknown>> = {
     demographics: {},
     dates: {},
     clinical: {},
@@ -100,7 +110,7 @@ function organizeSections(data: any): Record<string, any> {
 
   // Remove empty sections
   return Object.fromEntries(
-    Object.entries(sections).filter(([_, data]) => Object.keys(data).length > 0)
+    Object.entries(sections).filter(([_, sectionData]) => Object.keys(sectionData).length > 0)
   );
 }
 
@@ -115,13 +125,14 @@ function formatFieldName(name: string): string {
     .trim();
 }
 
-function renderFieldValue(value: any): React.ReactNode {
+function renderFieldValue(value: unknown): React.ReactNode {
   if (value === null || value === undefined) {
     return <span className="null-value">Not documented</span>;
   }
 
-  if (typeof value === 'object' && value.value !== undefined) {
-    return renderFieldValue(value.value);
+  // Check if it's a GroundedValue
+  if (typeof value === 'object' && value !== null && 'value' in value) {
+    return renderFieldValue((value as { value: unknown }).value);
   }
 
   if (Array.isArray(value)) {

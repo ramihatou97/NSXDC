@@ -1,4 +1,4 @@
-import { ExtractionResult } from '../App';
+import type { ExtractionResult } from '../types';
 import ConfidenceIndicator from './ConfidenceIndicator';
 import ValidationWarnings from './ValidationWarnings';
 import ExtractedData from './ExtractedData';
